@@ -13,6 +13,8 @@
 		3D5FA31825449D1700888CC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5FA31725449D1700888CC8 /* Preview Assets.xcassets */; };
 		3D5FA32325449D1800888CC8 /* justice_for_familiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32225449D1800888CC8 /* justice_for_familiesTests.swift */; };
 		3D5FA32E25449D1800888CC8 /* justice_for_familiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */; };
+		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
+		5B5CB0B3257B0CB900357437 /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0B2257B0CB800357437 /* PostRow.swift */; };
 		5B793B1925611B92008DC69B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B793B1825611B92008DC69B /* LoginView.swift */; };
 		C24432B92569CF9500656E30 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24432B82569CF9400656E30 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +49,8 @@
 		3D5FA32925449D1800888CC8 /* justice-for-familiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "justice-for-familiesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesUITests.swift; sourceTree = "<group>"; };
 		3D5FA32F25449D1800888CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B5CB0AD257B094F00357437 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		5B5CB0B2257B0CB800357437 /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		5B793B1825611B92008DC69B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C24432B82569CF9400656E30 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,13 +103,13 @@
 		3D5FA30F25449D1400888CC8 /* justice-for-families */ = {
 			isa = PBXGroup;
 			children = (
+				5B5CB0BC257B0D2700357437 /* View */,
+				5B5CB0BB257B0D2000357437 /* ViewModel */,
+				5B5CB0BA257B0D1100357437 /* Model */,
 				3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */,
-				3D5FA31225449D1400888CC8 /* ContentView.swift */,
 				3D5FA31425449D1700888CC8 /* Assets.xcassets */,
 				3D5FA31925449D1700888CC8 /* Info.plist */,
 				3D5FA31625449D1700888CC8 /* Preview Content */,
-				5B793B1825611B92008DC69B /* LoginView.swift */,
-				C24432B82569CF9400656E30 /* SignUpView.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -134,6 +138,32 @@
 				3D5FA32F25449D1800888CC8 /* Info.plist */,
 			);
 			path = "justice-for-familiesUITests";
+			sourceTree = "<group>";
+		};
+		5B5CB0BA257B0D1100357437 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5B5CB0BB257B0D2000357437 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B5CB0BC257B0D2700357437 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D5FA31225449D1400888CC8 /* ContentView.swift */,
+				C24432B82569CF9400656E30 /* SignUpView.swift */,
+				5B5CB0AD257B094F00357437 /* PostView.swift */,
+				5B793B1825611B92008DC69B /* LoginView.swift */,
+				5B5CB0B2257B0CB800357437 /* PostRow.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,7 +297,9 @@
 			files = (
 				5B793B1925611B92008DC69B /* LoginView.swift in Sources */,
 				C24432B92569CF9500656E30 /* SignUpView.swift in Sources */,
+				5B5CB0AE257B094F00357437 /* PostView.swift in Sources */,
 				3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */,
+				5B5CB0B3257B0CB900357437 /* PostRow.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
