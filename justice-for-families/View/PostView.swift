@@ -20,7 +20,7 @@ struct PostView: View {
                 //put comments here
             }
             .padding()
-            .background(Color(red: 211/255, green: 211/255, blue: 211/255))
+            .background(Constants.backgroundColor)
         }
     }
 }
