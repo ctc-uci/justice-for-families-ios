@@ -23,9 +23,6 @@ struct ContentView: View {
         .init(numberOfLikes: 1000, numberOfComments: 1000)
     ]
     
-    
-    
-    
     var body: some View {
         NavigationView {
             List {
@@ -56,14 +53,8 @@ struct ContentView: View {
                 .cornerRadius(12)
                 
             }
-            .navigationTitle("Logo")
-            .navigationBarItems(trailing: Button(action: {}) {
-                Image(systemName: "magnifyingglass").font(.system(size: 25, weight: .regular))
-            })
         }
-
     }
-
 }
 
 struct UrgentUpdateView: View {
