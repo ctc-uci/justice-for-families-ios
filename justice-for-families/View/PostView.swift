@@ -11,17 +11,40 @@
 import SwiftUI
 
 struct PostView: View {
+    
+    @State var txt = ""
+    @State var height : CGFloat = 20
+    
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
     //@StateObject var postData = PostViewModel()
     var body: some View {
         ScrollView{
             VStack{
                 PostRow()
-                //put comments here
+                CommentRow()
             }
             .padding()
             .background(Constants.backgroundColor)
         }
+        
+        HStack(spacing:8){
+            ResizeableTF(txt: self.$txt, height: self.$height)
+                .frame(height:self.height < 150 ? self.height : 150)
+                .padding(.horizontal)
+                .background(Constants.backgroundColor)
+                .cornerRadius(15)
+            Button(action: {}){
+                Text("Send")
+                .padding(.top, 6)
+                .padding(.bottom, 6)
+                .padding(.horizontal)
+                .foregroundColor(.white)
+                .background(Constants.backgroundColor)
+            }
+            .cornerRadius(15)
+            .padding(.vertical,4)
+        }
+        .padding(.horizontal)
     }
 }
 

@@ -18,6 +18,8 @@
 		5B793B1925611B92008DC69B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B793B1825611B92008DC69B /* LoginView.swift */; };
 		5BFF8E56257B3E4800BC6CE4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFF8E55257B3E4800BC6CE4 /* AppConstants.swift */; };
 		C24432B92569CF9500656E30 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24432B82569CF9400656E30 /* SignUpView.swift */; };
+		C27181662580E9D7001FA2F8 /* CommentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27181652580E9D7001FA2F8 /* CommentRow.swift */; };
+		C271816B2581846A001FA2F8 /* AddCommentFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C271816A2581846A001FA2F8 /* AddCommentFooter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		5B793B1825611B92008DC69B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5BFF8E55257B3E4800BC6CE4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		C24432B82569CF9400656E30 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		C27181652580E9D7001FA2F8 /* CommentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRow.swift; sourceTree = "<group>"; };
+		C271816A2581846A001FA2F8 /* AddCommentFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentFooter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,8 @@
 				5B5CB0AD257B094F00357437 /* PostView.swift */,
 				5B793B1825611B92008DC69B /* LoginView.swift */,
 				5B5CB0B2257B0CB800357437 /* PostRow.swift */,
+				C27181652580E9D7001FA2F8 /* CommentRow.swift */,
+				C271816A2581846A001FA2F8 /* AddCommentFooter.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -304,6 +310,8 @@
 				3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */,
 				5BFF8E56257B3E4800BC6CE4 /* AppConstants.swift in Sources */,
 				5B5CB0B3257B0CB900357437 /* PostRow.swift in Sources */,
+				C27181662580E9D7001FA2F8 /* CommentRow.swift in Sources */,
+				C271816B2581846A001FA2F8 /* AddCommentFooter.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
