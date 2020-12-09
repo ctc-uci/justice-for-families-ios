@@ -31,11 +31,20 @@ struct PopUp: View{
     
     @Environment(\.presentationMode) private var presentationMode
     
-    var body: some aView{
+    @State var title: String = ""
+    @State private var message = ""
+    @State private var textStyle = UIFont.TextStyle.body
+    
+    var body: some View{
         NavigationView {
             Form{
                 Section{
                     Text("hello world popup")
+                    VStack(alignment: .leading) {
+                        TextField("Title", text: $title)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                        TextView(text: $message, textStyle: $textStyle)
                 }
             }
             
