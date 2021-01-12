@@ -7,11 +7,7 @@
 
 import SwiftUI
 
-struct Update: Identifiable {
-    var id: UUID = UUID()
-    var numberOfLikes: Int
-    var numberOfComments: Int
-}
+
 
 
 struct ContentView: View {
@@ -23,41 +19,45 @@ struct ContentView: View {
         .init(numberOfLikes: 1000, numberOfComments: 1000)
     ]
     
-    
-    
-    
     var body: some View {
         NavigationView {
             List {
-                VStack(alignment: .leading) {
-                    Text("What you missed...")
-                        .font(.headline)
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(1..<10) { i in
-                                UrgentUpdateView()
-                            }
-                            .frame(width: 200, height: 150)
-                            .background(Color.gray)
-                            .cornerRadius(12)
-                        }.frame(height: 150)
-                        
-                    }.frame(height: 150)
+                VStack {
+                    Text("What you missed")
+                    
                 }
-                Spacer()
-                Text("Updates")
-                    .font(.headline)
-                
-                ForEach(updates, id: \.id) { u in
-                    UpdateView(u: u)
-                }.frame(minWidth: 0, maxWidth: .infinity)
-                .frame(height: 175)
-                .background(Color.gray)
-                .cornerRadius(12)
-                
             }
+//            List {
+//                VStack(alignment: .leading) {
+//                    Text("What you missed...")
+//                        .font(.headline)
+//                    ScrollView(.horizontal, showsIndicators: false) {
+//                        HStack(spacing: 16) {
+//                            ForEach(1..<10) { i in
+//                                UrgentUpdateView()
+//                            }
+//                            .frame(width: 200, height: 150)
+//                            .background(Color.gray)
+//                            .cornerRadius(12)
+//                        }.frame(height: 150)
+//
+//                    }.frame(height: 150)
+//                }
+//                Spacer()
+//                Text("Updates")
+//                    .font(.headline)
+//
+//                ForEach(updates, id: \.id) { u in
+//                    UpdateView(u: u)
+//                }.frame(minWidth: 0, maxWidth: .infinity)
+//                .frame(height: 175)
+//                .background(Color.gray)
+//                .cornerRadius(12)
+//
+//            }
             .navigationTitle("Logo")
-            .navigationBarItems(trailing: Button(action: {}) {
+            .navigationBarItems(trailing:
+                Button(action: {}) {
                 Image(systemName: "magnifyingglass").font(.system(size: 25, weight: .regular))
             })
         }
@@ -66,20 +66,7 @@ struct ContentView: View {
 
 }
 
-struct UrgentUpdateView: View {
-    var body: some View {
-        Text("Urgent update")
-    }
-}
 
-struct UpdateView: View {
-    
-    var u: Update
-    
-    var body: some View {
-        Text("Some update here")
-    }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
