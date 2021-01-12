@@ -27,43 +27,8 @@ struct ContentView: View {
                     
                 }
             }
-//            List {
-//                VStack(alignment: .leading) {
-//                    Text("What you missed...")
-//                        .font(.headline)
-//                    ScrollView(.horizontal, showsIndicators: false) {
-//                        HStack(spacing: 16) {
-//                            ForEach(1..<10) { i in
-//                                UrgentUpdateView()
-//                            }
-//                            .frame(width: 200, height: 150)
-//                            .background(Color.gray)
-//                            .cornerRadius(12)
-//                        }.frame(height: 150)
-//
-//                    }.frame(height: 150)
-//                }
-//                Spacer()
-//                Text("Updates")
-//                    .font(.headline)
-//
-//                ForEach(updates, id: \.id) { u in
-//                    UpdateView(u: u)
-//                }.frame(minWidth: 0, maxWidth: .infinity)
-//                .frame(height: 175)
-//                .background(Color.gray)
-//                .cornerRadius(12)
-//
-//            }
-            .navigationTitle("Logo")
-            .navigationBarItems(trailing:
-                Button(action: {}) {
-                Image(systemName: "magnifyingglass").font(.system(size: 25, weight: .regular))
-            })
         }
-
     }
-
 }
 
 
