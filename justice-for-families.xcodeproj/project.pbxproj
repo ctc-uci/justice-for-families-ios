@@ -110,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				5B5CB0BC257B0D2700357437 /* View */,
-				5B5CB0BB257B0D2000357437 /* ViewModel */,
 				5B5CB0BA257B0D1100357437 /* Model */,
 				3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */,
 				3D5FA31425449D1700888CC8 /* Assets.xcassets */,
@@ -152,13 +151,6 @@
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		5B5CB0BB257B0D2000357437 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		5B5CB0BC257B0D2700357437 /* View */ = {
