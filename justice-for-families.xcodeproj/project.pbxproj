@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09DDDCAA25AE9A19004E3BF4 /* NavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDDCA925AE9A19004E3BF4 /* NavBar.swift */; };
+		09DDDCAF25AFC1BF004E3BF4 /* CommentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DDDCAE25AFC1BF004E3BF4 /* CommentButton.swift */; };
 		3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */; };
 		3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA31225449D1400888CC8 /* ContentView.swift */; };
 		3D5FA31525449D1700888CC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5FA31425449D1700888CC8 /* Assets.xcassets */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09DDDCA925AE9A19004E3BF4 /* NavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBar.swift; sourceTree = "<group>"; };
+		09DDDCAE25AFC1BF004E3BF4 /* CommentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentButton.swift; sourceTree = "<group>"; };
 		3D5FA30D25449D1400888CC8 /* justice-for-families.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "justice-for-families.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesApp.swift; sourceTree = "<group>"; };
 		3D5FA31225449D1400888CC8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +113,9 @@
 				5B793B1825611B92008DC69B /* LoginView.swift */,
 				C24432B82569CF9400656E30 /* SignUpView.swift */,
 				6C9CEC54258051C100F4A733 /* Post.swift */,
+				4AEF695025AD4C4200C1B859 /* Home Feed.swift */,
+				09DDDCA925AE9A19004E3BF4 /* NavBar.swift */,
+				09DDDCAE25AFC1BF004E3BF4 /* CommentButton.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -271,6 +278,8 @@
 				5B793B1925611B92008DC69B /* LoginView.swift in Sources */,
 				C24432B92569CF9500656E30 /* SignUpView.swift in Sources */,
 				3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */,
+				09DDDCAA25AE9A19004E3BF4 /* NavBar.swift in Sources */,
+				09DDDCAF25AFC1BF004E3BF4 /* CommentButton.swift in Sources */,
 				6C9CEC55258051C100F4A733 /* Post.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 			);
