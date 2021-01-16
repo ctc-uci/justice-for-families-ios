@@ -15,6 +15,7 @@
 		3D5FA32E25449D1800888CC8 /* justice_for_familiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */; };
 		5B793B1925611B92008DC69B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B793B1825611B92008DC69B /* LoginView.swift */; };
 		6C9CEC55258051C100F4A733 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9CEC54258051C100F4A733 /* Post.swift */; };
+		6CFB7DEC25B243F5009A11AA /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFB7DEB25B243F5009A11AA /* TabBar.swift */; };
 		C24432B92569CF9500656E30 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24432B82569CF9400656E30 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 		3D5FA32F25449D1800888CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B793B1825611B92008DC69B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		6C9CEC54258051C100F4A733 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		6CFB7DEB25B243F5009A11AA /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		C24432B82569CF9400656E30 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 				5B793B1825611B92008DC69B /* LoginView.swift */,
 				C24432B82569CF9400656E30 /* SignUpView.swift */,
 				6C9CEC54258051C100F4A733 /* Post.swift */,
+				6CFB7DEB25B243F5009A11AA /* TabBar.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				5B793B1925611B92008DC69B /* LoginView.swift in Sources */,
 				C24432B92569CF9500656E30 /* SignUpView.swift in Sources */,
 				3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */,
+				6CFB7DEC25B243F5009A11AA /* TabBar.swift in Sources */,
 				6C9CEC55258051C100F4A733 /* Post.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 			);

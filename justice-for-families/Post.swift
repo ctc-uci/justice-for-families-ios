@@ -9,12 +9,10 @@ import Foundation
 import SwiftUI
 
 
-//@State public var showModal = false
 struct Post: View {
     @State private var showModal = false
     
     var body: some View {
-//        PopUp()
         Button(action:{
             self.showModal.toggle()
         }){
@@ -27,9 +25,9 @@ struct Post: View {
 }
 
 struct PopUp: View{
-    
     @State var title: String = ""
     @State var postBody: String = "What's on your mind?"
+    var placeholderString: String = "What's on your mind?"
     @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
@@ -54,31 +52,32 @@ struct PopUp: View{
                 Divider()
                 TextEditor(text: $postBody)
                     .font(.custom("Robot-Regular", size: 14))
-                    .foregroundColor(.secondary)
+                    .foregroundColor(self.postBody == placeholderString ? .secondary : .primary)
                     .frame(width: .infinity, height: 160, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+                     .onTapGesture {
+                         if self.postBody == placeholderString {
+                             self.postBody = ""
+                         }
+                     }
                 Spacer()
             }
             .navigationBarTitle("Text Post")
             .navigationBarTitleDisplayMode(.inline)
             .font(.custom("Roboto-Bold", size: 16))
-        }
-        .navigationBarItems(leading: Button(action: {
+            .navigationBarItems(leading: Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
-        }, label: {
-            Image(systemName: "xmark")
-                .font(.system(size: 16, weight: .regular))
-        }), trailing: Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }, label: {
-            Text("POST")
-        }))
+            }){
+                    Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
+            }, trailing:
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }){
+                        Text("POST")
+                    
+                }
+            )
+        }
     }
 }
 
-
-struct Post_Previews: PreviewProvider {
-    static var previews: some View {
-        Post()
-    }
-}
