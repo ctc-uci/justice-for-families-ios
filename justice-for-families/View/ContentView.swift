@@ -4,7 +4,7 @@
 //
 //  Created by Ethan  Nguyen on 10/24/20.
 //
-
+/*
 import SwiftUI
 
 struct Update: Identifiable {
@@ -79,3 +79,4 @@ struct ContentView_Previews: PreviewProvider {
         }
     }
 }
+*/
