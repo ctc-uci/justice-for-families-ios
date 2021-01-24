@@ -85,7 +85,7 @@ struct LoginView: View {
                     }
                 }
                 Spacer()
-            }.background(Color(red: 211/255, green: 211/255, blue: 211/255))
+            }.background(Constants.backgroundColor)
             .navigationBarHidden(true)
         }.navigationBarHidden(true)
     }
