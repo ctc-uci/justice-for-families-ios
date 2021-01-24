@@ -14,9 +14,7 @@ struct Update: Identifiable {
 }
 
 struct J4FColors {
-    
-    //static let primaryText = Color("primaryText")
-    static let primaryText = Color(.black)
+    static let primaryText = Color("primaryText")
 }
 
 struct J4FFonts {
@@ -75,7 +73,6 @@ struct HomeFeed: View {
                 }.textCase(.none)
             }
             .navigationTitle("J4F")
-            
         }
     }
     
@@ -160,32 +157,30 @@ struct FeedCellInteractButtons: View {
 
 struct FeedCell: View {
     var body: some View {
-        NavigationLink(destination: PostView()) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(Color.white)
-                VStack {
-                    HStack {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: 41, height: 41, alignment: .leading)
-                        
-                        Text("@iamspeed")
-                            .font(J4FFonts.username)
-                            .foregroundColor(J4FColors.primaryText)
-                        Spacer()
-                    }
+        ZStack {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.white)
+            VStack {
+                HStack {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .frame(width: 41, height: 41, alignment: .leading)
                     
-                    Spacer(minLength: 16)
-                    Text("This is the headline, you must click through to access the rest of this post")
-                        .font(J4FFonts.headline)
+                    Text("@iamspeed")
+                        .font(J4FFonts.username)
                         .foregroundColor(J4FColors.primaryText)
-                    Spacer(minLength: 16)
-                    FeedCellInteractButtons()
-                    
+                    Spacer()
                 }
-                .padding(20)
+                
+                Spacer(minLength: 16)
+                Text("This is the headline, you must click through to access the rest of this post")
+                    .font(J4FFonts.headline)
+                    .foregroundColor(J4FColors.primaryText)
+                Spacer(minLength: 16)
+                FeedCellInteractButtons()
+                
             }
+            .padding(20)
         }
     }
 }
