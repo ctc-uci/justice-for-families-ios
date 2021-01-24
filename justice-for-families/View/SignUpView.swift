@@ -44,11 +44,11 @@ struct SignUpView: View {
                         .padding()
                         .background(Capsule().fill(Color.white))
                         .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
-                    SecureField("Password", text: self.$password)
+                    TextField("Password", text: self.$password)
                         .padding()
                         .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
                         .background(Capsule().fill(Color.white))
-                    SecureField("Confirm Password", text: self.$confirmPassword)
+                    TextField("Confirm Password", text: self.$confirmPassword)
                         .padding()
                         .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
                         .background(Capsule().fill(Color.white))
@@ -94,7 +94,7 @@ struct SignUpView: View {
                 Spacer()
                 
                 Spacer()
-            }.background(Color(red: 211/255, green: 211/255, blue: 211/255))
+            }.background(Constants.backgroundColor)
             .navigationBarHidden(true)
         }.navigationBarHidden(true)
     }
