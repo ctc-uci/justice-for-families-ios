@@ -26,6 +26,8 @@ struct J4FFonts {
 
 struct HomeFeed: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    
     private let updates: [Update] = [
         .init(numberOfLikes: 1, numberOfComments: 1),
         .init(numberOfLikes: 10, numberOfComments: 10),
@@ -54,27 +56,42 @@ struct HomeFeed: View {
     ]
     
     var body: some View {
-        NavigationView {
-            List {
-                Section(header: WhatYouMissedSectionHeader()) {
-                    ScrollView(.horizontal, showsIndicators: false, content: {
-                        HStack {
-                            ForEach(1..<100) { i in
-                                WhatYouMissedCell()
+        TabView {
+            NavigationView {
+                List {
+                    Section(header: WhatYouMissedSectionHeader()) {
+                        ScrollView(.horizontal, showsIndicators: false, content: {
+                            HStack {
+                                ForEach(1..<100) { i in
+                                    WhatYouMissedCell()
+                                }
                             }
+                        })
+                    }.textCase(.none)
+                    
+                    Section(header: FeedSectionHeader()) {
+                        ForEach(1..<100) { i in
+                            FeedCell()
                         }
-                    })
-                }.textCase(.none)
-                
-                Section(header: FeedSectionHeader()) {
-                    ForEach(1..<100) { i in
-                        FeedCell()
-                    }
-                }.textCase(.none)
+                    }.textCase(.none)
+                }
+                .navigationTitle("J4F")
             }
-            .navigationTitle("J4F")
+            .tabItem {
+               Image(systemName: "1.circle")
+               Text("Page 1")
+            }
+            .tabItem {
+                Button(action: {
+                    print("Hello")
+                }, label: {
+                    /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                })
+            }
         }
+        .edgesIgnoringSafeArea(.top)
     }
+       
     
 }
 

@@ -81,3 +81,12 @@ struct PopUp: View{
     }
 }
 
+struct Post_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            Post()
+//            WhatYouMissedSection()
+        }
+    }
+}
+

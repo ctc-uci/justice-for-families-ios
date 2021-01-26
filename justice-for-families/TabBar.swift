@@ -4,19 +4,13 @@
 //
 //  Created by Sydney Chiang on 1/15/21.
 //
-
 import Foundation
 import SwiftUI
-
-
 enum Tab{
     case Tab1
     case Tab2
 }
-
-
 struct MainView: View{
-
     @State private var currentView: Tab = .Tab1
     @State private var showModal: Bool = false
     
@@ -34,9 +28,6 @@ struct MainView: View{
         }
     }
 }
-
-
-
 struct CurrentScreen: View{
     @Binding var currentView: Tab
     var body: some View{
@@ -50,7 +41,6 @@ struct CurrentScreen: View{
         }
     }
 }
-
 struct TabBarItem: View{
     @Binding var currentView: Tab
     let imageName: String
@@ -73,7 +63,6 @@ struct TabBarItem: View{
         .padding(paddingEdges, 15)
     }
 }
-
 struct TabBar: View{
     @Binding var currentView: Tab
     @Binding var showModal: Bool
@@ -92,7 +81,6 @@ struct TabBar: View{
     }
     
 }
-
 public struct ShowModalTabBarItem: View{
     let radius: CGFloat
     let action: () -> Void
@@ -111,14 +99,11 @@ public struct ShowModalTabBarItem: View{
                 .foregroundColor(Color(.systemGray))
                 .background(Color(.white))
                 .cornerRadius(radius/2)
-
         }
         .frame(width: radius, height: radius)
         .onTapGesture(perform: action)
     }
 }
-
-
 struct HomeView: View{
     var body: some View{
         VStack{
@@ -133,10 +118,6 @@ struct HomeView: View{
         .navigationBarTitle("Home Tab")
     }
 }
-
-
-
-
 struct ProfileView: View{
     var body: some View{
         VStack{
@@ -151,7 +132,6 @@ struct ProfileView: View{
         .navigationBarTitle("Profile Tab")
     }
 }
-
 struct ScreenModal: View{
     var body: some View{
         VStack{
@@ -166,8 +146,6 @@ struct ScreenModal: View{
         .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
-
-
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
