@@ -12,7 +12,7 @@ struct justice_for_familiesApp: App {
     var body: some Scene {
         WindowGroup {
             //PostView()
-            HomeFeed()
+            Post()
         }
     }
 }

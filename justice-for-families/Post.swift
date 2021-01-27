@@ -7,6 +7,9 @@
 
 import Foundation
 import SwiftUI
+import Combine
+import Alamofire
+
 
 
 struct Post: View {
@@ -71,6 +74,32 @@ struct PopUp: View{
                     Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
             }, trailing:
                     Button(action: {
+                        print("hi")
+                        let parameters = ["text" : "text",
+                                          "username" : "microsoft",
+                                          "tags" : ["hello"],
+                                          "numComments" : 5,
+                                          "title" : "newPost",
+                                          "anonymous" : false,
+                                          "numLikes" : 5] as [String : Any]
+                        AF.request(URL.init(string: "localhost:3000/posts/create")!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+                                print(response.result)
+
+                                switch response.result {
+
+                                case .success(_):
+                                    if let json = response.value
+                                    {
+                                       // successHandler((json as! [String:AnyObject]))
+                                        print(json)
+                                    }
+                                    break
+                                case .failure(let error):
+                                   // failureHandler([error as Error])
+                                    print(error)
+                                    break
+                                }
+                            }
                         self.presentationMode.wrappedValue.dismiss()
                     }){
                         Text("POST")
@@ -81,3 +110,11 @@ struct PopUp: View{
     }
 }
 
+struct Post_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            Post()
+//            WhatYouMissedSection()
+        }
+    }
+}
