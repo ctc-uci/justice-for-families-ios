@@ -28,10 +28,13 @@ struct Post: View {
 }
 
 struct PopUp: View{
+    
     @State var title: String = ""
     @State var postBody: String = "What's on your mind?"
     var placeholderString: String = "What's on your mind?"
     @Environment(\.presentationMode) private var presentationMode
+    
+    let postURL = URL(string: "http://localhost:3000/posts/create")
     
     var body: some View {
         NavigationView {
@@ -71,40 +74,25 @@ struct PopUp: View{
             .navigationBarItems(leading: Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }){
-                    Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
+                Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
             }, trailing:
-                    Button(action: {
-                        print("hi")
-                        let parameters = ["text" : "text",
-                                          "username" : "microsoft",
-                                          "tags" : ["hello"],
-                                          "numComments" : 5,
-                                          "title" : "newPost",
-                                          "anonymous" : false,
-                                          "numLikes" : 5] as [String : Any]
-                        AF.request(URL.init(string: "localhost:3000/posts/create")!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
-                                print(response.result)
-
-                                switch response.result {
-
-                                case .success(_):
-                                    if let json = response.value
-                                    {
-                                       // successHandler((json as! [String:AnyObject]))
-                                        print(json)
-                                    }
-                                    break
-                                case .failure(let error):
-                                   // failureHandler([error as Error])
-                                    print(error)
-                                    break
-                                }
-                            }
-                        self.presentationMode.wrappedValue.dismiss()
-                    }){
-                        Text("POST")
+                Button(action: {
+                    let parameters = ["text" : "text",
+                                      "username" : "buyHighSellLow",
+                                      "tags" : ["hello"],
+                                      "numComments" : 5,
+                                      "title" : "newPost",
+                                      "anonymous" : false,
+                                      "numLikes" : 5] as [String : Any]
                     
+                    Network.createNewPost(parameters: parameters)
+                        
+                    self.presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("POST")
                 }
+            
+            
             )
         }
     }
