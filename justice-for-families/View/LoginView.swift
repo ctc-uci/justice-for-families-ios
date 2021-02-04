@@ -60,8 +60,9 @@ struct LoginView: View {
                     
                 }.padding([.leading, .trailing], 27.5)
                 
-                
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                Button(action: {
+                    Network.fetchAllPosts()
+                }){
                     Text("Login")
                         .foregroundColor(.white)
                         .padding()
