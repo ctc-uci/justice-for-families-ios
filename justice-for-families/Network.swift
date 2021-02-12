@@ -74,7 +74,7 @@ struct Network {
     }
     
     static func fetchAllPosts(completionHandler: @escaping (_ posts: [Post]) -> Void) {
-        guard let url = URL(string: "http://localhost:3000/posts") else {
+        guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts") else {
             return
         }
         
@@ -109,7 +109,7 @@ struct Network {
     }
     
     static func getPost(fromUsername username: String) {
-        guard let url = URL(string: "http://localhost:3000/posts/username/\(username)") else {
+        guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts/username/\(username)") else {
             return
         }
         AF.request(url, method: .get).responseString { (response) in
