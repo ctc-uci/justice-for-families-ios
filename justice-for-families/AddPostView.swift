@@ -12,7 +12,7 @@ import Alamofire
 
 
 
-struct Post: View {
+struct AddPostView: View {
     @State private var showModal = false
     
     var body: some View {
@@ -101,7 +101,7 @@ struct PopUp: View{
 struct Post_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Post()
+            AddPostView()
 //            WhatYouMissedSection()
         }
     }
