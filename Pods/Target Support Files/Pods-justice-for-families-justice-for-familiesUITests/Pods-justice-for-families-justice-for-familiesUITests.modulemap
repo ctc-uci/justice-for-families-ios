@@ -1,0 +1,6 @@
+framework module Pods_justice_for_families_justice_for_familiesUITests {
+  umbrella header "Pods-justice-for-families-justice-for-familiesUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
