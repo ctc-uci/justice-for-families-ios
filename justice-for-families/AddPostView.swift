@@ -7,9 +7,12 @@
 
 import Foundation
 import SwiftUI
+import Combine
+import Alamofire
 
 
-struct Post: View {
+
+struct AddPostView: View {
     @State private var showModal = false
     
     var body: some View {
@@ -25,10 +28,13 @@ struct Post: View {
 }
 
 struct PopUp: View{
+    
     @State var title: String = ""
     @State var postBody: String = "What's on your mind?"
     var placeholderString: String = "What's on your mind?"
     @Environment(\.presentationMode) private var presentationMode
+    
+    let postURL = URL(string: "http://localhost:3000/posts/create")
     
     var body: some View {
         NavigationView {
@@ -68,16 +74,35 @@ struct PopUp: View{
             .navigationBarItems(leading: Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }){
-                    Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
+                Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
             }, trailing:
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }){
-                        Text("POST")
+                Button(action: {
+                    let parameters = ["text" : "text",
+                                      "username" : "buyHighSellLow",
+                                      "tags" : ["hello"],
+                                      "numComments" : 5,
+                                      "title" : "newPost",
+                                      "anonymous" : false,
+                                      "numLikes" : 5] as [String : Any]
                     
+                    Network.createNewPost(parameters: parameters)
+                        
+                    self.presentationMode.wrappedValue.dismiss()
+                }){
+                    Text("POST")
                 }
+            
+            
             )
         }
     }
 }
 
+struct Post_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            AddPostView()
+//            WhatYouMissedSection()
+        }
+    }
+}

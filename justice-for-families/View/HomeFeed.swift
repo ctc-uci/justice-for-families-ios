@@ -6,11 +6,35 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Update: Identifiable {
     var id: UUID = UUID()
     var numberOfLikes: Int
     var numberOfComments: Int
+}
+
+class NetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<NetworkManager, Never>()
+    
+    @Published var posts = [Post]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init() {
+        fetchPosts()
+    }
+    
+    public func fetchPosts() {
+        Network.fetchAllPosts { (posts) in
+            DispatchQueue.main.async {
+                self.posts = posts
+            }
+        }
+    }
+    
 }
 
 struct J4FColors {
@@ -28,6 +52,14 @@ struct J4FFonts {
 
 struct HomeFeed: View {
     
+    @ObservedObject var networkManager = NetworkManager()
+    
+    private let posts: [Post] = [
+//        Post(id: UUID(), text: "Test 1"),
+//        Post(id: UUID(), text: "Test 2"),
+//        Post(id: UUID(), text: "Test 3")
+    ]
+        
     private let updates: [Update] = [
         .init(numberOfLikes: 1, numberOfComments: 1),
         .init(numberOfLikes: 10, numberOfComments: 10),
@@ -69,8 +101,8 @@ struct HomeFeed: View {
                 }.textCase(.none)
                 
                 Section(header: FeedSectionHeader()) {
-                    ForEach(1..<100) { i in
-                        FeedCell()
+                    ForEach(networkManager.posts) { p in
+                        FeedCell(post: p)
                     }
                 }.textCase(.none)
             }
@@ -78,7 +110,6 @@ struct HomeFeed: View {
             
         }
     }
-    
 }
 
 struct WhatYouMissedSectionHeader: View {
@@ -115,6 +146,10 @@ struct FeedSectionHeader: View {
 }
 
 struct FeedCellInteractButtons: View {
+    
+    let numLikes: Int
+    let numComments: Int
+    
     var body: some View {
         HStack {
             
@@ -123,7 +158,7 @@ struct FeedCellInteractButtons: View {
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "hand.thumbsup")
-                    Text("70 likes")
+                    Text("\(self.numLikes)")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.primaryText)
                 }
@@ -135,7 +170,7 @@ struct FeedCellInteractButtons: View {
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "bubble.left")
-                    Text("7 comments")
+                    Text("\(self.numComments)")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.primaryText)
                 }
@@ -159,29 +194,33 @@ struct FeedCellInteractButtons: View {
 }
 
 struct FeedCell: View {
+    
+    let post: Post
+    
     var body: some View {
         NavigationLink(destination: PostView()) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.white)
-                VStack {
+                VStack(alignment: .leading) {
                     HStack {
                         Image(systemName: "person.crop.circle")
                             .resizable()
                             .frame(width: 41, height: 41, alignment: .leading)
                         
-                        Text("@iamspeed")
+                        Text(post.username)
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.primaryText)
                         Spacer()
                     }
                     
                     Spacer(minLength: 16)
-                    Text("This is the headline, you must click through to access the rest of this post")
+                    Text(post.title)
                         .font(J4FFonts.headline)
                         .foregroundColor(J4FColors.primaryText)
+                        .multilineTextAlignment(.leading)
                     Spacer(minLength: 16)
-                    FeedCellInteractButtons()
+                    FeedCellInteractButtons(numLikes: 5, numComments: post.numComments)
                     
                 }
                 .padding(20)
