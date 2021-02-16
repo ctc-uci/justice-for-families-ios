@@ -65,27 +65,11 @@ struct HomeFeed: View {
         .init(numberOfLikes: 10, numberOfComments: 10),
         .init(numberOfLikes: 100, numberOfComments: 100),
         .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000)
     ]
+    
+    init() {
+        UITableViewCell.appearance().selectionStyle = .none
+    }
     
     var body: some View {
         NavigationView {
@@ -103,6 +87,7 @@ struct HomeFeed: View {
                 Section(header: FeedSectionHeader()) {
                     ForEach(networkManager.posts) { p in
                         FeedCell(post: p)
+                            
                     }
                 }.textCase(.none)
             }
