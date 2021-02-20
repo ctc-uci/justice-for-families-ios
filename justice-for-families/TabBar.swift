@@ -63,12 +63,12 @@ struct TabBarItem: View{
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(5)
-                .frame(width:40, height:40, alignment: .center)
+                .frame(width:40, height:30, alignment: .center)
                 .background(Color(currentView == tab ? .blue : .white).opacity(0.2))
                 .foregroundColor(Color(currentView == tab ? .blue : .black))
                 .cornerRadius(6)
         }
-        .frame(width: 100, height: 50)
+        .frame(width: 100, height: 30)
         .onTapGesture{ currentView = tab }
         .padding(paddingEdges, 15)
     }
@@ -82,13 +82,13 @@ struct TabBar: View{
         HStack{
             TabBarItem(currentView: $currentView, imageName: "house.fill", paddingEdges: .leading, tab: .Tab1)
             Spacer()
-            ShowModalTabBarItem(radius: 55){
+            ShowModalTabBarItem(radius: 30){
                 showModal.toggle()
             }
             Spacer()
             TabBarItem(currentView: $currentView, imageName: "person", paddingEdges: .trailing, tab: .Tab2)
         }
-        .frame(minHeight: 70)
+        .frame(minHeight: 40)
     }
     
 }
@@ -149,21 +149,6 @@ struct ProfileView: View{
             Spacer()
         }
         .navigationBarTitle("Profile Tab")
-    }
-}
-
-struct ScreenModal: View{
-    var body: some View{
-        VStack{
-            Spacer()
-            HStack{
-                Spacer()
-                Text("Modal")
-                Spacer()
-            }
-            Spacer()
-        }
-        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 

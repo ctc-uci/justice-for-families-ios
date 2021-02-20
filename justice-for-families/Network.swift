@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 
+
 struct DecodedPost: Decodable {
     
     var __v: Int
@@ -54,6 +55,7 @@ struct Network {
     static func createNewPost(parameters: [String: Any]) {
         
         guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts/create") else {
+
             return
         }
         
@@ -73,12 +75,14 @@ struct Network {
         }
     }
     
+
     static func fetchAllPosts(completionHandler: @escaping (_ posts: [Post]) -> Void) {
         guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts") else {
             return
         }
         
         AF.request(url, method: .get).responseString { (response) in
+
             switch response.result {
             case .success(_):
                 guard let data = response.data else { return }
@@ -110,6 +114,7 @@ struct Network {
     
     static func getPost(fromUsername username: String) {
         guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts/username/\(username)") else {
+
             return
         }
         AF.request(url, method: .get).responseString { (response) in
