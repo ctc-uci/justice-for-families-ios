@@ -12,6 +12,7 @@ import Alamofire
 
 
 
+
 struct AddPostView: View {
     @State private var showModal = false
     
@@ -77,13 +78,14 @@ struct PopUp: View{
                 Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
             }, trailing:
                 Button(action: {
-                    let parameters = ["text" : "text",
+                    let parameters = ["text" :      postBody,
                                       "username" : "buyHighSellLow",
-                                      "tags" : ["hello"],
-                                      "numComments" : 5,
-                                      "title" : "newPost",
+                                      "tags" : ["tag#1"],
+                                      "numComments" : 0,
+                                      "title" : title,
                                       "anonymous" : false,
-                                      "numLikes" : 5] as [String : Any]
+                                      "numLikes" : 0] as [String : Any]
+
                     
                     Network.createNewPost(parameters: parameters)
                         
@@ -102,7 +104,7 @@ struct Post_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             AddPostView()
-//            WhatYouMissedSection()
+
         }
     }
 }
