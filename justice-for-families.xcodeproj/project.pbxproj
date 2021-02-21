@@ -14,6 +14,9 @@
 		3D5FA32325449D1800888CC8 /* justice_for_familiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32225449D1800888CC8 /* justice_for_familiesTests.swift */; };
 		3D5FA32E25449D1800888CC8 /* justice_for_familiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alamofire
 		4A64399B25C4E2990014B3FF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64399A25C4E2990014B3FF /* Network.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
 		5BABB15C25B9555A009EFB15 /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BABB15B25B9555A009EFB15 /* HomeFeed.swift */; };
@@ -28,6 +31,7 @@
 		7607A0E263E7ADAFB0A560A7 /* Pods_justice_for_families_justice_for_familiesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D499B24A6EC205505B12BBEF /* Pods_justice_for_families_justice_for_familiesUITests.framework */; };
 		7F58F38E0905E5C5B9576F4A /* Pods_justice_for_familiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */; };
 		89C66716EC31CFB291A8232F /* Pods_justice_for_families.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE13D7776807FFC81C661EF /* Pods_justice_for_families.framework */; };
+<<<<<<< HEAD
 =======
 		4AACFC1A25BE296D006FFFFE /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AACFC1925BE296D006FFFFE /* TabBar.swift */; };
 		4AADCBE925BE316200931187 /* J4FTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AADCBE825BE316200931187 /* J4FTextField.swift */; };
@@ -36,6 +40,8 @@
 		6C9CEC55258051C100F4A733 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9CEC54258051C100F4A733 /* Post.swift */; };
 		C24432B92569CF9500656E30 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24432B82569CF9400656E30 /* SignUpView.swift */; };
 >>>>>>> jl-ac-addPostTextField
+=======
+>>>>>>> alamofire
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +76,9 @@
 		3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesUITests.swift; sourceTree = "<group>"; };
 		3D5FA32F25449D1800888CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alamofire
 		4A64399A25C4E2990014B3FF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_familiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC2D1E29C2FB70D75D9D685 /* Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; path = "Target Support Files/Pods-justice-for-families-justice-for-familiesUITests/Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -89,6 +98,7 @@
 		AAE13D7776807FFC81C661EF /* Pods_justice_for_families.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_families.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB8B297DF4A152160B928D36 /* Pods-justice-for-familiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-familiesTests.debug.xcconfig"; path = "Target Support Files/Pods-justice-for-familiesTests/Pods-justice-for-familiesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D499B24A6EC205505B12BBEF /* Pods_justice_for_families_justice_for_familiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_families_justice_for_familiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+<<<<<<< HEAD
 =======
 		4AACFC1925BE296D006FFFFE /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		4AADCBE825BE316200931187 /* J4FTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = J4FTextField.swift; sourceTree = "<group>"; };
@@ -97,6 +107,8 @@
 		6C9CEC54258051C100F4A733 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		C24432B82569CF9400656E30 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 >>>>>>> jl-ac-addPostTextField
+=======
+>>>>>>> alamofire
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,11 +157,16 @@
 				3D5FA32C25449D1800888CC8 /* justice-for-familiesUITests */,
 				3D5FA30E25449D1400888CC8 /* Products */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				EBBA0B836B2D023B1F797E0D /* Pods */,
 				1D4C32B8752EFE24D99FDDB8 /* Frameworks */,
 =======
 				4AACFC1525BE288A006FFFFE /* Recovered References */,
 >>>>>>> jl-ac-addPostTextField
+=======
+				EBBA0B836B2D023B1F797E0D /* Pods */,
+				1D4C32B8752EFE24D99FDDB8 /* Frameworks */,
+>>>>>>> alamofire
 			);
 			sourceTree = "<group>";
 		};
@@ -175,6 +192,7 @@
 				5BE541F025B3A331008DF7A8 /* AppConstants.swift */,
 				6CFB7DEB25B243F5009A11AA /* TabBar.swift */,
 				4A64399A25C4E2990014B3FF /* Network.swift */,
+<<<<<<< HEAD
 =======
 				5B793B1825611B92008DC69B /* LoginView.swift */,
 				4AEF695025AD4C4200C1B859 /* Home Feed.swift */,
@@ -183,6 +201,8 @@
 				4AACFC1925BE296D006FFFFE /* TabBar.swift */,
 				4AADCBE825BE316200931187 /* J4FTextField.swift */,
 >>>>>>> jl-ac-addPostTextField
+=======
+>>>>>>> alamofire
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -241,6 +261,7 @@
 				2611575408C96908AE029F6C /* Pods-justice-for-familiesTests.release.xcconfig */,
 			);
 			path = Pods;
+<<<<<<< HEAD
 =======
 		4AACFC1525BE288A006FFFFE /* Recovered References */ = {
 			isa = PBXGroup;
@@ -248,6 +269,8 @@
 			);
 			name = "Recovered References";
 >>>>>>> jl-ac-addPostTextField
+=======
+>>>>>>> alamofire
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -488,6 +511,9 @@
 			buildActionMask = 2147483647;
 			files = (
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alamofire
 				4A64399B25C4E2990014B3FF /* Network.swift in Sources */,
 				5B5CB0AE257B094F00357437 /* PostView.swift in Sources */,
 				5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */,

@@ -52,30 +52,28 @@ struct Post: Identifiable {
 
 struct Network {
     
-    static func createNewPost(parameters: [String: Any]) {
-        
-        guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts/create") else {
-
-            return
-        }
-        
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
-
-            switch response.result {
-
-            case .success(_):
-                if let json = response.value {
-                    print(json)
-                }
-                break
-            case .failure(let error):
-                print(error)
-                break
-            }
-        }
-    }
+//    static func createNewPost(parameters: [String: Any]) {
+//
+//        guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts/create") else {
+//            return
+//        }
+//
+//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
+//
+//            switch response.result {
+//
+//            case .success(_):
+//                if let json = response.value {
+//                    print(json)
+//                }
+//                break
+//            case .failure(let error):
+//                print(error)
+//                break
+//            }
+//        }
+//    }
     
-
     static func fetchAllPosts(completionHandler: @escaping (_ posts: [Post]) -> Void) {
         guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts") else {
             return
@@ -115,23 +113,15 @@ struct Network {
     static func getPost(fromUsername username: String) {
         guard let url = URL(string: "https://j4f-backend.herokuapp.com/posts/username/\(username)") else {
 
-            return
-        }
-        AF.request(url, method: .get).responseString { (response) in
-
-            switch response.result {
-
-            case .success(_):
-                if let json = response.value {
-                    print(json)
-                }
-                break
-            case .failure(let error):
-                print(error)
-                break
+        case .success(_):
+            if let json = response.value {
+                print(json)
             }
+        case .failure(let error):
+            print(error)
         }
     }
+    
     
     static func getPost(fromDate date: Date) {
         

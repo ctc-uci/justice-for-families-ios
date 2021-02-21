@@ -10,9 +10,6 @@ import SwiftUI
 import Combine
 import Alamofire
 
-
-
-
 struct AddPostView: View {
     @State private var showModal = false
     
@@ -78,15 +75,13 @@ struct PopUp: View{
                 Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
             }, trailing:
                 Button(action: {
-                    let parameters = ["text" :      postBody,
+                    let parameters = ["text" : "text",
                                       "username" : "buyHighSellLow",
-                                      "tags" : ["tag#1"],
-                                      "numComments" : 0,
-                                      "title" : title,
+                                      "tags" : ["hello"],
+                                      "numComments" : 5,
+                                      "title" : "newPost",
                                       "anonymous" : false,
-                                      "numLikes" : 0] as [String : Any]
-
-                    
+                                      "numLikes" : 5] as [String : Any]
                     Network.createNewPost(parameters: parameters)
                         
                     self.presentationMode.wrappedValue.dismiss()
@@ -103,17 +98,7 @@ struct PopUp: View{
 struct Post_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-<<<<<<< HEAD:justice-for-families/View/AddPostView.swift
             AddPostView()
-
         }
     }
 }
-=======
-            Post()
-//            WhatYouMissedSection()
-        }
-    }
-}
-
->>>>>>> jl-ac-addPostTextField:justice-for-families/Post.swift
