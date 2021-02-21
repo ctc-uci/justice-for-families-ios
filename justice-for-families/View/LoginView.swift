@@ -63,6 +63,18 @@ struct LoginView: View {
                 }.padding([.leading, .trailing], 27.5)
                 
                 Button(action: {
+                    Network.createNewPost(parameters: [
+                        "text": "Text",
+                        "username": "JulesLabador",
+                        "tags": [
+                            "tag1",
+                            "tag2"
+                        ],
+                        "numComments": 5,
+                        "title": "New Post",
+                        "anonymous": false,
+                        "numLikes": 5
+                    ])
                 }){
                     Text("Login")
                         .foregroundColor(.white)
