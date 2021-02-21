@@ -15,6 +15,8 @@ struct LoginView: View {
     @State private var password = ""
     @State private var hiddenPass = true
     
+    @Environment(\.presentationMode) var presentationMode
+    
     private var fieldWidth: CGFloat? = 350
     private var fieldHeight: CGFloat? = 60
     var body: some View {

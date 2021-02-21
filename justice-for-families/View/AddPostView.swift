@@ -103,8 +103,17 @@ struct PopUp: View{
 struct Post_Previews: PreviewProvider {
     static var previews: some View {
         Group {
+<<<<<<< HEAD:justice-for-families/View/AddPostView.swift
             AddPostView()
 
         }
     }
 }
+=======
+            Post()
+//            WhatYouMissedSection()
+        }
+    }
+}
+
+>>>>>>> jl-ac-addPostTextField:justice-for-families/Post.swift
