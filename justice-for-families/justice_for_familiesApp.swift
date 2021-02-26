@@ -11,11 +11,11 @@ import SwiftUI
 struct justice_for_familiesApp: App {
     var body: some Scene {
         WindowGroup {
-//            LoginView()
+            LoginView()
 //            SignUpView()
 //            PostView()
 //            Post()
-            HomeFeed()
+//            HomeFeed()
         }
     }
 }

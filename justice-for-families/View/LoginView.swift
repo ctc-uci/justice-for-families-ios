@@ -20,86 +20,93 @@ struct LoginView: View {
     var body: some View {
         
         NavigationView {
-           
+            ScrollView{
             VStack (alignment: .center, spacing: 20) {
-                Image("testLogo")
+                Image("J4F-Logo")
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-             
-         
+                    .scaledToFill() // <=== Saves aspect ratio
+                    .frame(width: 270.0, height:62)
+                    .padding(.top,35)
+                
+
                 VStack(alignment: .leading, spacing: -30) {
                     Text("Welcome,")
                         .padding()
-                        .font(.system(size: 20, weight: .heavy))
+                        .font(.system(size: 24, weight: .heavy))
+                        .foregroundColor(Constants.primaryFontColor)
                     Text("Sign in to continue!")
                         .padding()
-                }.frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
+                        .font(.system(size: 18))
+                        .foregroundColor(Constants.secondaryFontColor)
+                }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
+                    .padding(.bottom,25)
 
                 
-                VStack(alignment: .leading, spacing: 25){
-                    TextField("Username",text: self.$email)
-                        .padding()
-                        .background(Capsule().fill(Color.white))
-                        .frame(width: fieldWidth, height: fieldHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        
+                VStack(alignment: .center){
+                    HStack{
+                        TextField("email",text: self.$email)
+                            .foregroundColor(Constants.primaryFontColor)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(20)
+                            .padding(.bottom,26)
+                            .frame(width:345,height:53)
+                    }
+                    
                     HStack {
                         if self.hiddenPass {
-                            SecureField("Password", text: self.$password)
+                            SecureField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor)
                         } else {
-                            TextField("Password", text: self.$password)
+                            TextField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor)
                         }
                         
                         Button(action: {self.hiddenPass.toggle()}) {
                             Image(systemName: !self.hiddenPass ? "eye.fill": "eye.slash.fill")
                                 .foregroundColor((!self.hiddenPass) ? Color.green : Color.secondary)
-                        } .padding([.leading], 0)
+                        }
                         
                     }   .padding()
-                        .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
-                        .background(Capsule().fill(Color.white))
+                        .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Color.white))
                     
-                }.padding([.leading, .trailing], 27.5)
+                    
+                    
+                    Button(action: {}, label: {
+                        Text("Forgot password?")
+                            .fontWeight(.medium)
+                            .font(.system(size: 13.0))
+                            .foregroundColor(Constants.primaryFontColor)
+                    })
+                    .frame(width: fieldWidth, height: CGFloat(fieldHeight!/2), alignment: .trailing)
+                }
+                .padding(.bottom,30)
                 
-                Button(action: {
-                    Network.createNewPost(parameters: [
-                        "text": "Text",
-                        "username": "JulesLabador",
-                        "tags": [
-                            "tag1",
-                            "tag2"
-                        ],
-                        "numComments": 5,
-                        "title": "New Post",
-                        "anonymous": false,
-                        "numLikes": 5
-                    ])
-                }){
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
                     Text("Login")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color.white)
+                        .fontWeight(.heavy)
                         .padding()
                         .frame(width: fieldWidth, height: fieldHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .background(Capsule().fill(Color.gray))
-                        .cornerRadius(15.0)
-                }
-                Button(action: {}, label: {
-                    Text("Forgot password?")
-                        .fontWeight(.medium)
-                }).foregroundColor(.black)
-                .frame(width: fieldWidth, height: CGFloat(fieldHeight!/2), alignment: .trailing)
-                Spacer()
+                        .background(Capsule().fill(Constants.grey))
+                        
+                }.padding([.leading, .trailing],30)
+                
+                
                 HStack(alignment: .center, spacing: 0){
                     Text("I'm a new user. ")
-                        .font(.system(size: 15))
+                        .font(.system(size: 16))
+                        .foregroundColor(Constants.primaryFontColor)
                     NavigationLink(destination: SignUpView()){
-                        Text("Join Now!")
-                            .foregroundColor(.black)
-                            .font(.system(size: 15, weight: .heavy))
+                        Text("Sign Up")
+                            .foregroundColor(Constants.tertiaryFontColor)
+                            .font(.system(size: 16, weight: .heavy))
                     }
                 }
                 Spacer()
-            }.background(Constants.backgroundColor)
-            .navigationBarHidden(true)
+            }
+            
         }.navigationBarHidden(true)
+            .background(Constants.loginBackground)
+    }.navigationBarHidden(true)
     }
 
 }
