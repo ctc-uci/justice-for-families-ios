@@ -18,10 +18,11 @@ struct LoginView: View {
     private var fieldWidth: CGFloat? = 350
     private var fieldHeight: CGFloat? = 60
     var body: some View {
-        
         NavigationView {
             ScrollView{
             VStack (alignment: .center, spacing: 20) {
+                Spacer()
+                Spacer()
                 Image("J4F-Logo")
                     .resizable()
                     .scaledToFill() // <=== Saves aspect ratio
@@ -105,10 +106,10 @@ struct LoginView: View {
             }
             
         }.navigationBarHidden(true)
-            .background(Constants.loginBackground)
-    }.navigationBarHidden(true)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Constants.loginBackground).ignoresSafeArea()
+        }.navigationBarHidden(true)
     }
-
 }
 
 struct LoginView_Previews: PreviewProvider {
