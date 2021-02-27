@@ -36,33 +36,35 @@ struct SignUpView: View {
                 VStack(alignment: .leading, spacing: -30) {
                     Text("Create an Account,")
                         .padding()
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(.custom("Poppins-Medium", size: 24))
                         .foregroundColor(Constants.primaryFontColor)
                     Text("Sign up to get started!")
                         .padding()
-                        .font(.system(size: 18))
+                        .font(.custom("Poppins-Regular", size: 18))
                         .foregroundColor(Constants.secondaryFontColor)
-                }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
+                }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading).padding(.bottom,25)
                 
                 VStack(alignment: .center, spacing:20){
-                    TextField("Name",text: self.$name)
+                    TextField("name",text: self.$name)
                         .padding()
                         .background(Constants.lightBlue)
                         .cornerRadius(20)
                         .foregroundColor(Constants.primaryFontColor)
                         .frame(width:345,height:53)
-                    TextField("Email",text: self.$email)
+                        .font(.custom("Poppins-Regular", size: 16))
+                    TextField("email",text: self.$email)
                         .padding()
                         .background(Constants.lightBlue)
                         .cornerRadius(20)
                         .foregroundColor(Constants.primaryFontColor)
                         .frame(width:345,height:53)
+                        .font(.custom("Poppins-Regular", size: 16))
                     
                     HStack {
                         if self.hiddenPass1 {
-                            SecureField("password", text: self.$password1).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor)
+                            SecureField("password", text: self.$password1).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
                         } else {
-                            TextField("password", text: self.$password1).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor)
+                            TextField("password", text: self.$password1).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
                         }
                         
                         Button(action: {self.hiddenPass1.toggle()}) {
@@ -75,9 +77,9 @@ struct SignUpView: View {
                     
                     HStack {
                         if self.hiddenPass2 {
-                            SecureField("confirm password", text: self.$password2).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor)
+                            SecureField("confirm password", text: self.$password2).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
                         } else {
-                            TextField("confirm password", text: self.$password2).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor)
+                            TextField("confirm password", text: self.$password2).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
                         }
                         
                         Button(action: {self.hiddenPass2.toggle()}) {
@@ -87,7 +89,7 @@ struct SignUpView: View {
                         
                     }   .padding()
                         .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Constants.lightBlue))
-                }
+                }.padding(.bottom,55)
                 
 //
 //                VStack {
@@ -115,15 +117,15 @@ struct SignUpView: View {
                         .background(Capsule().fill(Constants.grey))
                         
                 }.padding([.leading, .trailing],30)
-                HStack {
-                    Text("Already a Member?")
-                        .font(.system(size: 16))
+                HStack(alignment: .center, spacing: 0) {
+                    Text("I have an account. ")
+                        .font(.custom("Poppins-Regular", size: 16))
                         .foregroundColor(Constants.primaryFontColor)
                     HStack {
                         NavigationLink(destination: LoginView()) {
                             Text("Login")
                                 .foregroundColor(Constants.tertiaryFontColor)
-                                .font(.system(size: 16, weight: .heavy))
+                                .font(.custom("Poppins-Medium", size: 16))
                         }
                     }
                 }

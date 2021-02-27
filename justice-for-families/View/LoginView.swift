@@ -33,11 +33,11 @@ struct LoginView: View {
                 VStack(alignment: .leading, spacing: -30) {
                     Text("Welcome,")
                         .padding()
-                        .font(.system(size: 24, weight: .heavy))
+                        .font(.custom("Poppins-Medium", size: 24))
                         .foregroundColor(Constants.primaryFontColor)
                     Text("Sign in to continue!")
                         .padding()
-                        .font(.system(size: 18))
+                        .font(.custom("Poppins-Regular", size: 18))
                         .foregroundColor(Constants.secondaryFontColor)
                 }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
                     .padding(.bottom,25)
@@ -52,13 +52,14 @@ struct LoginView: View {
                             .cornerRadius(20)
                             .padding(.bottom,26)
                             .frame(width:345,height:53)
+                            .font(.custom("Poppins-Regular", size: 16))
                     }
                     
                     HStack {
                         if self.hiddenPass {
-                            SecureField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor)
+                            SecureField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
                         } else {
-                            TextField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor)
+                            TextField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
                         }
                         
                         Button(action: {self.hiddenPass.toggle()}) {
@@ -73,8 +74,7 @@ struct LoginView: View {
                     
                     Button(action: {}, label: {
                         Text("Forgot password?")
-                            .fontWeight(.medium)
-                            .font(.system(size: 13.0))
+                            .font(.custom("Poppins-Regular", size: 13))
                             .foregroundColor(Constants.primaryFontColor)
                     })
                     .frame(width: fieldWidth, height: CGFloat(fieldHeight!/2), alignment: .trailing)
@@ -83,6 +83,7 @@ struct LoginView: View {
                 
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
                     Text("Login")
+                        .font(.custom("Poppins-Regular", size: 18))
                         .foregroundColor(Color.white)
                         .fontWeight(.heavy)
                         .padding()
@@ -94,12 +95,12 @@ struct LoginView: View {
                 
                 HStack(alignment: .center, spacing: 0){
                     Text("I'm a new user. ")
-                        .font(.system(size: 16))
+                        .font(.custom("Poppins-Regular", size: 16))
                         .foregroundColor(Constants.primaryFontColor)
                     NavigationLink(destination: SignUpView()){
                         Text("Sign Up")
                             .foregroundColor(Constants.tertiaryFontColor)
-                            .font(.system(size: 16, weight: .heavy))
+                            .font(.custom("Poppins-Medium", size: 16))
                     }
                 }
                 Spacer()
