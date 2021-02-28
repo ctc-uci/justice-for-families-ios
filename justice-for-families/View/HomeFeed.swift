@@ -29,11 +29,11 @@ class NetworkManager: ObservableObject {
     
     public func fetchPosts() {
         Network.fetchAllPosts { (posts) in
-            DispatchQueue.main.async {
-                self.posts = posts
-            }
+            self.posts = posts
         }
     }
+    
+    
     
 }
 

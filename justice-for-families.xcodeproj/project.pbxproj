@@ -13,6 +13,8 @@
 		3D5FA31825449D1700888CC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5FA31725449D1700888CC8 /* Preview Assets.xcassets */; };
 		3D5FA32325449D1800888CC8 /* justice_for_familiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32225449D1800888CC8 /* justice_for_familiesTests.swift */; };
 		3D5FA32E25449D1800888CC8 /* justice_for_familiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */; };
+		4A5F6EBA25E307FE00D6C66F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EB925E307FE00D6C66F /* Post.swift */; };
+		4A5F6EBF25E3081500D6C66F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EBE25E3081500D6C66F /* Comment.swift */; };
 		4A64399B25C4E2990014B3FF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64399A25C4E2990014B3FF /* Network.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
 		5BABB15C25B9555A009EFB15 /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BABB15B25B9555A009EFB15 /* HomeFeed.swift */; };
@@ -60,6 +62,8 @@
 		3D5FA32925449D1800888CC8 /* justice-for-familiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "justice-for-familiesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesUITests.swift; sourceTree = "<group>"; };
 		3D5FA32F25449D1800888CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A5F6EB925E307FE00D6C66F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		4A5F6EBE25E3081500D6C66F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		4A64399A25C4E2990014B3FF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_familiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC2D1E29C2FB70D75D9D685 /* Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; path = "Target Support Files/Pods-justice-for-families-justice-for-familiesUITests/Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +156,8 @@
 				5BE541F025B3A331008DF7A8 /* AppConstants.swift */,
 				6CFB7DEB25B243F5009A11AA /* TabBar.swift */,
 				4A64399A25C4E2990014B3FF /* Network.swift */,
+				4A5F6EB925E307FE00D6C66F /* Post.swift */,
+				4A5F6EBE25E3081500D6C66F /* Comment.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -453,10 +459,12 @@
 				5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */,
 				3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */,
 				5BE541FE25B3A3FC008DF7A8 /* CommentRow.swift in Sources */,
+				4A5F6EBA25E307FE00D6C66F /* Post.swift in Sources */,
 				6CFB7DEC25B243F5009A11AA /* TabBar.swift in Sources */,
 				5BE5420925B3A43E008DF7A8 /* AddCommentFooter.swift in Sources */,
 				5BE5421125B3A4E4008DF7A8 /* SignUpView.swift in Sources */,
 				5BABB15C25B9555A009EFB15 /* HomeFeed.swift in Sources */,
+				4A5F6EBF25E3081500D6C66F /* Comment.swift in Sources */,
 				6C9CEC55258051C100F4A733 /* AddPostView.swift in Sources */,
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
 				5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */,
