@@ -27,6 +27,8 @@
 		7607A0E263E7ADAFB0A560A7 /* Pods_justice_for_families_justice_for_familiesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D499B24A6EC205505B12BBEF /* Pods_justice_for_families_justice_for_familiesUITests.framework */; };
 		7F58F38E0905E5C5B9576F4A /* Pods_justice_for_familiesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */; };
 		89C66716EC31CFB291A8232F /* Pods_justice_for_families.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAE13D7776807FFC81C661EF /* Pods_justice_for_families.framework */; };
+		C278BEFF25EA419500F50373 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C278BEFE25EA419500F50373 /* Poppins-Regular.ttf */; };
+		C278BF0425EA41AB00F50373 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C278BF0325EA41AB00F50373 /* Poppins-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		71BECD6C781A015883954734 /* Pods-justice-for-families-justice-for-familiesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-families-justice-for-familiesUITests.debug.xcconfig"; path = "Target Support Files/Pods-justice-for-families-justice-for-familiesUITests/Pods-justice-for-families-justice-for-familiesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AAE13D7776807FFC81C661EF /* Pods_justice_for_families.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_families.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB8B297DF4A152160B928D36 /* Pods-justice-for-familiesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-familiesTests.debug.xcconfig"; path = "Target Support Files/Pods-justice-for-familiesTests/Pods-justice-for-familiesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C278BEFE25EA419500F50373 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		C278BF0325EA41AB00F50373 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		D499B24A6EC205505B12BBEF /* Pods_justice_for_families_justice_for_familiesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_families_justice_for_familiesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -144,6 +148,7 @@
 		3D5FA30F25449D1400888CC8 /* justice-for-families */ = {
 			isa = PBXGroup;
 			children = (
+				C278BEFD25EA40A200F50373 /* Custom Fonts */,
 				5B5CB0BC257B0D2700357437 /* View */,
 				3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */,
 				3D5FA31425449D1700888CC8 /* Assets.xcassets */,
@@ -196,6 +201,15 @@
 				5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		C278BEFD25EA40A200F50373 /* Custom Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				C278BF0325EA41AB00F50373 /* Poppins-Medium.ttf */,
+				C278BEFE25EA419500F50373 /* Poppins-Regular.ttf */,
+			);
+			path = "Custom Fonts";
 			sourceTree = "<group>";
 		};
 		EBBA0B836B2D023B1F797E0D /* Pods */ = {
@@ -319,6 +333,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C278BEFF25EA419500F50373 /* Poppins-Regular.ttf in Resources */,
+				C278BF0425EA41AB00F50373 /* Poppins-Medium.ttf in Resources */,
 				3D5FA31825449D1700888CC8 /* Preview Assets.xcassets in Resources */,
 				3D5FA31525449D1700888CC8 /* Assets.xcassets in Resources */,
 			);
