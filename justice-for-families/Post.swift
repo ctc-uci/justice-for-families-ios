@@ -30,9 +30,7 @@ struct DecodedPost: Decodable {
 
 struct Post: Identifiable {
     
-    let id = UUID()
-    let decodedPost: DecodedPost
-    
+    let id = UUID()    
     let anonymous: Bool
     
     let datePosted: String

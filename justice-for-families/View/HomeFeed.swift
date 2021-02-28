@@ -37,19 +37,6 @@ class NetworkManager: ObservableObject {
     
 }
 
-struct J4FColors {
-    
-    //static let primaryText = Color("primaryText")
-    static let primaryText = Color(.black)
-}
-
-struct J4FFonts {
-    static let sectionTitle = Font.custom("AvenirNext-Medium", size: 15)
-    static let headline = Font.custom("AvenirNext-Medium", size: 15)
-    static let button = Font.custom("AvenirNext-Regular", size: 10)
-    static let username = Font.custom("AvenirNext-Medium", size: 13)
-}
-
 struct HomeFeed: View {
     
     @ObservedObject var networkManager = NetworkManager()
@@ -158,6 +145,8 @@ struct FeedCellInteractButtons: View {
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "hand.thumbsup")
+                        .renderingMode(.template)
+                        .foregroundColor(J4FColors.orange)
                     Text("\(self.numLikes)")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.primaryText)
@@ -170,6 +159,8 @@ struct FeedCellInteractButtons: View {
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "bubble.left")
+                        .renderingMode(.template)
+                        .foregroundColor(J4FColors.orange)
                     Text("\(self.numComments)")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.primaryText)
@@ -182,6 +173,8 @@ struct FeedCellInteractButtons: View {
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "square.and.arrow.up")
+                        .renderingMode(.template)
+                        .foregroundColor(J4FColors.orange)
                     Text("10 shares")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.primaryText)
@@ -198,7 +191,7 @@ struct FeedCell: View {
     let post: Post
     
     var body: some View {
-        NavigationLink(destination: PostView()) {
+        NavigationLink(destination: PostView(post: Post(anonymous: false, datePosted: "", createdAt: "", updatedAt: "", numComments: 5, tags: [], title: "This is the headline, you must click through to access the rest of this post", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", username: "iamspeed"))) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.white)

@@ -12,58 +12,84 @@ import SwiftUI
 
 struct PostView: View {
     
-    @State var txt = ""
-    @State var height : CGFloat = 20
-    
-    var edges = UIApplication.shared.windows.first?.safeAreaInsets
-    //@StateObject var postData = PostViewModel()
+    var post: Post
+        
     var body: some View {
-            ScrollView{
-                VStack{
-                    PostRow()
-                    CommentRow()
-                }
-                .padding()
-                .background(Constants.backgroundColor)
+//        NavigationView {
+            List {
+                Section(header: PostHeader(post: post)) {
+                    ScrollView(.vertical, showsIndicators: false, content: {
+                        ForEach(1..<20) { i in
+                            CommentCell()
+                                .listRowInsets(EdgeInsets())
+                        }
+                    })
+                }.textCase(.none)
             }
-            .navigationBarItems(trailing:
-                                    HStack(spacing: 120) {
-                                        Button(action: {
-                                            print("Menu Button Pressed...")
-                                        }) {
-                                            Text("...")
-                                        }
-                                        Button(action: {
-                                            print("Save button Pressed...")
-                                        }) {
-                                            Image(systemName: "bookmark")
-                                        }
-                                    }
-                                )
+//        }
+    }
+}
+
+struct CommentCell: View {
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            Image(systemName: "person.crop.circle")
+                .resizable()
+                .frame(width: 41, height: 41, alignment: .leading)
+
+        }
+        .frame(width: UIScreen.main.bounds.width, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: .leading)
+        .background(Color.red)
+    }
+    
+}
+
+struct PostHeader: View {
+    
+    var post: Post
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: "person.crop.circle")
+                    .resizable()
+                    .frame(width: 41, height: 41, alignment: .leading)
+                
+                Text("@\(post.username)")
+                    .font(J4FFonts.username)
+                    .foregroundColor(J4FColors.primaryText)
+                Text("3h")
+                    .font(J4FFonts.postText)
+                    .foregroundColor(J4FColors.secondaryText)
+                Spacer()
+            }
+            Spacer(minLength: 16)
+            Text(post.title)
+                .font(J4FFonts.postTitle)
+                .foregroundColor(J4FColors.primaryText)
+                .multilineTextAlignment(.leading)
+            Spacer(minLength: 16)
+            Text(post.text)
+                .font(J4FFonts.username)
+                .foregroundColor(J4FColors.bodyText)
+                .multilineTextAlignment(.leading)
+            Spacer(minLength: 16)
+            FeedCellInteractButtons(numLikes: 5, numComments: post.numComments)
             
-            HStack(spacing:8){
-                ResizeableTF(txt: self.$txt, height: self.$height)
-                    .frame(height:self.height < 150 ? self.height : 150)
-                    .padding(.horizontal)
-                    .background(Constants.backgroundColor)
-                    .cornerRadius(15)
-                Button(action: {Network.createNewComment(parameters: ["one":"two","three":"four"],postID: "lesgo")}){
-                    Text("Send")
-                    .padding(.top, 6)
-                    .padding(.bottom, 6)
-                    .padding(.horizontal)
-                    .foregroundColor(.white)
-                    .background(Constants.backgroundColor)
-                }
-                .cornerRadius(15)
-                .padding(.vertical,4)
-            }
-            .padding(.horizontal)
+        }
+        .padding(20)
+        .frame(minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .topLeading)
+        .background(Color.white)
     }
 }
 
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
-        PostView()
+        PostView(post: Post(anonymous: false, datePosted: "", createdAt: "", updatedAt: "", numComments: 5, tags: [], title: "This is the headline, you must click through to access the rest of this post", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", username: "iamspeed"))
     }
 }

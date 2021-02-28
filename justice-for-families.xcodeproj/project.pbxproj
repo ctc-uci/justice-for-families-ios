@@ -16,6 +16,8 @@
 		4A5F6EBA25E307FE00D6C66F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EB925E307FE00D6C66F /* Post.swift */; };
 		4A5F6EBF25E3081500D6C66F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EBE25E3081500D6C66F /* Comment.swift */; };
 		4A64399B25C4E2990014B3FF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64399A25C4E2990014B3FF /* Network.swift */; };
+		4AB6068A25EB83B100F56C5B /* J4FColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB6068925EB83B100F56C5B /* J4FColors.swift */; };
+		4AB6068F25EB84DB00F56C5B /* J4FFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB6068E25EB84DB00F56C5B /* J4FFonts.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
 		5BABB15C25B9555A009EFB15 /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BABB15B25B9555A009EFB15 /* HomeFeed.swift */; };
 		5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541F025B3A331008DF7A8 /* AppConstants.swift */; };
@@ -65,6 +67,8 @@
 		4A5F6EB925E307FE00D6C66F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		4A5F6EBE25E3081500D6C66F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		4A64399A25C4E2990014B3FF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		4AB6068925EB83B100F56C5B /* J4FColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = J4FColors.swift; sourceTree = "<group>"; };
+		4AB6068E25EB84DB00F56C5B /* J4FFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = J4FFonts.swift; sourceTree = "<group>"; };
 		526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_familiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC2D1E29C2FB70D75D9D685 /* Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; path = "Target Support Files/Pods-justice-for-families-justice-for-familiesUITests/Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5B5CB0AD257B094F00357437 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 				4A64399A25C4E2990014B3FF /* Network.swift */,
 				4A5F6EB925E307FE00D6C66F /* Post.swift */,
 				4A5F6EBE25E3081500D6C66F /* Comment.swift */,
+				4AB6068925EB83B100F56C5B /* J4FColors.swift */,
+				4AB6068E25EB84DB00F56C5B /* J4FFonts.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -454,6 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB6068A25EB83B100F56C5B /* J4FColors.swift in Sources */,
 				4A64399B25C4E2990014B3FF /* Network.swift in Sources */,
 				5B5CB0AE257B094F00357437 /* PostView.swift in Sources */,
 				5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */,
@@ -469,6 +476,7 @@
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
 				5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
+				4AB6068F25EB84DB00F56C5B /* J4FFonts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
