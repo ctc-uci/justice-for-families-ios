@@ -29,6 +29,25 @@ struct Network {
         }
     }
     
+    static func createNewComment(parameters: [String: Any], postID: String) {
+        guard let url = URL(string: "\(self.baseURL)/\(postID)/comments/create") else {
+            print("failed to connect to endpoint")
+            return
+        }
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
+            switch response.result {
+            case .success(_):
+                if let json = response.value {
+                    print(json)
+                    print("LETS GOOOOOOOOOOO")
+                }
+            case .failure(let error):
+                print("ruh roh, error:")
+                print(error)
+            }
+        }
+    }
 
     static func fetchAllPosts(completionHandler: @escaping (_ posts: [Post]) -> Void) {
         guard let url = URL(string: "\(self.baseURL)/posts") else {

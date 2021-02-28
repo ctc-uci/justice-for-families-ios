@@ -47,7 +47,7 @@ struct PostView: View {
                     .padding(.horizontal)
                     .background(Constants.backgroundColor)
                     .cornerRadius(15)
-                Button(action: {}){
+                Button(action: {Network.createNewComment(parameters: ["one":"two","three":"four"],postID: "lesgo")}){
                     Text("Send")
                     .padding(.top, 6)
                     .padding(.bottom, 6)

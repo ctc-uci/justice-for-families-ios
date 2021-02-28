@@ -13,9 +13,9 @@ struct justice_for_familiesApp: App {
         WindowGroup {
 //            LoginView()
 //            SignUpView()
-//            PostView()
+            PostView()
 //            Post()
-            HomeFeed()
+//            HomeFeed()
         }
     }
 }
