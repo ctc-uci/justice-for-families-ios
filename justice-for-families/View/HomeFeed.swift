@@ -111,8 +111,7 @@ struct UIFeed: View {
                 }
             }.textCase(.none)
         }
-        .navigationTitle("J4F")
-        
+  
     }
 }
     
@@ -235,12 +234,21 @@ struct FeedCell: View {
 }
 
 struct HomeFeed: View {
+    @ObservedObject var model: AuthenticationData
     var body: some View {
         GeometryReader{
         geometry in
         NavigationView{
                 HomeFeedHelper(width: geometry.size.width, height: geometry.size.height)
+                    .navigationBarBackButtonHidden(true).navigationTitle("J4F")
+                    .navigationBarItems(trailing:
+                    NavigationLink(destination: LoginView()) {
+                        Button(action: {model.logout()}) {
+                            Text("Logout")
+                        }
+                    })
             }
+        .navigationBarHidden(true)
         }
     }
 }
@@ -286,12 +294,12 @@ struct HomeFeedHelper: UIViewRepresentable {
     
 
 }
-
+/*
 struct HomeFeed_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            HomeFeed()
+            HomeFeed(model: model)
 //            WhatYouMissedSection()
         }
     }
-}
+}*/
