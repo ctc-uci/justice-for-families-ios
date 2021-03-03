@@ -1,3 +1,4 @@
+
 //
 //  LoginView.swift
 //  justice-for-families
@@ -7,19 +8,17 @@
 
 import Foundation
 import SwiftUI
-
-
+import Combine
+import Alamofire
 
 struct LoginView: View {
-    @State private var email = ""
-    @State private var password = ""
     @State private var hiddenPass = true
     
+    @ObservedObject var model = AuthenticationData()
     private var fieldWidth: CGFloat? = 350
     private var fieldHeight: CGFloat? = 60
     var body: some View {
         NavigationView {
-            ScrollView{
             VStack (alignment: .center, spacing: 20) {
                 Spacer()
                 Spacer()
@@ -40,26 +39,28 @@ struct LoginView: View {
                         .font(.custom("Poppins-Regular", size: 18))
                         .foregroundColor(Constants.secondaryFontColor)
                 }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
+                    .cornerRadius(20)
+                    .padding(.bottom, 26)
                     .padding(.bottom,25)
 
                 
                 VStack(alignment: .center){
                     HStack{
-                        TextField("email",text: self.$email)
+                        TextField("email",text: $model.email)
                             .foregroundColor(Constants.primaryFontColor)
                             .padding()
                             .background(Color.white)
                             .cornerRadius(20)
                             .padding(.bottom,26)
                             .frame(width:345,height:53)
-                            .font(.custom("Poppins-Regular", size: 16))
+                            .autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                     }
                     
                     HStack {
                         if self.hiddenPass {
-                            SecureField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
+                            SecureField("password", text: $model.password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                         } else {
-                            TextField("password", text: self.$password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16))
+                            TextField("password", text: $model.password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                         }
                         
                         Button(action: {self.hiddenPass.toggle()}) {
@@ -81,34 +82,44 @@ struct LoginView: View {
                 }
                 .padding(.bottom,30)
                 
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                    Text("Login")
-                        .font(.custom("Poppins-Regular", size: 18))
-                        .foregroundColor(Color.white)
-                        .fontWeight(.heavy)
-                        .padding()
-                        .frame(width: fieldWidth, height: fieldHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .background(Capsule().fill(Constants.grey))
-                        
-                }.padding([.leading, .trailing],30)
-                
+                NavigationLink(destination: HomeFeed(model: model), tag: 1, selection: $model.canLogin){
+                    Button(action: {
+                        model.login()
+                        //UserDefaults.standard.removeObject(forKey: "LoggedInUser")
+                    }) {
+                        Text("Login")
+                            .font(.custom("Poppins-Regular", size: 18))
+                            .foregroundColor(Color.white)
+                            .fontWeight(.heavy)
+                            .padding()
+                            .frame(width: fieldWidth, height: fieldHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .background(Capsule().fill(Constants.grey))
+                            
+                    }.padding([.leading, .trailing],30)
+                }
                 
                 HStack(alignment: .center, spacing: 0){
                     Text("I'm a new user. ")
                         .font(.custom("Poppins-Regular", size: 16))
                         .foregroundColor(Constants.primaryFontColor)
-                    NavigationLink(destination: SignUpView()){
-                        Text("Sign Up")
+                    
+                    Button(action: {
+                        model.isSignUp.toggle()
+                        model.resetQueries()
+                    }) {
+                        Text("Join Now!")
                             .foregroundColor(Constants.tertiaryFontColor)
                             .font(.custom("Poppins-Medium", size: 16))
+                           
                     }
                 }
                 Spacer()
             }
-            
-        }.navigationBarHidden(true)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Constants.loginBackground).ignoresSafeArea()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Constants.loginBackground).ignoresSafeArea()
+                .fullScreenCover(isPresented: $model.isSignUp) {
+                    SignUpView(model: model)
+                }.navigationBarHidden(true)
         }.navigationBarHidden(true)
     }
 }
@@ -120,3 +131,4 @@ struct LoginView_Previews: PreviewProvider {
         }
     }
 }
+

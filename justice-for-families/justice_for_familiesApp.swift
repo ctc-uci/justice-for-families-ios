@@ -9,13 +9,17 @@ import SwiftUI
 
 @main
 struct justice_for_familiesApp: App {
+    @StateObject var model = AuthenticationData()
     var body: some Scene {
         WindowGroup {
-            LoginView()
-//            SignUpView()
-//            PostView()
-//            Post()
-//            HomeFeed()
+            if (UserDefaults.standard.string(forKey: "LoggedInUser") != nil) {
+                HomeFeed(model: model)
+                //LoginView()
+            }
+            else{
+                LoginView()
+            }
+            
         }
     }
 }
