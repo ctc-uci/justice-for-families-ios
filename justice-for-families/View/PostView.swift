@@ -38,18 +38,18 @@ struct CommentCell: View {
         HStack(alignment: .top) {
             Image(systemName: "person.crop.circle")
                 .resizable()
-                .frame(width: 41, height: 41, alignment: .leading)
+                .frame(width: 35, height: 35, alignment: .leading)
             VStack(alignment: .leading) {
                 CommentView()
                 HStack(alignment: .top, spacing: 24) {
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {}, label: {
                         Text("Like")
-                            .font(Font.custom("AvenirNext-Regular", size: 12))
+                            .font(J4FFonts.button)
                             .foregroundColor(J4FColors.secondaryText)
                     })
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    Button(action: {}, label: {
                         Text("Reply")
-                            .font(Font.custom("AvenirNext-Regular", size: 12))
+                            .font(J4FFonts.button)
                             .foregroundColor(J4FColors.secondaryText)
                     })
                 }
@@ -74,7 +74,7 @@ struct CommentView: View {
                 .foregroundColor(J4FColors.secondaryText)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.all, 16)
+        .padding(.all, 7)
         .background(J4FColors.lightGray)
         .cornerRadius(8.0)
         

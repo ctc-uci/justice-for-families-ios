@@ -41,24 +41,32 @@ struct PopUp: View{
         NavigationView {
             VStack(alignment: .leading) {
                 HStack {
-                    Image("replace this later")
+                    /*Image("replace this later")
                         .frame(width: 60, height: 60)
                         .background(Color.gray)
                         .cornerRadius(30)
                         .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
+ */
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .frame(width: 47, height: 47, alignment: .leading)
+                        .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
+ 
                     Text("Choose a community")
+                        .font(J4FFonts.postTitle)
                         .frame(width: .infinity, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         .foregroundColor(.secondary)
                         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 24))
                 }
                 Divider()
                 TextField("Title (required)", text: $title)
+                    .font(J4FFonts.postTitle)
                     .frame(width: .infinity, height: 82, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .foregroundColor(.black)
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
                 Divider()
                 TextEditor(text: $postBody)
-                    .font(.custom("Robot-Regular", size: 14))
+                    .font(J4FFonts.postText)
                     .foregroundColor(self.postBody == placeholderString ? .secondary : .primary)
                     .frame(width: .infinity, height: 160, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
@@ -70,6 +78,7 @@ struct PopUp: View{
                 Spacer()
             }
             .navigationBarTitle("Text Post")
+
             .navigationBarTitleDisplayMode(.inline)
             .font(.custom("Roboto-Bold", size: 16))
             .navigationBarItems(leading: Button(action: {
@@ -92,6 +101,7 @@ struct PopUp: View{
                     self.presentationMode.wrappedValue.dismiss()
                 }){
                     Text("POST")
+                        .font(J4FFonts.postTitle)
                 }
             
             
