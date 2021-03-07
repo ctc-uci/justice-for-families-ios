@@ -44,11 +44,7 @@ struct HomeFeed: View {
     
     @ObservedObject var networkManager = NetworkManager()
     
-    private let posts: [Post] = [
-//        Post(id: UUID(), text: "Test 1"),
-//        Post(id: UUID(), text: "Test 2"),
-//        Post(id: UUID(), text: "Test 3")
-    ]
+    private let posts: [Post] = []
         
     private let updates: [Update] = [
         .init(numberOfLikes: 1, numberOfComments: 1),
@@ -76,19 +72,17 @@ struct HomeFeed: View {
         .init(numberOfLikes: 100, numberOfComments: 100),
         .init(numberOfLikes: 1000, numberOfComments: 1000)
     ]
-
-    init() {
-        UITableView.appearance().separatorColor = .clear
-    }
     
     var body: some View {
         NavigationView {
             List {
+                
                 Section(header: SectionHeader(title: "Tags you follow")){
                     ScrollView(.horizontal, showsIndicators: false, content: {
                         HStack {
                             ForEach(1..<100) { i in
-                                WhatYouMissedCell()
+                                TagCell(tag: "Resources")
+                                    .background(J4FColors.background)
                             }
                         }
                     })
@@ -117,6 +111,7 @@ struct HomeFeed: View {
                 .listStyle(SidebarListStyle())
             }
             .navigationTitle("J4F")
+            .background(J4FColors.background)
         }
     }
 }
@@ -127,10 +122,10 @@ struct SectionHeader: View {
     
     var body: some View {
         Text(title)
-            .padding()
+            .padding(EdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 0))
             .textCase(.none)
             .font(J4FFonts.sectionTitle)
-            .frame(width: UIScreen.main.bounds.width, height: 28, alignment: .leading)
+            .frame(width: UIScreen.main.bounds.width, height: 60, alignment: .leading)
             .background(J4FColors.background)
             .foregroundColor(J4FColors.primaryText)
     }

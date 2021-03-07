@@ -7,60 +7,6 @@
 
 import SwiftUI
 
-struct FeedCellInteractButtons: View {
-    
-    let numLikes: Int
-    let numComments: Int
-    
-    var body: some View {
-        HStack {
-            
-            Button(action: {
-                print("Tapped on the like button!")
-            }) {
-                HStack(alignment: .center) {
-                    Image(systemName: "hand.thumbsup")
-                        .renderingMode(.template)
-                        .foregroundColor(J4FColors.orange)
-                    Text("\(self.numLikes) likes")
-                        .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.primaryText)
-                }
-                
-            }
-            Spacer()
-            Button(action: {
-                print("Tapped on the comment button!")
-            }) {
-                HStack(alignment: .center) {
-                    Image(systemName: "bubble.left")
-                        .renderingMode(.template)
-                        .foregroundColor(J4FColors.orange)
-                    Text("\(self.numComments) comments")
-                        .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.primaryText)
-                }
-                
-            }
-            Spacer()
-            Button(action: {
-                print("Tapped on the like button!")
-            }) {
-                HStack(alignment: .center) {
-                    Image(systemName: "square.and.arrow.up")
-                        .renderingMode(.template)
-                        .foregroundColor(J4FColors.orange)
-                    Text("10 shares")
-                        .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.primaryText)
-                }
-                
-            }
-            
-        }
-    }
-}
-
 struct FeedCell: View {
     
     let post: Post
@@ -99,6 +45,70 @@ struct FeedCell: View {
                 EmptyView()
             }
             .opacity(0.0)
+        }
+    }
+}
+
+struct FeedCellInteractButtons: View {
+    
+    let numLikes: Int
+    let numComments: Int
+    
+    var body: some View {
+        HStack {
+            
+            Button(action: {
+                print("Tapped on the like button!")
+            }) {
+                HStack(alignment: .center) {
+                    Image(systemName: "hand.thumbsup")
+                        .renderingMode(.template)
+                        .foregroundColor(J4FColors.orange)
+                    Text("\(self.numLikes) likes")
+                        .font(J4FFonts.button)
+                        .foregroundColor(J4FColors.primaryText)
+                }
+                
+            }
+            // Prevents all three buttons from detecting a tap when the row is tapped on
+            .buttonStyle(BorderlessButtonStyle())
+            
+            Spacer()
+            
+            Button(action: {
+                print("Tapped on the comment button!")
+            }) {
+                HStack(alignment: .center) {
+                    Image(systemName: "bubble.left")
+                        .renderingMode(.template)
+                        .foregroundColor(J4FColors.orange)
+                    Text("\(self.numComments) comments")
+                        .font(J4FFonts.button)
+                        .foregroundColor(J4FColors.primaryText)
+                }
+                
+            }
+            // Prevents all three buttons from detecting a tap when the row is tapped on
+            .buttonStyle(BorderlessButtonStyle())
+            
+            Spacer()
+            
+            Button(action: {
+                print("Tapped on the like button!")
+            }) {
+                HStack(alignment: .center) {
+                    Image(systemName: "square.and.arrow.up")
+                        .renderingMode(.template)
+                        .foregroundColor(J4FColors.orange)
+                    Text("10 shares")
+                        .font(J4FFonts.button)
+                        .foregroundColor(J4FColors.primaryText)
+                }
+                
+            }
+            // Prevents all three buttons from detecting a tap when the row is tapped on
+            .buttonStyle(BorderlessButtonStyle())
+            
         }
     }
 }
