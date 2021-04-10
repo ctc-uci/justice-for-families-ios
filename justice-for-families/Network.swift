@@ -30,7 +30,7 @@ struct Network {
     }
     
     static func createNewComment(parameters: [String: Any], postID: String) {
-        guard let url = URL(string: "\(self.baseURL)/\(postID)/comments/create") else {
+        guard let url = URL(string: "\(self.baseURL)/comments/\(postID)/comments/create") else {
             print("failed to connect to endpoint")
             return
         }
