@@ -16,24 +16,33 @@ struct FeedCell: View {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(Color.white)
             VStack(alignment: .leading) {
-                HStack {
+                HStack(alignment: .bottom) {
                     Image(systemName: "person.crop.circle")
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
                     
-                    Text("@\(post.username)")
-                        .font(J4FFonts.username)
-                        .foregroundColor(J4FColors.primaryText)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("resources")
+                            .frame(width: nil, height: 12, alignment: .center)
+                            .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
+                            .background(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
+                            .cornerRadius(40)
+                            .foregroundColor(J4FColors.darkBlue)
+                            .font(J4FFonts.postText)
+                        Text("@\(post.username)")
+                            .font(J4FFonts.username)
+                            .foregroundColor(J4FColors.darkBlue)
+                    }
                     Text("3h")
                         .font(J4FFonts.postText)
-                        .foregroundColor(J4FColors.primaryText)
+                        .foregroundColor(J4FColors.darkBlue)
                     Spacer()
                 }
                 
                 Spacer(minLength: 16)
                 Text(post.title)
                     .font(J4FFonts.headline)
-                    .foregroundColor(J4FColors.primaryText)
+                    .foregroundColor(J4FColors.darkBlue)
                     .multilineTextAlignment(.leading)
                 Spacer(minLength: 16)
                 FeedCellInteractButtons(numLikes: 5, numComments: post.numComments)
@@ -66,7 +75,7 @@ struct FeedCellInteractButtons: View {
                         .foregroundColor(J4FColors.orange)
                     Text("\(self.numLikes) likes")
                         .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.primaryText)
+                        .foregroundColor(J4FColors.darkBlue)
                 }
                 
             }
@@ -84,7 +93,7 @@ struct FeedCellInteractButtons: View {
                         .foregroundColor(J4FColors.orange)
                     Text("\(self.numComments) comments")
                         .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.primaryText)
+                        .foregroundColor(J4FColors.darkBlue)
                 }
                 
             }
@@ -102,7 +111,7 @@ struct FeedCellInteractButtons: View {
                         .foregroundColor(J4FColors.orange)
                     Text("10 shares")
                         .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.primaryText)
+                        .foregroundColor(J4FColors.darkBlue)
                 }
                 
             }

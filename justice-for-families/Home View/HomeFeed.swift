@@ -111,7 +111,7 @@ struct HomeFeed: View {
                 .listStyle(SidebarListStyle())
             }
             .navigationTitle("J4F")
-            .background(J4FColors.background)
+//            .id
         }
     }
 }
@@ -127,7 +127,7 @@ struct SectionHeader: View {
             .font(J4FFonts.sectionTitle)
             .frame(width: UIScreen.main.bounds.width, height: 60, alignment: .leading)
             .background(J4FColors.background)
-            .foregroundColor(J4FColors.primaryText)
+            .foregroundColor(J4FColors.darkBlue)
     }
 }
 

@@ -9,9 +9,9 @@ import Foundation
 import SwiftUI
 
 struct J4FColors {
-    static let primaryText = Color("primaryText")
+    static let darkBlue = Color("darkBlue")
     static let secondaryText = Color("secondaryText")
-    static let bodyText = Color("bodyText")
+    static let black = Color("black")
     static let orange = Color("orange")
     static let lightGray = Color("lightGray")
     static let background = Color("background")
