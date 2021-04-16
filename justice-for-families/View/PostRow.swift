@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PostRow: View {
+    @State var isLiked = false;
     // var post: PostModel
     
     var body: some View {
@@ -43,8 +44,29 @@ struct PostRow: View {
             Text("This is a test. This is the post details. Feel free to make any changes.")
             Spacer()
             HStack(spacing: 10) {
-                Button(action: {}){
-                    Text("Like")
+                Button(action: {
+                    let parameters = [
+                                          "username" : "buyHighSellLow",
+                                        "_id" : "6025c6ef604b72766a49980d"
+                                         ]
+                        if isLiked == false {
+                            Network.likePost(parameters: parameters)
+                            isLiked = true;
+                        }
+                        else{
+                            Network.unlikePost(parameters: parameters)
+                            isLiked = false;
+                        }
+                })
+                {
+                    if isLiked == true
+                    {
+                        Text("Liked")
+                    }
+                    else
+                    {
+                        Text("Like")
+                    }
                 }
                 Spacer()
                 Button(action: {}){
@@ -64,6 +86,9 @@ struct PostRow: View {
 
 struct PostRow_Previews: PreviewProvider {
     static var previews: some View {
-        PostRow()
+        Group {
+            PostRow()
+            PostRow()
+        }
     }
 }
