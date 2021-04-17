@@ -11,17 +11,16 @@
 import SwiftUI
 
 struct PostView: View {
-    
+    let post: Post
     @State var txt = ""
     @State var height : CGFloat = 20
     
     var edges = UIApplication.shared.windows.first?.safeAreaInsets
-    //@StateObject var postData = PostViewModel()
     var body: some View {
             ScrollView{
                 VStack{
-                    PostRow()
-                    CommentRow()
+                    PostRow(post: post)
+                   
                 }
                 .padding()
                 .background(Constants.backgroundColor)
@@ -61,9 +60,10 @@ struct PostView: View {
             .padding(.horizontal)
     }
 }
-
+/*
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
         PostView()
     }
 }
+*/

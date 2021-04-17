@@ -16,19 +16,16 @@ enum Tab{
 
 
 struct MainView: View{
-
+    @StateObject var model: AuthenticationData
     @State private var currentView: Tab = .Tab1
     @State private var showModal: Bool = false
     
     var body: some View{
-        NavigationView{
-            VStack{
-                CurrentScreen(currentView: $currentView)
-                TabBar(currentView: $currentView, showModal: $showModal)
-            }
-            .edgesIgnoringSafeArea(.all)
+        VStack{
+            CurrentScreen( model: model ,currentView: $currentView)
+            TabBar(currentView: $currentView, showModal: $showModal)
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .edgesIgnoringSafeArea(.all)
         .sheet(isPresented: $showModal){
             PopUp()
         }
@@ -38,11 +35,12 @@ struct MainView: View{
 
 
 struct CurrentScreen: View{
+    @StateObject var model: AuthenticationData
     @Binding var currentView: Tab
     var body: some View{
         VStack{
             if currentView == .Tab1{
-                HomeView()
+                HomeFeed(model: model)
             }
             else{
                 ProfileView()
@@ -118,7 +116,7 @@ public struct ShowModalTabBarItem: View{
     }
 }
 
-
+/*
 struct HomeView: View{
     var body: some View{
         VStack{
@@ -132,7 +130,7 @@ struct HomeView: View{
         }
         .navigationBarTitle("Home Tab")
     }
-}
+}*/
 
 
 
@@ -152,9 +150,9 @@ struct ProfileView: View{
     }
 }
 
-
+/*
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
     }
-}
+}*/
