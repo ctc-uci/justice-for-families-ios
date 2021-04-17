@@ -202,7 +202,7 @@ struct FeedCell: View {
     let post: Post
     
     var body: some View {
-        NavigationLink(destination: PostView()) {
+        NavigationLink(destination: PostView(post: post)) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color.white)
@@ -235,6 +235,7 @@ struct FeedCell: View {
 
 struct HomeFeed: View {
     @ObservedObject var model: AuthenticationData
+    @State private var showModal = false
     var body: some View {
         GeometryReader{
         geometry in
@@ -242,13 +243,19 @@ struct HomeFeed: View {
                 HomeFeedHelper(width: geometry.size.width, height: geometry.size.height)
                     .navigationBarBackButtonHidden(true).navigationTitle("J4F")
                     .navigationBarItems(trailing:
-                    NavigationLink(destination: LoginView()) {
-                        Button(action: {model.logout()}) {
-                            Text("Logout")
+                      
+                        NavigationLink(destination: LoginView()) {
+                            Button(action: {model.logout()}) {
+                                Text("Logout")
+                            }
                         }
-                    })
+                       
+                        
+                    )
+                                            
+                    
             }
-        .navigationBarHidden(true)
+        //.navigationBarHidden(true)
         }
     }
 }

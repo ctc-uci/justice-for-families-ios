@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct PostRow: View {
+    var post: Post
     @State var isLiked = false;
-    // var post: PostModel
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 10) {
@@ -25,7 +24,7 @@ struct PostRow: View {
                     Text("Tag")
                         .foregroundColor(.gray)
                     HStack(spacing: 10) {
-                        Text("Username")
+                        Text(post.username)
                             .foregroundColor(.black)
                             .fontWeight(.bold)
                         Text("2h ago")
@@ -39,16 +38,16 @@ struct PostRow: View {
                         .background(Capsule().fill(Color.gray))
                 }
             }
-            Text("Post title")
+            Text(post.title)
                 .fontWeight(.bold)
-            Text("This is a test. This is the post details. Feel free to make any changes.")
+            Text(post.text)
             Spacer()
             HStack(spacing: 10) {
                 Button(action: {
                     let parameters = [
-                                          "username" : "buyHighSellLow",
-                                        "_id" : "6025c6ef604b72766a49980d"
-                                         ]
+                        "username" : UserDefaults.standard.object(forKey: "LoggedInUser")!,
+                        "postId" : post.decodedPost._id
+                    ]
                         if isLiked == false {
                             Network.likePost(parameters: parameters)
                             isLiked = true;
@@ -57,6 +56,8 @@ struct PostRow: View {
                             Network.unlikePost(parameters: parameters)
                             isLiked = false;
                         }
+                    print(parameters["username"]!)
+                    print(parameters["postId"]!)
                 })
                 {
                     if isLiked == true
@@ -83,7 +84,7 @@ struct PostRow: View {
         .cornerRadius(20)
     }
 }
-
+/*
 struct PostRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -91,4 +92,4 @@ struct PostRow_Previews: PreviewProvider {
             PostRow()
         }
     }
-}
+}*/

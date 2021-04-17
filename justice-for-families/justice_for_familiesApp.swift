@@ -12,13 +12,14 @@ struct justice_for_familiesApp: App {
     @StateObject var model = AuthenticationData()
     var body: some Scene {
         WindowGroup {
+            
             if (UserDefaults.standard.string(forKey: "LoggedInUser") != nil) {
-                HomeFeed(model: model)
-                //LoginView()
+                MainView(model: model)
             }
             else{
                 LoginView()
             }
+            
             
         }
     }

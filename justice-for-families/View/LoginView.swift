@@ -82,7 +82,7 @@ struct LoginView: View {
                 }
                 .padding(.bottom,30)
                 
-                NavigationLink(destination: HomeFeed(model: model), tag: 1, selection: $model.canLogin){
+                NavigationLink(destination: MainView(model: model), tag: 1, selection: $model.canLogin){
                     Button(action: {
                         model.login()
                         //UserDefaults.standard.removeObject(forKey: "LoggedInUser")
