@@ -18,17 +18,38 @@ struct PostView: View {
         UINavigationBar.appearance().backgroundColor = UIColor(red: 196/255.0, green: 215/255.0, blue: 235/255.0, alpha: 1.0)
         
     }
-        
+    @State private var commentText: String = "hello there"
     var body: some View {
-        List {
-            Section(header: PostHeader(post: post)) {
-                ForEach(1..<20) { i in
-                    CommentCell()
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.white)
-                }
-            }.textCase(.none)
-        }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+        
+        VStack{
+            List {
+                Section(header: PostHeader(post: post)) {
+                    ForEach(1..<20) { i in
+                        CommentCell()
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                    }
+                }.textCase(.none)
+            }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+            HStack {
+                // this textField generates the value for the composedMessage @State var
+                ZStack {
+                    TextEditor(text: $commentText)
+                 
+                    Text(commentText)
+                   
+                        .opacity(0)
+                        .padding(.all, 8) // <- This will solve the issue if it is in the same ZStack
+                            }
+                // the button triggers the sendMessage() function written in the end of current View
+                Button(action: {}) {
+                    Text("Post")
+                        .font(J4FFonts.postTitle)
+                    
+                            }
+            }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
+        }
+        
     }
 }
 
