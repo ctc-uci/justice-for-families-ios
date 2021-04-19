@@ -18,6 +18,38 @@
             endingLineNumber = "10"
             landmarkName = "unknown"
             landmarkType = "0">
+            <Locations>
+               <Location
+                  uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA - 5463fce9870e6521"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "justice_for_families.justice_for_familiesApp.init(model: @autoclosure () -&gt; justice_for_families.AuthenticationData) -&gt; justice_for_families.justice_for_familiesApp"
+                  moduleName = "justice-for-families"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sydneychiang/Desktop/fix-mr/justice-for-families-ios/justice-for-families/justice_for_familiesApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA - 7aac130d1e07dcab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "justice_for_families.justice_for_familiesApp.init() -&gt; justice_for_families.justice_for_familiesApp"
+                  moduleName = "justice-for-families"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sydneychiang/Desktop/fix-mr/justice-for-families-ios/justice-for-families/justice_for_familiesApp.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
