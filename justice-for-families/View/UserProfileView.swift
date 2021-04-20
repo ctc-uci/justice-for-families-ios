@@ -41,7 +41,7 @@ struct UserCell: View{
         VStack{
             BioView()
             HButtonView()
-            PostView()
+            //PostView()
             
         }
 
@@ -107,15 +107,15 @@ struct HButtonView : View{
     }
 }
 
-struct ProfilePostView : View{
-    var body: some View{
-        PostView()
-    }
-}
+//struct ProfilePostView : View{
+  //  var body: some View{
+        //PostView()
+   // }
+//}
 
 
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        UserProfileView()
+    UserProfileView()
     }
 }

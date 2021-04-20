@@ -71,10 +71,6 @@ struct PostRow: View {
                 }
                 Spacer()
                 Button(action: {}){
-                    Text("Comment")
-                }
-                Spacer()
-                Button(action: {}){
                     Text("Share")
                 }
             }
