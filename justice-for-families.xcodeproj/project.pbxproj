@@ -13,6 +13,11 @@
 		3D5FA31825449D1700888CC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5FA31725449D1700888CC8 /* Preview Assets.xcassets */; };
 		3D5FA32325449D1800888CC8 /* justice_for_familiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32225449D1800888CC8 /* justice_for_familiesTests.swift */; };
 		3D5FA32E25449D1800888CC8 /* justice_for_familiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */; };
+		4A35C7D525F47E1E00594836 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35C7D425F47E1E00594836 /* FeedCell.swift */; };
+		4A35C7DA25F47E3900594836 /* WhatYouMissedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35C7D925F47E3900594836 /* WhatYouMissedCell.swift */; };
+		4A35C7DF25F47FA300594836 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35C7DE25F47FA300594836 /* TagCell.swift */; };
+		4A5F6EBA25E307FE00D6C66F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EB925E307FE00D6C66F /* Post.swift */; };
+		4A5F6EBF25E3081500D6C66F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EBE25E3081500D6C66F /* Comment.swift */; };
 		4A64399B25C4E2990014B3FF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64399A25C4E2990014B3FF /* Network.swift */; };
 		4AD5DC9E262F8BAD00A614B1 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC98262F8BAD00A614B1 /* TagCell.swift */; };
 		4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */; };
@@ -71,6 +76,11 @@
 		3D5FA32925449D1800888CC8 /* justice-for-familiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "justice-for-familiesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesUITests.swift; sourceTree = "<group>"; };
 		3D5FA32F25449D1800888CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A35C7D425F47E1E00594836 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		4A35C7D925F47E3900594836 /* WhatYouMissedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatYouMissedCell.swift; sourceTree = "<group>"; };
+		4A35C7DE25F47FA300594836 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		4A5F6EB925E307FE00D6C66F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		4A5F6EBE25E3081500D6C66F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		4A64399A25C4E2990014B3FF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		4AD5DC98262F8BAD00A614B1 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = J4FFonts.swift; sourceTree = "<group>"; };
@@ -177,6 +187,10 @@
 				5BE541F025B3A331008DF7A8 /* AppConstants.swift */,
 				6CFB7DEB25B243F5009A11AA /* TabBar.swift */,
 				4A64399A25C4E2990014B3FF /* Network.swift */,
+				4A5F6EB925E307FE00D6C66F /* Post.swift */,
+				4A5F6EBE25E3081500D6C66F /* Comment.swift */,
+				4AB6068925EB83B100F56C5B /* J4FColors.swift */,
+				4AB6068E25EB84DB00F56C5B /* J4FFonts.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -223,9 +237,12 @@
 		5B3EE6E025EC8410005FCA29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */,
+				5BABB15B25B9555A009EFB15 /* HomeFeed.swift */,
+				4A35C7D425F47E1E00594836 /* FeedCell.swift */,
+				4A35C7D925F47E3900594836 /* WhatYouMissedCell.swift */,
+				4A35C7DE25F47FA300594836 /* TagCell.swift */,
 			);
-			path = Model;
+			path = "Home View";
 			sourceTree = "<group>";
 		};
 		5B5CB0BC257B0D2700357437 /* View */ = {
@@ -235,7 +252,6 @@
 				5BE5421025B3A4E4008DF7A8 /* SignUpView.swift */,
 				6C2B212D25F17F820076691C /* EditProfileView.swift */,
 				5BE5421525B3A4EB008DF7A8 /* LoginView.swift */,
-				5BABB15B25B9555A009EFB15 /* HomeFeed.swift */,
 				5B5CB0AD257B094F00357437 /* PostView.swift */,
 				6C9CEC54258051C100F4A733 /* AddPostView.swift */,
 				5BE5420825B3A43E008DF7A8 /* AddCommentFooter.swift */,
@@ -529,6 +545,8 @@
 				5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */,
 				5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
+				4AB6068F25EB84DB00F56C5B /* J4FFonts.swift in Sources */,
+				4A35C7D525F47E1E00594836 /* FeedCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
