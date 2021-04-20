@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PostRow: View {
-    // var post: PostModel
-    
+    var post: Post
+    @State var isLiked = false;
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 10) {
@@ -24,7 +24,7 @@ struct PostRow: View {
                     Text("Tag")
                         .foregroundColor(.gray)
                     HStack(spacing: 10) {
-                        Text("Username")
+                        Text(post.username)
                             .foregroundColor(.black)
                             .fontWeight(.bold)
                         Text("2h ago")
@@ -38,13 +38,36 @@ struct PostRow: View {
                         .background(Capsule().fill(Color.gray))
                 }
             }
-            Text("Post title")
+            Text(post.title)
                 .fontWeight(.bold)
-            Text("This is a test. This is the post details. Feel free to make any changes.")
+            Text(post.text)
             Spacer()
             HStack(spacing: 10) {
-                Button(action: {}){
-                    Text("Like")
+                Button(action: {
+                    let parameters = [
+                        "username" : UserDefaults.standard.object(forKey: "LoggedInUser")!,
+                        "postId" : post.decodedPost._id
+                    ]
+                        if isLiked == false {
+                            Network.likePost(parameters: parameters)
+                            isLiked = true;
+                        }
+                        else{
+                            Network.unlikePost(parameters: parameters)
+                            isLiked = false;
+                        }
+                    print(parameters["username"]!)
+                    print(parameters["postId"]!)
+                })
+                {
+                    if isLiked == true
+                    {
+                        Text("Liked")
+                    }
+                    else
+                    {
+                        Text("Like")
+                    }
                 }
                 Spacer()
                 Button(action: {}){
@@ -61,9 +84,12 @@ struct PostRow: View {
         .cornerRadius(20)
     }
 }
-
+/*
 struct PostRow_Previews: PreviewProvider {
     static var previews: some View {
-        PostRow()
+        Group {
+            PostRow()
+            PostRow()
+        }
     }
-}
+}*/

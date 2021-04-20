@@ -123,9 +123,10 @@ struct PostHeader: View {
         .background(Color.white)
     }
 }
-
+/*
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
         PostView()
     }
 }
+*/
