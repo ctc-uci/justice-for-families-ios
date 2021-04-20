@@ -40,7 +40,7 @@ struct CurrentScreen: View{
     var body: some View{
         VStack{
             if currentView == .Tab1{
-                HomeFeed(model: model)
+                HomeFeed()
             }
             else{
                 ProfileView()
