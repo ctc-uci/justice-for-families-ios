@@ -73,12 +73,7 @@ struct LoginView: View {
                     
                     
                     
-                    Button(action: {}, label: {
-                        Text("Forgot password?")
-                            .font(.custom("Poppins-Regular", size: 13))
-                            .foregroundColor(Constants.primaryFontColor)
-                    })
-                    .frame(width: fieldWidth, height: CGFloat(fieldHeight!/2), alignment: .trailing)
+                  
                 }
                 .padding(.bottom,30)
                 

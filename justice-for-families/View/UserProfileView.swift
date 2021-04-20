@@ -23,12 +23,12 @@ struct UserProfileView: View{
         NavigationView{
             ScrollView{
                 UserCell()
-                .navigationBarTitle("Profile", displayMode: .inline)
+                    .navigationBarTitle("Profile", displayMode: .inline)
                     .navigationBarItems(trailing:
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Image(systemName: "ellipsis").font(.system(size: 16, weight: .regular))
-                    })
-                )
+                                            Button(action: {}, label: {
+                                                Image(systemName: "ellipsis").font(.system(size: 16, weight: .regular))
+                                            })
+                    )
             }
         }
     }
@@ -41,7 +41,7 @@ struct UserCell: View{
         VStack{
             BioView()
             HButtonView()
-            PostView()
+            //PostView()
             
         }
 
@@ -107,11 +107,11 @@ struct HButtonView : View{
     }
 }
 
-struct ProfilePostView : View{
-    var body: some View{
-        PostView()
-    }
-}
+//struct ProfilePostView : View{
+    //var body: some View{
+        //PostView()
+    //}
+//}
 
 
 struct UserProfileView_Previews: PreviewProvider {
@@ -119,3 +119,4 @@ struct UserProfileView_Previews: PreviewProvider {
         UserProfileView()
     }
 }
+
