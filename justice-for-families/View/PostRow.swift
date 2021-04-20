@@ -45,8 +45,8 @@ struct PostRow: View {
             HStack(spacing: 10) {
                 Button(action: {
                     let parameters = [
-                        "username" : UserDefaults.standard.object(forKey: "LoggedInUser")!,
-                        "postId" : post.decodedPost._id
+                        "username" : UserDefaults.standard.object(forKey: "LoggedInUser")!
+//                        "postId" : post.decodedPost._id
                     ]
                         if isLiked == false {
                             Network.likePost(parameters: parameters)

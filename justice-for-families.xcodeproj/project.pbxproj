@@ -13,21 +13,18 @@
 		3D5FA31825449D1700888CC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5FA31725449D1700888CC8 /* Preview Assets.xcassets */; };
 		3D5FA32325449D1800888CC8 /* justice_for_familiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32225449D1800888CC8 /* justice_for_familiesTests.swift */; };
 		3D5FA32E25449D1800888CC8 /* justice_for_familiesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */; };
-		4A35C7D525F47E1E00594836 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35C7D425F47E1E00594836 /* FeedCell.swift */; };
-		4A35C7DA25F47E3900594836 /* WhatYouMissedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35C7D925F47E3900594836 /* WhatYouMissedCell.swift */; };
-		4A35C7DF25F47FA300594836 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35C7DE25F47FA300594836 /* TagCell.swift */; };
-		4A5F6EBA25E307FE00D6C66F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EB925E307FE00D6C66F /* Post.swift */; };
-		4A5F6EBF25E3081500D6C66F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5F6EBE25E3081500D6C66F /* Comment.swift */; };
 		4A64399B25C4E2990014B3FF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64399A25C4E2990014B3FF /* Network.swift */; };
+		4A781E7B262F915900ABDEDF /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E79262F915900ABDEDF /* HomeFeed.swift */; };
+		4A781E7C262F915900ABDEDF /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E7A262F915900ABDEDF /* FeedCell.swift */; };
+		4A781E8A262F91C800ABDEDF /* AuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E89262F91C800ABDEDF /* AuthenticationData.swift */; };
+		4A781E8F262F91F900ABDEDF /* Post-2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E8E262F91F900ABDEDF /* Post-2.swift */; };
+		4A781E94262F920A00ABDEDF /* Comment-2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E93262F920A00ABDEDF /* Comment-2.swift */; };
 		4AD5DC9E262F8BAD00A614B1 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC98262F8BAD00A614B1 /* TagCell.swift */; };
 		4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */; };
 		4AD5DCA0262F8BAD00A614B1 /* J4FColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC9A262F8BAD00A614B1 /* J4FColors.swift */; };
-		4AD5DCA1262F8BAD00A614B1 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC9B262F8BAD00A614B1 /* FeedCell.swift */; };
 		4AD5DCA2262F8BAD00A614B1 /* WhatYouMissedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC9C262F8BAD00A614B1 /* WhatYouMissedCell.swift */; };
-		4AD5DCA3262F8BAD00A614B1 /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC9D262F8BAD00A614B1 /* HomeFeed.swift */; };
 		5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
-		5BABB15C25B9555A009EFB15 /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BABB15B25B9555A009EFB15 /* HomeFeed.swift */; };
 		5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541F025B3A331008DF7A8 /* AppConstants.swift */; };
 		5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541F825B3A38F008DF7A8 /* PostRow.swift */; };
 		5BE541FE25B3A3FC008DF7A8 /* CommentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */; };
@@ -76,23 +73,24 @@
 		3D5FA32925449D1800888CC8 /* justice-for-familiesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "justice-for-familiesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5FA32D25449D1800888CC8 /* justice_for_familiesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesUITests.swift; sourceTree = "<group>"; };
 		3D5FA32F25449D1800888CC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4A35C7D425F47E1E00594836 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		4A35C7D925F47E3900594836 /* WhatYouMissedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatYouMissedCell.swift; sourceTree = "<group>"; };
 		4A35C7DE25F47FA300594836 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		4A5F6EB925E307FE00D6C66F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		4A5F6EBE25E3081500D6C66F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		4A64399A25C4E2990014B3FF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		4A781E79262F915900ABDEDF /* HomeFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeed.swift; sourceTree = "<group>"; };
+		4A781E7A262F915900ABDEDF /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		4A781E89262F91C800ABDEDF /* AuthenticationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationData.swift; sourceTree = "<group>"; };
+		4A781E8E262F91F900ABDEDF /* Post-2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post-2.swift"; sourceTree = "<group>"; };
+		4A781E93262F920A00ABDEDF /* Comment-2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comment-2.swift"; sourceTree = "<group>"; };
 		4AD5DC98262F8BAD00A614B1 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = J4FFonts.swift; sourceTree = "<group>"; };
 		4AD5DC9A262F8BAD00A614B1 /* J4FColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = J4FColors.swift; sourceTree = "<group>"; };
-		4AD5DC9B262F8BAD00A614B1 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		4AD5DC9C262F8BAD00A614B1 /* WhatYouMissedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatYouMissedCell.swift; sourceTree = "<group>"; };
-		4AD5DC9D262F8BAD00A614B1 /* HomeFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeed.swift; sourceTree = "<group>"; };
 		526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_familiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC2D1E29C2FB70D75D9D685 /* Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; path = "Target Support Files/Pods-justice-for-families-justice-for-familiesUITests/Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationData.swift; sourceTree = "<group>"; };
 		5B5CB0AD257B094F00357437 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
-		5BABB15B25B9555A009EFB15 /* HomeFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeed.swift; sourceTree = "<group>"; };
 		5BE541F025B3A331008DF7A8 /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		5BE541F825B3A38F008DF7A8 /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRow.swift; sourceTree = "<group>"; };
@@ -154,12 +152,14 @@
 		3D5FA30425449D1400888CC8 = {
 			isa = PBXGroup;
 			children = (
+				4A781E89262F91C800ABDEDF /* AuthenticationData.swift */,
 				3D5FA30F25449D1400888CC8 /* justice-for-families */,
 				3D5FA32125449D1800888CC8 /* justice-for-familiesTests */,
 				3D5FA32C25449D1800888CC8 /* justice-for-familiesUITests */,
 				3D5FA30E25449D1400888CC8 /* Products */,
 				EBBA0B836B2D023B1F797E0D /* Pods */,
 				1D4C32B8752EFE24D99FDDB8 /* Frameworks */,
+				4A781E59262F906900ABDEDF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,7 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				4AD5DC97262F8B9800A614B1 /* misc */,
-				5B3EE6E025EC8410005FCA29 /* Model */,
+				5B3EE6E025EC8410005FCA29 /* Home View */,
 				C278BEFD25EA40A200F50373 /* Custom Fonts */,
 				5B5CB0BC257B0D2700357437 /* View */,
 				3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */,
@@ -189,8 +189,8 @@
 				4A64399A25C4E2990014B3FF /* Network.swift */,
 				4A5F6EB925E307FE00D6C66F /* Post.swift */,
 				4A5F6EBE25E3081500D6C66F /* Comment.swift */,
-				4AB6068925EB83B100F56C5B /* J4FColors.swift */,
-				4AB6068E25EB84DB00F56C5B /* J4FFonts.swift */,
+				4A781E8E262F91F900ABDEDF /* Post-2.swift */,
+				4A781E93262F920A00ABDEDF /* Comment-2.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -221,11 +221,17 @@
 			path = "justice-for-familiesUITests";
 			sourceTree = "<group>";
 		};
+		4A781E59262F906900ABDEDF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		4AD5DC97262F8B9800A614B1 /* misc */ = {
 			isa = PBXGroup;
 			children = (
-				4AD5DC9B262F8BAD00A614B1 /* FeedCell.swift */,
-				4AD5DC9D262F8BAD00A614B1 /* HomeFeed.swift */,
 				4AD5DC9A262F8BAD00A614B1 /* J4FColors.swift */,
 				4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */,
 				4AD5DC98262F8BAD00A614B1 /* TagCell.swift */,
@@ -234,11 +240,11 @@
 			path = misc;
 			sourceTree = "<group>";
 		};
-		5B3EE6E025EC8410005FCA29 /* Model */ = {
+		5B3EE6E025EC8410005FCA29 /* Home View */ = {
 			isa = PBXGroup;
 			children = (
-				5BABB15B25B9555A009EFB15 /* HomeFeed.swift */,
-				4A35C7D425F47E1E00594836 /* FeedCell.swift */,
+				4A781E7A262F915900ABDEDF /* FeedCell.swift */,
+				4A781E79262F915900ABDEDF /* HomeFeed.swift */,
 				4A35C7D925F47E3900594836 /* WhatYouMissedCell.swift */,
 				4A35C7DE25F47FA300594836 /* TagCell.swift */,
 			);
@@ -524,29 +530,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C2B212E25F17F820076691C /* EditProfileView.swift in Sources */,
-				4AD5DCA1262F8BAD00A614B1 /* FeedCell.swift in Sources */,
+				4A781E8A262F91C800ABDEDF /* AuthenticationData.swift in Sources */,
 				4A64399B25C4E2990014B3FF /* Network.swift in Sources */,
 				5B5CB0AE257B094F00357437 /* PostView.swift in Sources */,
 				5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */,
+				4A781E7C262F915900ABDEDF /* FeedCell.swift in Sources */,
 				4AD5DCA2262F8BAD00A614B1 /* WhatYouMissedCell.swift in Sources */,
 				3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */,
 				5BE541FE25B3A3FC008DF7A8 /* CommentRow.swift in Sources */,
-				4AD5DCA3262F8BAD00A614B1 /* HomeFeed.swift in Sources */,
 				6CFB7DEC25B243F5009A11AA /* TabBar.swift in Sources */,
 				4AD5DCA0262F8BAD00A614B1 /* J4FColors.swift in Sources */,
 				5BE5420925B3A43E008DF7A8 /* AddCommentFooter.swift in Sources */,
 				5BE5421125B3A4E4008DF7A8 /* SignUpView.swift in Sources */,
-				5BABB15C25B9555A009EFB15 /* HomeFeed.swift in Sources */,
 				6C2B213325F17F890076691C /* UserProfileView.swift in Sources */,
 				4AD5DC9E262F8BAD00A614B1 /* TagCell.swift in Sources */,
 				6C9CEC55258051C100F4A733 /* AddPostView.swift in Sources */,
+				4A781E7B262F915900ABDEDF /* HomeFeed.swift in Sources */,
 				4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */,
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
 				5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */,
+				4A781E94262F920A00ABDEDF /* Comment-2.swift in Sources */,
 				5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
-				4AB6068F25EB84DB00F56C5B /* J4FFonts.swift in Sources */,
-				4A35C7D525F47E1E00594836 /* FeedCell.swift in Sources */,
+				4A781E8F262F91F900ABDEDF /* Post-2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
