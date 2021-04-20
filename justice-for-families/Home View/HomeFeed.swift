@@ -84,7 +84,7 @@ struct HomeFeed: View {
                                 TagCell(tag: "Resources")
                                     .background(J4FColors.background)
                             }
-                        }
+                        }.background(J4FColors.background)
                     })
                     .listRowInsets(EdgeInsets())
                     .background(J4FColors.background)
@@ -111,7 +111,6 @@ struct HomeFeed: View {
                 .listStyle(SidebarListStyle())
             }
             .navigationTitle("J4F")
-//            .id
         }
     }
 }
