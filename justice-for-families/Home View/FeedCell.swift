@@ -60,17 +60,28 @@ struct FeedCell: View {
 
 struct FeedCellInteractButtons: View {
     
-    let numLikes: Int
-    let numComments: Int
+    @State var numLikes: Int
+    @State var isLiked: Bool = false
+    @State var numComments: Int
     
     var body: some View {
         HStack {
             
             Button(action: {
                 print("Tapped on the like button!")
+                Network.likePost(parameters: ["username" : UserDefaults.standard.object(forKey: "LoggedInUser")! ])
+                
+                if isLiked {
+                    isLiked = false
+                    numLikes -= 1
+                } else {
+                    isLiked = true
+                    numLikes += 1
+                }
+                
             }) {
                 HStack(alignment: .center) {
-                    Image(systemName: "hand.thumbsup")
+                    Image(systemName: isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .renderingMode(.template)
                         .foregroundColor(J4FColors.orange)
                     Text("\(self.numLikes) likes")

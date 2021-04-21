@@ -13,44 +13,38 @@ struct Network {
     static let baseURL = "https://j4f-backend.herokuapp.com"
     static func unlikePost(parameters:[String: Any]) {
         
-        guard let url = URL(string: "\(baseURL)/likes/unlike") else {
-            return
-        }
+        guard let url = URL(string: "\(baseURL)/likes/unlike") else { return }
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
 
             switch response.result {
 
             case .success(_):
-                if let json = response.value {
-                    print(json)
-                }
-                break
+                guard let json = response.value else { return }
+                print(json)
+                
             case .failure(let error):
                 print(error)
-                break
+                
             }
         }
     }
     
     static func likePost(parameters:[String: Any]) {
         
-        guard let url = URL(string: "https://j4f-backend.herokuapp.com/likes/like") else {
-            return
-        }
+        guard let url = URL(string: "\(baseURL)/likes/like") else { return }
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
 
             switch response.result {
 
             case .success(_):
-                if let json = response.value {
-                    print(json)
-                }
-                break
+                guard let json = response.value else { return }
+                print(json)
+                
             case .failure(let error):
                 print(error)
-                break
+                
             }
         }
     }

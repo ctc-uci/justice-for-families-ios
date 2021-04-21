@@ -1,8 +1,8 @@
 //
-//  Comment.swift
+//  Comment-2.swift
 //  justice-for-families
 //
-//  Created by Jules Labador on 2/21/21.
+//  Created by Jules Labador on 4/20/21.
 //
 
 import Foundation
@@ -25,7 +25,7 @@ struct DecodedComment: Decodable {
 
 struct Comment: Identifiable {
     
-    let id = UUID()    
+    let id = UUID()
     let text: String
     let username: String
     let numLikes: Int
