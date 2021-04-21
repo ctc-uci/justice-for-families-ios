@@ -10,62 +10,79 @@ import Combine
 import Alamofire
 
 
-
-/*
-
-struct AddPostView: View {
-    @State private var showModal = false
-    
-    var body: some View {
-        Button(action:{
-            self.showModal.toggle()
-        }){
-            Text("Show modal")
-
-        }.sheet(isPresented: $showModal){
-            PopUp()
-        }
-    }
-}*/
-
 struct PopUp: View{
     
     @State var title: String = ""
-    @State var postBody: String = ""
+    @State var postBody: String = "What's on your mind?"
+    @State var isAnon: Bool = false
     @Environment(\.presentationMode) private var presentationMode
     
-    let postURL = URL(string: "http://localhost:3000/posts/create")
+    let postURL = URL(string: "https://j4f-backend.herokuapp.com/posts/create")
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
                 HStack {
                     Image("replace this later")
-                        .frame(width: 60, height: 60)
+                        .frame(width: 47, height: 47)
                         .background(Color.gray)
                         .cornerRadius(30)
-                        .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
-                    Text("Choose a community")
-                        .frame(width: .infinity, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .foregroundColor(.secondary)
-                        .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 24))
+                        .padding(EdgeInsets(top: 16, leading: 24, bottom: 0, trailing: 0))
+                    Button(action: {
+                        print("User wants to add tags!")
+                    }, label: {
+                        Text("Add tags")
+                            .frame(minWidth: 130, minHeight: 21.0, alignment: .leading)
+                            .foregroundColor(Constants.primaryFontColor)
+                            .padding(EdgeInsets(top: 16, leading: 7, bottom: 0, trailing: 24))
+                    })
+                    VStack(alignment: .trailing, spacing: 5) {
+                        Toggle("Anonymous posting", isOn: $isAnon)
+                            .labelsHidden()
+                            .frame(alignment: .leading)
+                            .toggleStyle(SwitchToggleStyle(tint: Constants.primaryFontColor))
+                            .padding(EdgeInsets(top: 22, leading: 0, bottom: 0, trailing: 10))
+                        Text("Anonymous posting")
+                            .foregroundColor(Constants.subtitleFontColor)
+                            .font(.custom("Poppins-Regular", size: 7))
+                    }
                 }
-                Divider()
-                TextField("Title (required)", text: $title)
-                    .frame(width: .infinity, height: 82, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .foregroundColor(.black)
-                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-                Divider()
-                TextField("What's on your mind?", text: $postBody)
-                    .font(.custom("Robot-Regular", size: 14))
-                    .frame(width: .infinity, height: 160, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
-                    
+                Divider().padding([.leading, .trailing], 24)
+                TextField("Add Title (required)", text: $title)
+                    .font(.custom("Poppins-Regular", size: 15))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Constants.primaryFontColor)
+                    .padding(EdgeInsets(top: 12, leading: 36, bottom: 12, trailing: 24))
+                Divider().padding([.leading, .trailing], 24)
+                TextEditor(text: $postBody)
+                    .font(.custom("Poppins-Regular", size: 12))
+                    .foregroundColor(Constants.subtitleFontColor)
+                    .onAppear {
+                        // remove the placeholder text when keyboard appears
+                        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (noti) in
+                            withAnimation {
+                                if postBody == "What's on your mind?" {
+                                    postBody = ""
+                                }
+                            }
+                        }
+                        
+                        // put back the placeholder text if the user dismisses the keyboard without adding any text
+                        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (noti) in
+                            withAnimation {
+                                if postBody == "" {
+                                    postBody = "What's on your mind?"
+                                }
+                            }
+                        }
+                    }
+                    .padding(EdgeInsets(top: 4, leading: 32, bottom: 0, trailing: 24))
+                
                 Spacer()
             }
             .navigationBarTitle("Text Post")
             .navigationBarTitleDisplayMode(.inline)
-            .font(.custom("Roboto-Bold", size: 16))
+            .font(.custom("Poppins-Regular", size: 16))
             .navigationBarItems(leading: Button(action: {
                 self.presentationMode.wrappedValue.dismiss()
             }){
@@ -73,22 +90,20 @@ struct PopUp: View{
             }, trailing:
                 Button(action: {
                     //username is your email
-                    let parameters = ["text" :      postBody,
+                    let parameters = ["text" : postBody,
                                       "username" : UserDefaults.standard.object(forKey: "LoggedInUser")!,
                                       "tags" : ["tag#1"],
                                       "numComments" : 0,
                                       "title" : title,
-                                      "anonymous" : false,
+                                      "anonymous" : isAnon,
                                       "numLikes" : 0] as [String : Any]
                     if (title.count > 0) {
                         Network.createNewPost(parameters: parameters)
                         self.presentationMode.wrappedValue.dismiss()
                     }
-                }){
+                }, label: {
                     Text("POST")
-                }
-            
-            
+                })
             )
         }
     }
