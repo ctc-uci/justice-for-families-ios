@@ -18,7 +18,8 @@ struct PostView: View {
         UINavigationBar.appearance().backgroundColor = UIColor(red: 196/255.0, green: 215/255.0, blue: 235/255.0, alpha: 1.0)
         
     }
-    @State private var commentText: String = "hello there"
+    @State private var commentText: String = ""
+    @State private var placeholderString: String = "hello"
     var body: some View {
         
         VStack{
@@ -34,15 +35,31 @@ struct PostView: View {
             HStack {
                 // this textField generates the value for the composedMessage @State var
                 ZStack {
+                  
+                    
                     TextEditor(text: $commentText)
-                 
+                        .foregroundColor(self.commentText == placeholderString ? .gray : .primary)
+                        .onTapGesture {
+                            if self.commentText == placeholderString {
+                                self.commentText = ""
+                              
+                                            }
+                                        }
                     Text(commentText)
                    
                         .opacity(0)
                         .padding(.all, 8) // <- This will solve the issue if it is in the same ZStack
+                
                             }
                 // the button triggers the sendMessage() function written in the end of current View
-                Button(action: {}) {
+                Button(action: {let parameters = ["text" : commentText,
+                      "username": "mingjia",
+                      "numLikes": 0,
+                      "postId": "somepostid",
+                   
+                    ] as [String : Any]
+                Network.createNewComment(parameters: parameters,postID: "testingtesting")}) {
+                    
                     Text("Post")
                         .font(J4FFonts.postTitle)
                     
