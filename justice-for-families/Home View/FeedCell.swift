@@ -50,9 +50,7 @@ struct FeedCell: View {
             }
             .padding(20)
             // Removes arrow indicators on the right side of the cell
-            NavigationLink(destination: PostView()) {
-                EmptyView()
-            }
+            NavigationLink(destination: PostView()) { EmptyView() }
             .opacity(0.0)
         }
     }
@@ -96,7 +94,8 @@ struct FeedCellInteractButtons: View {
             Spacer()
             
             Button(action: {
-                print("Tapped on the comment button!")
+//                print("Tapped on the comment button!")
+                
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "bubble.left")
@@ -111,23 +110,23 @@ struct FeedCellInteractButtons: View {
             // Prevents all three buttons from detecting a tap when the row is tapped on
             .buttonStyle(BorderlessButtonStyle())
             
-            Spacer()
-            
-            Button(action: {
-                print("Tapped on the like button!")
-            }) {
-                HStack(alignment: .center) {
-                    Image(systemName: "square.and.arrow.up")
-                        .renderingMode(.template)
-                        .foregroundColor(J4FColors.orange)
-                    Text("10 shares")
-                        .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.darkBlue)
-                }
-                
-            }
-            // Prevents all three buttons from detecting a tap when the row is tapped on
-            .buttonStyle(BorderlessButtonStyle())
+//            Spacer()
+//
+//            Button(action: {
+//                print("Tapped on the share button!")
+//            }) {
+//                HStack(alignment: .center) {
+//                    Image(systemName: "square.and.arrow.up")
+//                        .renderingMode(.template)
+//                        .foregroundColor(J4FColors.orange)
+//                    Text("10 shares")
+//                        .font(J4FFonts.button)
+//                        .foregroundColor(J4FColors.darkBlue)
+//                }
+//
+//            }
+//            // Prevents all three buttons from detecting a tap when the row is tapped on
+//            .buttonStyle(BorderlessButtonStyle())
             
         }
     }
