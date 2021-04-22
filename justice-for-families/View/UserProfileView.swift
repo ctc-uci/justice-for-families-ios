@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct profileColors{
     static let primaryColor = Color(.sRGB, red: 16/255.0, green: 83/255.0, blue: 110/255.0, opacity: 1)
@@ -18,19 +19,19 @@ struct profileColors{
 }
 
 struct UserProfileView: View{
-    
+    @StateObject var model: AuthenticationData
     var body: some View{
         NavigationView{
             ScrollView{
                 UserCell()
-                .navigationBarTitle("Profile", displayMode: .inline)
+                    .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInEmail")!, displayMode: .inline)
                     .navigationBarItems(trailing:
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Image(systemName: "ellipsis").font(.system(size: 16, weight: .regular))
+                    Menu("...") {
+                        Button("Logout", action: {model.logout()})
+
                     })
-                )
             }
-        }
+        }.navigationBarHidden(true)
     }
 
 }
@@ -40,7 +41,7 @@ struct UserCell: View{
     var body: some View{
         VStack{
             BioView()
-            HButtonView()
+            OwnPosts()
 //            PostView()
             
         }
@@ -55,17 +56,9 @@ struct BioView : View {
         HStack{
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading){
-                Text("John Apples")
+                Text(UserDefaults.standard.string(forKey: "LoggedInEmail")!)
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(profileColors.primaryColor)
-                HStack{
-                    Image(systemName: "mappin.and.ellipse")
-                        .font(.custom("Poppins-Regular", size: 16))
-                        .foregroundColor(profileColors.accentColor)
-                    Text("Irvine, CA")
-                        .font(.custom("Poppins-Regular", size: 16))
-                        .foregroundColor(profileColors.primaryColorOpaque)
-                }
                 NavigationLink(destination: EditProfileView()) {
                     Text("Edit Profile")
                         .padding()
@@ -81,6 +74,8 @@ struct BioView : View {
     }
 }
 
+
+/*
 struct HButtonView : View{
     let tabs = ["Posts", "Activity"]
     @State var isPostViewToggled = true
@@ -105,6 +100,48 @@ struct HButtonView : View{
         }.padding(.top)
 
     }
+}*/
+
+struct OwnPosts : View{
+    @ObservedObject var networkManager = ProfileNetworkManager()
+    private let posts: [Post] = []
+    
+    var body: some View{
+        VStack {
+            ForEach(networkManager.posts) { p in
+                FeedCell(post: p)
+                    .listRowBackground(J4FColors.background)
+            }
+        }.textCase(.none)
+        .listStyle(SidebarListStyle())
+        .padding(.top)
+    }
+        
+    
+
+}
+
+class ProfileNetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<ProfileNetworkManager, Never>()
+    
+    @Published var posts = [Post]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init() {
+        getPosts()
+    }
+    
+    public func getPosts() {
+        Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser")!) {
+            (posts) in self.posts = posts
+        }
+    }
+    
+    
+    
 }
 
 //struct ProfilePostView : View{
@@ -113,9 +150,10 @@ struct HButtonView : View{
 //    }
 //}
 
-
+/*
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()
     }
 }
+*/

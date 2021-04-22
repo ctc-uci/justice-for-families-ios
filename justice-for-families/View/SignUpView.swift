@@ -39,7 +39,7 @@ struct SignUpView: View {
             }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
             
             VStack(alignment: .center, spacing:20){
-                TextField("name",text: $model.name)
+                TextField("username",text: $model.username)
                     .padding()
                     .background(Constants.lightBlue)
                     .cornerRadius(20)

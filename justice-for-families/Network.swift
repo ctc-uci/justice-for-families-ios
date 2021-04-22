@@ -132,18 +132,39 @@ struct Network {
         
     }
     
-    static func getPost(fromUsername username: String) {
+    static func getPost(fromUsername username: String, completionHandler: @escaping (_ posts: [Post]) -> Void) {
         guard let url = URL(string: "\(self.baseURL)/posts/username/\(username)") else {
             return
         }
         AF.request(url, method: .get).responseString { (response) in
+
             switch response.result {
             case .success(_):
-                if let json = response.value {
-                    print(json)
+                guard let data = response.data else { return }
+                    
+                do {
+                    
+                    let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
+                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username) }
+                    DispatchQueue.main.async {
+                        completionHandler(posts)
+                        print(posts)
+                    }
+                    
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }
+                
             case .failure(let error):
-                print(error)
+                print("🔥 \(error)")
             }
         }
     }

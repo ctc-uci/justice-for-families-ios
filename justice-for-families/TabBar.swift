@@ -43,7 +43,7 @@ struct CurrentScreen: View{
                 HomeFeed()
             }
             else{
-                ProfileView()
+                UserProfileView(model: model)
             }
         }
     }

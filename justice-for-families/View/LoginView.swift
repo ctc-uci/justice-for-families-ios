@@ -85,7 +85,6 @@ struct LoginView: View {
                 NavigationLink(destination: MainView(model: model), tag: 1, selection: $model.canLogin){
                     Button(action: {
                         print(model.login())
-                        //UserDefaults.standard.removeObject(forKey: "LoggedInUser")
                     }) {
                         Text("Login")
                             .font(.custom("Poppins-Regular", size: 18))
