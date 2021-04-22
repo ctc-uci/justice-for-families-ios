@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09215071263172A900E3283F /* Post-2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09215070263172A900E3283F /* Post-2.swift */; };
 		3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */; };
 		3D5FA31325449D1400888CC8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5FA31225449D1400888CC8 /* ContentView.swift */; };
 		3D5FA31525449D1700888CC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D5FA31425449D1700888CC8 /* Assets.xcassets */; };
@@ -17,7 +18,6 @@
 		4A781E7B262F915900ABDEDF /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E79262F915900ABDEDF /* HomeFeed.swift */; };
 		4A781E7C262F915900ABDEDF /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E7A262F915900ABDEDF /* FeedCell.swift */; };
 		4A781E8A262F91C800ABDEDF /* AuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E89262F91C800ABDEDF /* AuthenticationData.swift */; };
-		4A781E8F262F91F900ABDEDF /* Post-2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E8E262F91F900ABDEDF /* Post-2.swift */; };
 		4A781E94262F920A00ABDEDF /* Comment-2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E93262F920A00ABDEDF /* Comment-2.swift */; };
 		4AD5DC9E262F8BAD00A614B1 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC98262F8BAD00A614B1 /* TagCell.swift */; };
 		4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */; };
@@ -60,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09215070263172A900E3283F /* Post-2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Post-2.swift"; path = "../../../../.Trash/Post-2.swift"; sourceTree = "<group>"; };
 		2611575408C96908AE029F6C /* Pods-justice-for-familiesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-familiesTests.release.xcconfig"; path = "Target Support Files/Pods-justice-for-familiesTests/Pods-justice-for-familiesTests.release.xcconfig"; sourceTree = "<group>"; };
 		3D5FA30D25449D1400888CC8 /* justice-for-families.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "justice-for-families.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = justice_for_familiesApp.swift; sourceTree = "<group>"; };
@@ -81,7 +82,6 @@
 		4A781E79262F915900ABDEDF /* HomeFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeed.swift; sourceTree = "<group>"; };
 		4A781E7A262F915900ABDEDF /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		4A781E89262F91C800ABDEDF /* AuthenticationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationData.swift; sourceTree = "<group>"; };
-		4A781E8E262F91F900ABDEDF /* Post-2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post-2.swift"; sourceTree = "<group>"; };
 		4A781E93262F920A00ABDEDF /* Comment-2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comment-2.swift"; sourceTree = "<group>"; };
 		4AD5DC98262F8BAD00A614B1 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = J4FFonts.swift; sourceTree = "<group>"; };
@@ -188,8 +188,8 @@
 				6CFB7DEB25B243F5009A11AA /* TabBar.swift */,
 				4A64399A25C4E2990014B3FF /* Network.swift */,
 				4A5F6EB925E307FE00D6C66F /* Post.swift */,
+				09215070263172A900E3283F /* Post-2.swift */,
 				4A5F6EBE25E3081500D6C66F /* Comment.swift */,
-				4A781E8E262F91F900ABDEDF /* Post-2.swift */,
 				4A781E93262F920A00ABDEDF /* Comment-2.swift */,
 			);
 			path = "justice-for-families";
@@ -549,10 +549,10 @@
 				4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */,
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
 				5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */,
+				09215071263172A900E3283F /* Post-2.swift in Sources */,
 				4A781E94262F920A00ABDEDF /* Comment-2.swift in Sources */,
 				5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
-				4A781E8F262F91F900ABDEDF /* Post-2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

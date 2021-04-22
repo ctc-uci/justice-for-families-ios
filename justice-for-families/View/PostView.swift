@@ -18,17 +18,57 @@ struct PostView: View {
         UINavigationBar.appearance().backgroundColor = UIColor(red: 196/255.0, green: 215/255.0, blue: 235/255.0, alpha: 1.0)
         
     }
-        
+    @State private var commentText: String = ""
+    @State private var placeholderString: String = "hello"
+
     var body: some View {
-        List {
-            Section(header: PostHeader(post: post)) {
-                ForEach(1..<20) { i in
-                    CommentCell()
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.white)
-                }
-            }.textCase(.none)
-        }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+        VStack{
+            List {
+                Section(header: PostHeader(post: post)) {
+                    ForEach(1..<20) { i in
+                        CommentCell()
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                    }
+                }.textCase(.none)
+            }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+            HStack {
+                // this textField generates the value for the composedMessage @State var
+                ZStack {
+                  
+                    
+                    TextEditor(text: $commentText)
+                        .foregroundColor(self.commentText == placeholderString ? .gray : .primary)
+                        .onTapGesture {
+                            if self.commentText == placeholderString {
+                                self.commentText = ""
+                              
+                                            }
+                                        }
+                    Text(commentText)
+                   
+                        .opacity(0)
+                        .padding(.all, 8) // <- This will solve the issue if it is in the same ZStack
+                
+                            }
+                // the button triggers creating post
+                Button(action: {let parameters = ["text" : commentText,
+                      "username": "mingjia",
+                      "numLikes": 0,
+                      "postId": "somepostid",
+                   
+                    ] as [String : Any]
+                Network.createNewComment(parameters: parameters,postID: "testingtesting")}) {
+                    
+                    Text("Post")
+                        .font(J4FFonts.postTitle)
+                    
+                            }
+            }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
+        }
+
+               
+
     }
 }
 
@@ -123,10 +163,10 @@ struct PostHeader: View {
         .background(Color.white)
     }
 }
-/*
+
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
         PostView()
     }
 }
-*/
+

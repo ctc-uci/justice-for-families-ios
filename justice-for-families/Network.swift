@@ -74,7 +74,7 @@ struct Network {
     }
     
     static func createNewComment(parameters: [String: Any], postID: String) {
-        guard let url = URL(string: "\(self.baseURL)/\(postID)/comments/create") else {
+        guard let url = URL(string: "\(self.baseURL)/comments/\(postID)/comments/create") else {
             print("failed to connect to endpoint")
             return
         }
@@ -166,7 +166,7 @@ struct Network {
                 do {
                     
                     let decodedComments = try JSONDecoder().decode([DecodedComment].self, from: data)
-                    let comments = decodedComments.map { Comment(text: $0.text, username: $0.username, numLikes: $0.numLikes, postId: $0.postId, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt) }
+                    let comments = decodedComments.map { Comment(text: $0.text, username: $0.username, numLikes: $0.numLikes, postId: $0.postId, datePosted: $0.datePosted) }
                     completionHandler(comments)
                     
                 } catch DecodingError.keyNotFound(let key, let context) {

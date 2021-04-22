@@ -18,8 +18,7 @@ struct DecodedComment: Decodable {
     let postId: String
     
     let datePosted: String
-    let createdAt: String
-    let updatedAt: String
+
     
 }
 
@@ -32,6 +31,5 @@ struct Comment: Identifiable {
     let postId: String
     
     let datePosted: String
-    let createdAt: String
-    let updatedAt: String
+
 }
