@@ -23,31 +23,18 @@ struct UserProfileView: View{
     var body: some View{
         NavigationView{
             ScrollView{
-                UserCell()
-                    .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInEmail")!, displayMode: .inline)
-                    .navigationBarItems(trailing:
-                    Menu("...") {
-                        Button("Logout", action: {model.logout()})
+                BioView()
+                OwnPosts()
+                    
+            }.navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInEmail")!, displayMode: .inline)
+            .navigationBarItems(trailing:
+            Menu("...") {
+                Button("Logout", action: {model.logout()})
 
-                    })
-            }
+            })
         }.navigationBarHidden(true)
     }
 
-}
-
-
-struct UserCell: View{
-    var body: some View{
-        VStack{
-            BioView()
-            OwnPosts()
-//            PostView()
-            
-        }
-
-    }
-    
 }
 
 struct BioView : View {
@@ -107,10 +94,12 @@ struct OwnPosts : View{
     private let posts: [Post] = []
     
     var body: some View{
-        VStack {
+        Section(header: SectionHeader(title: "Posts")) {
             ForEach(networkManager.posts) { p in
-                FeedCell(post: p)
-                    .listRowBackground(J4FColors.background)
+                NavigationLink(destination: PostView()){
+                    FeedCell(post: p)
+                        .listRowBackground(J4FColors.background)
+                }
             }
         }.textCase(.none)
         .listStyle(SidebarListStyle())
