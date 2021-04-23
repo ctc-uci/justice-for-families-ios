@@ -43,7 +43,7 @@ struct BioView : View {
         HStack{
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading){
-                Text(UserDefaults.standard.string(forKey: "LoggedInEmail")!)
+                Text(UserDefaults.standard.string(forKey: "LoggedInUser")!)
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(profileColors.primaryColor)
                 NavigationLink(destination: EditProfileView()) {
