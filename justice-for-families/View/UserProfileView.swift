@@ -69,7 +69,7 @@ struct OwnPosts : View{
     var body: some View{
         Section(header: SectionHeader(title: "Posts")) {
             ForEach(networkManager.posts) { p in
-                NavigationLink(destination: PostView()){
+                NavigationLink(destination: PostView(post: p)){
                     FeedCell(post: p)
                         .listRowBackground(J4FColors.background)
                 }
