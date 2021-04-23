@@ -12,7 +12,7 @@ class AuthenticationData: ObservableObject {
     @Published var password = ""
     @Published var canLogin: Int? = nil
     
-    @Published var name = ""
+    @Published var username = ""
     @Published var isSignUp = false
     @Published var email_SignUp = ""
     @Published var password_SignUp = ""
@@ -25,7 +25,7 @@ class AuthenticationData: ObservableObject {
         email = ""
         password = ""
         canLogin = nil
-        name = ""
+        username = ""
         email_SignUp = ""
         password_SignUp = ""
         reEnterPassword = ""
@@ -79,7 +79,7 @@ class AuthenticationData: ObservableObject {
         
         let passwordRequirement = NSPredicate(format: "SELF MATCHES %@ ", "^(?=.*[a-z])(?=.*[0-9])(?=.*[$@$#!%*?&])(?=.*[A-Z]).{8,}$")
         
-        if name.count > 0 && email_SignUp.count > 0 && password_SignUp == reEnterPassword && passwordRequirement.evaluate(with: password_SignUp) {
+        if username.count > 0 && email_SignUp.count > 0 && password_SignUp == reEnterPassword && passwordRequirement.evaluate(with: password_SignUp) {
             print("Valid inputs")
         
             AF.request(url, method: .post, parameters: ["email": email_SignUp, "password": password_SignUp], encoding: JSONEncoding.default).responseString { (response) in

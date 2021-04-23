@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct profileColors{
     static let primaryColor = Color(.sRGB, red: 16/255.0, green: 83/255.0, blue: 110/255.0, opacity: 1)
@@ -17,36 +18,24 @@ struct profileColors{
     static let accentColor = Color(.sRGB, red: 252/255.0, green: 129/255.0, blue: 97/255.0, opacity: 1)
 }
 
-struct UserProfileView: View{
-    
+struct UIUserProfileFeed: View{
+    @ObservedObject var networkManager: ProfileNetworkManager
+    @StateObject var model: AuthenticationData
     var body: some View{
-        NavigationView{
-            ScrollView{
-                UserCell()
-                .navigationBarTitle("Profile", displayMode: .inline)
-                    .navigationBarItems(trailing:
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Image(systemName: "ellipsis").font(.system(size: 16, weight: .regular))
-                    })
-                )
-            }
-        }
-    }
-
-}
-
-
-struct UserCell: View{
-    var body: some View{
-        VStack{
+   
+        ScrollView{
             BioView()
-            HButtonView()
-//            PostView()
-            
-        }
+            OwnPosts()
+                
+        }.navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
+        .navigationBarItems(trailing:
+        Menu("...") {
+            Button("Logout", action: {model.logout()})
+
+        })
 
     }
-    
+
 }
 
 struct BioView : View {
@@ -55,17 +44,9 @@ struct BioView : View {
         HStack{
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading){
-                Text("John Apples")
+                Text(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(profileColors.primaryColor)
-                HStack{
-                    Image(systemName: "mappin.and.ellipse")
-                        .font(.custom("Poppins-Regular", size: 16))
-                        .foregroundColor(profileColors.accentColor)
-                    Text("Irvine, CA")
-                        .font(.custom("Poppins-Regular", size: 16))
-                        .foregroundColor(profileColors.primaryColorOpaque)
-                }
                 NavigationLink(destination: EditProfileView()) {
                     Text("Edit Profile")
                         .padding()
@@ -81,30 +62,98 @@ struct BioView : View {
     }
 }
 
-struct HButtonView : View{
-    let tabs = ["Posts", "Activity"]
-    @State var isPostViewToggled = true
-    @State var isActivityViewToggled = false
+struct OwnPosts : View{
+    @ObservedObject var networkManager = ProfileNetworkManager()
+    private let posts: [Post] = []
+    
     var body: some View{
-        HStack{
-            ForEach(tabs, id: \.self) { tab in
-                HStack{
-                    Spacer()
-                    Button(action: {
-
-                    }) {
-                        Text(tab)
-                            .font(.custom("Poppins-Medium", size: 16))
-                            .foregroundColor(profileColors.primaryColor3)
-                    }
-                    Spacer()
+        Section(header: SectionHeader(title: "Posts")) {
+            ForEach(networkManager.posts) { p in
+                NavigationLink(destination: PostView(post: p)){
+                    FeedCell(post: p)
+                        .listRowBackground(J4FColors.background)
                 }
-
-                
             }
-        }.padding(.top)
-
+        }.textCase(.none)
+        .listStyle(SidebarListStyle())
+        .padding(.top)
     }
+
+}
+
+class ProfileNetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<ProfileNetworkManager, Never>()
+    
+    @Published var posts = [Post]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init() {
+        getPosts()
+    }
+    
+    public func getPosts() {
+        Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
+            (posts) in self.posts = posts.reversed()
+        }
+    }
+    
+}
+
+struct UserProfileView: View {
+    @StateObject var model: AuthenticationData
+    var body: some View {
+        GeometryReader{
+            geometry in
+            NavigationView{
+                    UserProfileViewHelper(width: geometry.size.width, height: geometry.size.height, model: model)
+                }
+        }
+    }
+}
+
+struct UserProfileViewHelper: UIViewRepresentable {
+    var width : CGFloat
+    var height : CGFloat
+    @StateObject var model: AuthenticationData
+    var networkManager = ProfileNetworkManager()
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self, model: networkManager)
+    }
+    
+    func makeUIView(context: Context) -> UIScrollView {
+        let control = UIScrollView()
+        control.refreshControl = UIRefreshControl()
+        control.refreshControl?.addTarget(context.coordinator, action:
+            #selector(Coordinator.handleRefreshControl),
+                                          for: .valueChanged)
+        
+        let childView = UIHostingController(rootView: UIUserProfileFeed(networkManager: networkManager, model: model))
+            childView.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+            
+            control.addSubview(childView.view)
+            return control
+        }
+    
+    func updateUIView(_ uiView: UIScrollView, context: Context) {}
+    
+    class Coordinator: NSObject {
+            var control: UserProfileViewHelper
+        var model : ProfileNetworkManager
+        init(_ control: UserProfileViewHelper, model: ProfileNetworkManager) {
+                self.control = control
+                self.model = model
+            }
+    @objc func handleRefreshControl(sender: UIRefreshControl) {
+                sender.endRefreshing()
+                model.getPosts()
+            }
+        }
+    
+
 }
 
 //struct ProfilePostView : View{
@@ -113,9 +162,10 @@ struct HButtonView : View{
 //    }
 //}
 
-
+/*
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()
     }
 }
+*/
