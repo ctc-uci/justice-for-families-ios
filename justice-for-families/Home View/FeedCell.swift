@@ -50,9 +50,7 @@ struct FeedCell: View {
             }
             .padding(20)
             // Removes arrow indicators on the right side of the cell
-            NavigationLink(destination: PostView()) {
-                EmptyView()
-            }
+            NavigationLink(destination: PostView()) { EmptyView() }
             .opacity(0.0)
         }
     }
@@ -60,17 +58,28 @@ struct FeedCell: View {
 
 struct FeedCellInteractButtons: View {
     
-    let numLikes: Int
-    let numComments: Int
+    @State var numLikes: Int
+    @State var isLiked: Bool = false
+    @State var numComments: Int
     
     var body: some View {
         HStack {
             
             Button(action: {
                 print("Tapped on the like button!")
+                Network.likePost(parameters: ["username" : UserDefaults.standard.object(forKey: "LoggedInUser")! ])
+                
+                if isLiked {
+                    isLiked = false
+                    numLikes -= 1
+                } else {
+                    isLiked = true
+                    numLikes += 1
+                }
+                
             }) {
                 HStack(alignment: .center) {
-                    Image(systemName: "hand.thumbsup")
+                    Image(systemName: isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .renderingMode(.template)
                         .foregroundColor(J4FColors.orange)
                     Text("\(self.numLikes) likes")
@@ -85,7 +94,8 @@ struct FeedCellInteractButtons: View {
             Spacer()
             
             Button(action: {
-                print("Tapped on the comment button!")
+//                print("Tapped on the comment button!")
+                
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "bubble.left")
@@ -100,23 +110,23 @@ struct FeedCellInteractButtons: View {
             // Prevents all three buttons from detecting a tap when the row is tapped on
             .buttonStyle(BorderlessButtonStyle())
             
-            Spacer()
-            
-            Button(action: {
-                print("Tapped on the like button!")
-            }) {
-                HStack(alignment: .center) {
-                    Image(systemName: "square.and.arrow.up")
-                        .renderingMode(.template)
-                        .foregroundColor(J4FColors.orange)
-                    Text("10 shares")
-                        .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.darkBlue)
-                }
-                
-            }
-            // Prevents all three buttons from detecting a tap when the row is tapped on
-            .buttonStyle(BorderlessButtonStyle())
+//            Spacer()
+//
+//            Button(action: {
+//                print("Tapped on the share button!")
+//            }) {
+//                HStack(alignment: .center) {
+//                    Image(systemName: "square.and.arrow.up")
+//                        .renderingMode(.template)
+//                        .foregroundColor(J4FColors.orange)
+//                    Text("10 shares")
+//                        .font(J4FFonts.button)
+//                        .foregroundColor(J4FColors.darkBlue)
+//                }
+//
+//            }
+//            // Prevents all three buttons from detecting a tap when the row is tapped on
+//            .buttonStyle(BorderlessButtonStyle())
             
         }
     }
