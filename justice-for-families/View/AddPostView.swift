@@ -11,10 +11,13 @@ import Alamofire
 
 
 struct PopUp: View{
+    @State private var showingTags = false
     
     @State var title: String = ""
     @State var postBody: String = "What's on your mind?"
     @State var isAnon: Bool = false
+    @State var tags: Array<String> = []
+
     @Environment(\.presentationMode) private var presentationMode
     
     let postURL = URL(string: "https://j4f-backend.herokuapp.com/posts/create")
@@ -28,23 +31,56 @@ struct PopUp: View{
                         .background(Color.gray)
                         .cornerRadius(30)
                         .padding(EdgeInsets(top: 16, leading: 24, bottom: 0, trailing: 0))
-                    Button(action: {
-                        print("User wants to add tags!")
-                    }, label: {
-                        Text("Add tags")
-                            .frame(minWidth: 130, minHeight: 21.0, alignment: .leading)
-                            .foregroundColor(Constants.primaryFontColor)
-                            .padding(EdgeInsets(top: 16, leading: 7, bottom: 0, trailing: 24))
-                    })
+                    if tags.isEmpty {
+                        Button(action: {
+                            showingTags.toggle()
+                        }, label: {
+                            Text("Add tags")
+                                .frame(minWidth: 130, minHeight: 21.0, alignment: .leading)
+                                .foregroundColor(Constants.primaryFontColor)
+                                .padding(EdgeInsets(top: 16, leading: 7, bottom: 0, trailing: 24))
+                        }).sheet(isPresented: $showingTags) {
+                            AddTagsView(tags: $tags)
+                        }
+                    } else {
+                        HStack(spacing: 5) {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack (spacing: 4) {
+                                    ForEach(tags, id: \.self) { tag in
+                                        Text("#\(tag.description)")
+                                            .font(.custom("Poppins-Regular", size:11))
+                                            .frame(alignment: .center)
+                                            .padding(EdgeInsets(top: 4, leading: 9, bottom: 4, trailing: 9))
+                                            .foregroundColor(.white)
+                                            .background(RoundedRectangle(cornerRadius: 40.0)
+                                                            .fill(Constants.secondaryFontColor))
+                                            .overlay(RoundedRectangle(cornerRadius: 40.0)
+                                                        .stroke(Constants.secondaryFontColor, lineWidth: 0.5))
+                                    }
+                                }.padding(.top, 10)
+                            }.frame(minWidth: 100, maxWidth: 110, alignment: .leading)
+                            Button(action: {
+                                showingTags.toggle()
+                            }, label: {
+                                Image(systemName: "plus.circle")
+                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(Constants.primaryFontColor)
+                            }).sheet(isPresented: $showingTags) {
+                                AddTagsView(tags: $tags)
+                            }.padding(.top, 10)
+                        }
+                    }
+
                     VStack(alignment: .trailing, spacing: 5) {
                         Toggle("Anonymous posting", isOn: $isAnon)
                             .labelsHidden()
                             .frame(alignment: .leading)
                             .toggleStyle(SwitchToggleStyle(tint: Constants.primaryFontColor))
-                            .padding(EdgeInsets(top: 22, leading: 0, bottom: 0, trailing: 10))
+                            .padding(EdgeInsets(top: 22, leading: 0, bottom: 0, trailing: 16))
                         Text("Anonymous posting")
                             .foregroundColor(Constants.subtitleFontColor)
-                            .font(.custom("Poppins-Regular", size: 7))
+                            .font(.custom("Poppins-Regular", size: 7.5))
+                            .padding(.leading, 15)
                     }
                 }
                 Divider().padding([.leading, .trailing], 24)
@@ -92,7 +128,7 @@ struct PopUp: View{
                     //username is your email
                     let parameters = ["text" : postBody,
                                       "username" : UserDefaults.standard.object(forKey: "LoggedInUser")!,
-                                      "tags" : ["tag#1"],
+                                      "tags" : tags,
                                       "numComments" : 0,
                                       "title" : title,
                                       "anonymous" : isAnon,
