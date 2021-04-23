@@ -26,7 +26,7 @@ struct UserProfileView: View{
                 BioView()
                 OwnPosts()
                     
-            }.navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInEmail")!, displayMode: .inline)
+            }.navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser")!, displayMode: .inline)
             .navigationBarItems(trailing:
             Menu("...") {
                 Button("Logout", action: {model.logout()})
@@ -124,7 +124,7 @@ class ProfileNetworkManager: ObservableObject {
     }
     
     public func getPosts() {
-        Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser")!) {
+        Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
             (posts) in self.posts = posts
         }
     }

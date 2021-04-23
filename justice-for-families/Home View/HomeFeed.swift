@@ -39,6 +39,7 @@ class NetworkManager: ObservableObject {
                 print($0)
             })
         }
+        self.posts.reverse()
     }
     
     
