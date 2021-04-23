@@ -117,7 +117,11 @@ struct HomeFeed: View {
                 .listStyle(SidebarListStyle())
             }
             .navigationTitle("J4F")
+            //.navigationBarBackButtonHidden(true)
+            //.navigationBarHidden(true)
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
   
     }
 }

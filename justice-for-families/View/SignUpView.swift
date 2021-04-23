@@ -11,6 +11,7 @@ import SwiftUI
 struct SignUpView: View {
     @State private var hiddenPass1 = true
     @State private var hiddenPass2 = true
+    @State private var differentPasswords = false
     @ObservedObject var model: AuthenticationData
     var fieldWidth: CGFloat? = 350
     var fieldHeight: CGFloat? = 60
@@ -71,6 +72,30 @@ struct SignUpView: View {
                 }   .padding()
                     .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Constants.lightBlue))
                 
+                VStack(alignment:.leading){
+                    Text("Password must contain at least:")
+                        .font(.custom("Poppins-Regular", size: 15))
+                        .foregroundColor(Constants.secondaryFontColor)
+                    Text("- Eight (8) characters")
+                        .font(.custom("Poppins-Regular", size: 10))
+                        .foregroundColor(Constants.secondaryFontColor)
+                    Text("- An uppercase character")
+                        .font(.custom("Poppins-Regular", size: 10))
+                        .foregroundColor(Constants.secondaryFontColor)
+                    Text("- A lowercase character")
+                        .font(.custom("Poppins-Regular", size: 10))
+                        .foregroundColor(Constants.secondaryFontColor)
+                    Text("- A number")
+                        .font(.custom("Poppins-Regular", size: 10))
+                        .foregroundColor(Constants.secondaryFontColor)
+                    Text("- A special character (!@#$%^&*")
+                        .font(.custom("Poppins-Regular", size: 10))
+                        .foregroundColor(Constants.secondaryFontColor)
+
+                }
+                .frame(width: fieldWidth, height: fieldHeight, alignment: .leading).padding()
+                
+                
                 HStack {
                     if self.hiddenPass2 {
                         SecureField("confirm password", text: $model.reEnterPassword).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
@@ -85,19 +110,32 @@ struct SignUpView: View {
                     
                 }   .padding()
                 .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Constants.lightBlue))
-            }.padding(.bottom,55)
-
+            }
+            
+            if differentPasswords{
+                Text("Passwords do not match. Try again.")
+                    .font(.custom("Poppins-Regular", size: 10))
+                    .foregroundColor(Constants.tertiaryFontColor)
+                    .padding(.bottom,55)
+            }
+           
             
             
             Button(action: {
+                
+                if model.password_SignUp != model.reEnterPassword{
+                    self.differentPasswords.toggle()
+                }
+                
                 model.signup()
             }) {
                 Text("Sign Up")
                     .foregroundColor(Color.white)
                     .fontWeight(.heavy)
+                    .font(.custom("Poppins-Regular", size: 15))
                     .padding()
                     .frame(width: fieldWidth, height: fieldHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .background(Capsule().fill(Constants.grey))
+                    .background(Capsule().fill(Constants.primaryFontColor))
                     
             }.padding([.leading, .trailing],30)
             
