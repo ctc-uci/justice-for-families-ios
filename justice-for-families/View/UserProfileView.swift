@@ -108,8 +108,8 @@ struct UserProfileView: View {
         GeometryReader{
             geometry in
             NavigationView{
-                    UserProfileViewHelper(width: geometry.size.width, height: geometry.size.height, model: model)
-                }
+                UserProfileViewHelper(width: geometry.size.width, height: geometry.size.height, model: model)
+            }.navigationBarHidden(true)
         }
     }
 }
