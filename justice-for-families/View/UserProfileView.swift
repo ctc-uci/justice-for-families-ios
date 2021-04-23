@@ -18,21 +18,22 @@ struct profileColors{
     static let accentColor = Color(.sRGB, red: 252/255.0, green: 129/255.0, blue: 97/255.0, opacity: 1)
 }
 
-struct UserProfileView: View{
+struct UIUserProfileFeed: View{
+    @ObservedObject var networkManager: ProfileNetworkManager
     @StateObject var model: AuthenticationData
     var body: some View{
-        NavigationView{
-            ScrollView{
-                BioView()
-                OwnPosts()
-                    
-            }.navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser")!, displayMode: .inline)
-            .navigationBarItems(trailing:
-            Menu("...") {
-                Button("Logout", action: {model.logout()})
+   
+        ScrollView{
+            BioView()
+            OwnPosts()
+                
+        }.navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
+        .navigationBarItems(trailing:
+        Menu("...") {
+            Button("Logout", action: {model.logout()})
 
-            })
-        }.navigationBarHidden(true)
+        })
+
     }
 
 }
@@ -43,7 +44,7 @@ struct BioView : View {
         HStack{
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading){
-                Text(UserDefaults.standard.string(forKey: "LoggedInUser")!)
+                Text(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(profileColors.primaryColor)
                 NavigationLink(destination: EditProfileView()) {
@@ -61,34 +62,6 @@ struct BioView : View {
     }
 }
 
-
-/*
-struct HButtonView : View{
-    let tabs = ["Posts", "Activity"]
-    @State var isPostViewToggled = true
-    @State var isActivityViewToggled = false
-    var body: some View{
-        HStack{
-            ForEach(tabs, id: \.self) { tab in
-                HStack{
-                    Spacer()
-                    Button(action: {
-
-                    }) {
-                        Text(tab)
-                            .font(.custom("Poppins-Medium", size: 16))
-                            .foregroundColor(profileColors.primaryColor3)
-                    }
-                    Spacer()
-                }
-
-                
-            }
-        }.padding(.top)
-
-    }
-}*/
-
 struct OwnPosts : View{
     @ObservedObject var networkManager = ProfileNetworkManager()
     private let posts: [Post] = []
@@ -105,8 +78,6 @@ struct OwnPosts : View{
         .listStyle(SidebarListStyle())
         .padding(.top)
     }
-        
-    
 
 }
 
@@ -125,12 +96,64 @@ class ProfileNetworkManager: ObservableObject {
     
     public func getPosts() {
         Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
-            (posts) in self.posts = posts
+            (posts) in self.posts = posts.reversed()
         }
     }
     
+}
+
+struct UserProfileView: View {
+    @StateObject var model: AuthenticationData
+    var body: some View {
+        GeometryReader{
+            geometry in
+            NavigationView{
+                    UserProfileViewHelper(width: geometry.size.width, height: geometry.size.height, model: model)
+                }
+        }
+    }
+}
+
+struct UserProfileViewHelper: UIViewRepresentable {
+    var width : CGFloat
+    var height : CGFloat
+    @StateObject var model: AuthenticationData
+    var networkManager = ProfileNetworkManager()
     
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self, model: networkManager)
+    }
     
+    func makeUIView(context: Context) -> UIScrollView {
+        let control = UIScrollView()
+        control.refreshControl = UIRefreshControl()
+        control.refreshControl?.addTarget(context.coordinator, action:
+            #selector(Coordinator.handleRefreshControl),
+                                          for: .valueChanged)
+        
+        let childView = UIHostingController(rootView: UIUserProfileFeed(networkManager: networkManager, model: model))
+            childView.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+            
+            control.addSubview(childView.view)
+            return control
+        }
+    
+    func updateUIView(_ uiView: UIScrollView, context: Context) {}
+    
+    class Coordinator: NSObject {
+            var control: UserProfileViewHelper
+        var model : ProfileNetworkManager
+        init(_ control: UserProfileViewHelper, model: ProfileNetworkManager) {
+                self.control = control
+                self.model = model
+            }
+    @objc func handleRefreshControl(sender: UIRefreshControl) {
+                sender.endRefreshing()
+                model.getPosts()
+            }
+        }
+    
+
 }
 
 //struct ProfilePostView : View{
