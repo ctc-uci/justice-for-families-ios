@@ -9,30 +9,63 @@
 //Post ID should get passed to this screen
 
 import SwiftUI
+import Combine
+
+class CommentsNetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<CommentsNetworkManager, Never>()
+    private var postId: String
+    
+    @Published var comments = [Comment]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init(postId: String) {
+        self.postId = postId
+        fetchComments(postId: postId)
+    }
+    
+    private func fetchComments(postId: String) {
+        Network.getComments(forPostID: postId,
+                            completionHandler: {(comments) in
+                                self.comments = comments
+                                comments.forEach({
+                                    print($0)
+                                })
+                            })
+    }
+}
 
 struct PostView: View {
     
     var post: Post
-    /*
-    init() {
-        UINavigationBar.appearance().backgroundColor = UIColor(red: 196/255.0, green: 215/255.0, blue: 235/255.0, alpha: 1.0)
+
+    @ObservedObject var networkManager: CommentsNetworkManager
+    
+    init(post: Post) {
+        self.post = post
+        self.networkManager = CommentsNetworkManager(postId: post.DecodedPost._id)
         
-    }*/
+    }
         
     var body: some View {
         List {
             Section(header: PostHeader(post: post)) {
-                ForEach(1..<20) { i in
-                    CommentCell()
+                ForEach(networkManager.comments) { i in
+                    CommentCell(comment: i)
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.white)
                 }
             }.textCase(.none)
         }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
     }
+    
 }
 
 struct CommentCell: View {
+    
+    var comment: Comment
     
     var body: some View {
         HStack(alignment: .top) {
@@ -40,19 +73,19 @@ struct CommentCell: View {
                 .resizable()
                 .frame(width: 41, height: 41, alignment: .leading)
             VStack(alignment: .leading) {
-                CommentView()
-                HStack(alignment: .top, spacing: 24) {
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Text("Like")
-                            .font(Font.custom("AvenirNext-Regular", size: 12))
-                            .foregroundColor(J4FColors.secondaryText)
-                    })
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Text("Reply")
-                            .font(Font.custom("AvenirNext-Regular", size: 12))
-                            .foregroundColor(J4FColors.secondaryText)
-                    })
-                }
+                CommentView(comment: comment)
+//                HStack(alignment: .top, spacing: 24) {
+//                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+//                        Text("Like")
+//                            .font(Font.custom("AvenirNext-Regular", size: 12))
+//                            .foregroundColor(J4FColors.secondaryText)
+//                    })
+//                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+//                        Text("Reply")
+//                            .font(Font.custom("AvenirNext-Regular", size: 12))
+//                            .foregroundColor(J4FColors.secondaryText)
+//                    })
+//                }
             }
             
         }
@@ -63,13 +96,16 @@ struct CommentCell: View {
 }
 
 struct CommentView: View {
+    
+    var comment: Comment
+    
     var body: some View {
         
         VStack(alignment: .leading) {
-            Text("@blackpinkjinsoo")
+            Text(comment.username)
                 .font(J4FFonts.username)
                 .foregroundColor(J4FColors.darkBlue)
-            Text("Very cool!")
+            Text(comment.text)
                 .font(J4FFonts.postText)
                 .foregroundColor(J4FColors.secondaryText)
         }
@@ -123,10 +159,11 @@ struct PostHeader: View {
         .background(Color.white)
     }
 }
+
 /*
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
-        PostView()
+        PostView(post: Post())
     }
 }
 */
