@@ -62,7 +62,9 @@ struct HomeFeed: View {
                  }
             }
         }
-  
+        // Goodbye 5head :)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
     
