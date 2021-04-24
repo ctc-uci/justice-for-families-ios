@@ -54,6 +54,7 @@ struct PostView: View {
                         
                         Button(action: {let parameters = ["text" : commentText,
                                                           "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
+                                                          "numLikes":0,
                               "postId": post.DecodedPost._id,
                            
                             ] as [String : Any]
