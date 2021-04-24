@@ -13,8 +13,8 @@ struct SignUpView: View {
     @State private var hiddenPass2 = true
     @State private var differentPasswords = false
     @ObservedObject var model: AuthenticationData
-    var fieldWidth: CGFloat? = 350
-    var fieldHeight: CGFloat? = 60
+    var fieldWidth: CGFloat? = 315
+    var fieldHeight: CGFloat? = 53
     
 
     var body: some View {
@@ -22,7 +22,7 @@ struct SignUpView: View {
             Image("J4F-Logo")
                 .resizable()
                 .scaledToFill() // <=== Saves aspect ratio
-                .frame(width: 270.0, height:62)
+                .frame(width: fieldWidth, height:fieldHeight)
                 .padding(.top,35)
             
             VStack(alignment: .leading, spacing: -30) {
@@ -44,7 +44,7 @@ struct SignUpView: View {
                     .background(Constants.lightBlue)
                     .cornerRadius(20)
                     .foregroundColor(Constants.primaryFontColor)
-                    .frame(width:345,height:53)
+                    .frame(width:fieldWidth,height:fieldHeight)
                     .font(.custom("Poppins-Regular", size: 16))
 
                 TextField("email",text: $model.email_SignUp)
@@ -52,16 +52,16 @@ struct SignUpView: View {
                     .background(Constants.lightBlue)
                     .cornerRadius(20)
                     .foregroundColor(Constants.primaryFontColor)
-                    .frame(width:345,height:53)
+                    .frame(width:fieldWidth,height:fieldHeight)
                     .font(.custom("Poppins-Regular", size: 16))
                     .autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
 
                 
                 HStack {
                     if self.hiddenPass1 {
-                        SecureField("password", text: $model.password_SignUp).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
+                        SecureField("password", text: $model.password_SignUp).background(Constants.lightBlue).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                     } else {
-                        TextField("password", text: $model.password_SignUp).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
+                        TextField("password", text: $model.password_SignUp).background(Constants.lightBlue).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                     }
                     
                     Button(action: {self.hiddenPass1.toggle()}) {
@@ -70,7 +70,9 @@ struct SignUpView: View {
                     }
                     
                 }   .padding()
-                    .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Constants.lightBlue))
+                    .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
+                    .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1))
+                .background(RoundedRectangle(cornerRadius: 20).fill(Constants.lightBlue))
                 
                 VStack(alignment:.leading){
                     Text("Password must contain at least:")
@@ -98,9 +100,9 @@ struct SignUpView: View {
                 
                 HStack {
                     if self.hiddenPass2 {
-                        SecureField("confirm password", text: $model.reEnterPassword).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
+                        SecureField("confirm password", text: $model.reEnterPassword).background(Constants.lightBlue).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                     } else {
-                        TextField("confirm password", text: $model.reEnterPassword).background(Constants.lightBlue).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
+                        TextField("confirm password", text: $model.reEnterPassword).background(Constants.lightBlue).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                     }
                     
                     Button(action: {self.hiddenPass2.toggle()}) {
@@ -109,6 +111,7 @@ struct SignUpView: View {
                     }
                     
                 }   .padding()
+                .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
                 .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Constants.lightBlue))
             }
             
@@ -157,6 +160,7 @@ struct SignUpView: View {
            
             Spacer()
         }.background(Color.white)
+        .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
     }
 }
 
