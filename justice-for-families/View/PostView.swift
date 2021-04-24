@@ -9,20 +9,50 @@
 //Post ID should get passed to this screen
 
 import SwiftUI
+import Combine
+
+class CommentsNetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<CommentsNetworkManager, Never>()
+    private var postId: String
+    
+    @Published var comments = [Comment]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init(postId: String) {
+        self.postId = postId
+        fetchComments(postId: postId)
+    }
+    
+    private func fetchComments(postId: String) {
+        Network.getComments(forPostID: postId,
+                            completionHandler: {(comments) in
+                                self.comments = comments
+                                comments.forEach({
+                                    print($0)
+                                })
+                            })
+    }
+}
 
 struct PostView: View {
     
     var post: Post
-    /*
-    init() {
-        UINavigationBar.appearance().backgroundColor = UIColor(red: 196/255.0, green: 215/255.0, blue: 235/255.0, alpha: 1.0)
+
+    @ObservedObject var networkManager: CommentsNetworkManager
+    
+    init(post: Post) {
+        self.post = post
+        self.networkManager = CommentsNetworkManager(postId: post.id.uuidString)
         
-    }*/
+    }
         
     var body: some View {
         List {
             Section(header: PostHeader(post: post)) {
-                ForEach(1..<20) { i in
+                ForEach(networkManager.comments) { i in
                     CommentCell()
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.white)
@@ -30,6 +60,7 @@ struct PostView: View {
             }.textCase(.none)
         }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
     }
+    
 }
 
 struct CommentCell: View {
