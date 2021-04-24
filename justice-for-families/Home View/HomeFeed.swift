@@ -12,6 +12,7 @@
 
 import SwiftUI
 import Combine
+import SwiftUIRefresh
 
 struct Update: Identifiable {
     var id: UUID = UUID()
@@ -35,90 +36,32 @@ class NetworkManager: ObservableObject {
     public func fetchPosts() {
         Network.fetchAllPosts { (posts) in
             self.posts = posts.reversed()
-            posts.forEach({
-                print($0)
-            })
         }
-        
     }
     
     
     
 }
 
-struct UIFeed: View {
+struct HomeFeed: View {
     
+    @State private var isShowing = false
     @ObservedObject var networkManager = NetworkManager()
-    
-    private let posts: [Post] = []
-        
-    private let updates: [Update] = [
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000),
-        .init(numberOfLikes: 1, numberOfComments: 1),
-        .init(numberOfLikes: 10, numberOfComments: 10),
-        .init(numberOfLikes: 100, numberOfComments: 100),
-        .init(numberOfLikes: 1000, numberOfComments: 1000)
-    ]
-    
     
     var body: some View {
 
-            List {
-                
-                Section(header: SectionHeader(title: "Tags you follow")){
-                    ScrollView(.horizontal, showsIndicators: false, content: {
-                        HStack {
-                            ForEach(1..<100) { i in
-                                TagCell(tag: "Resources")
-                                    .background(J4FColors.background)
-                            }
-                        }.background(J4FColors.background)
-                    })
-                    .listRowInsets(EdgeInsets())
-                    .background(J4FColors.background)
-                }.textCase(.none)
-                
-                Section(header: SectionHeader(title: "What you missed...")){
-                    ScrollView(.horizontal, showsIndicators: false, content: {
-                        HStack {
-                            ForEach(1..<100) { i in
-                                WhatYouMissedCell()
-                            }
-                        }
-                    })
-                    .listRowInsets(EdgeInsets())
-                    .background(J4FColors.background)
-                }.textCase(.none)
-                
-                Section(header: SectionHeader(title: "Feed")) {
-                    ForEach(networkManager.posts) { p in
-                        FeedCell(post: p)
-                            .listRowBackground(J4FColors.background)
-                    }
-                }.textCase(.none)
-                .listStyle(SidebarListStyle())
+        NavigationView {
+            List(networkManager.posts) { p in
+                FeedCell(post: p)
             }
-            .navigationTitle("J4F")
-
+            .navigationBarTitle("J4F")
+            .pullToRefresh(isShowing: $isShowing) {
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    networkManager.fetchPosts()
+                    self.isShowing = false
+                 }
+            }
+        }
   
     }
 }
@@ -138,68 +81,3 @@ struct SectionHeader: View {
             .foregroundColor(J4FColors.darkBlue)
     }
 }
-
-struct HomeFeed: View {
-    @State private var showModal = false
-    var body: some View {
-        GeometryReader{
-        geometry in
-        NavigationView{
-                HomeFeedHelper(width: geometry.size.width, height: geometry.size.height)
-                    .navigationBarBackButtonHidden(true).navigationTitle("J4F")
-                                            
-            }
-        .navigationBarHidden(true)
-        }
-    }
-}
-
-struct HomeFeedHelper: UIViewRepresentable {
-    var width : CGFloat
-    var height : CGFloat
-
-    var networkManager = NetworkManager()
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self, model: networkManager)
-    }
-
-    func makeUIView(context: Context) -> UIScrollView {
-        let control = UIScrollView()
-        control.refreshControl = UIRefreshControl()
-        control.refreshControl?.addTarget(context.coordinator, action:
-            #selector(Coordinator.handleRefreshControl),
-                                          for: .valueChanged)
-
-        let childView = UIHostingController(rootView: UIFeed(networkManager: networkManager))
-            childView.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
-
-            control.addSubview(childView.view)
-            return control
-        }
-
-    func updateUIView(_ uiView: UIScrollView, context: Context) {}
-
-    class Coordinator: NSObject {
-            var control: HomeFeedHelper
-        var model : NetworkManager
-        init(_ control: HomeFeedHelper, model: NetworkManager) {
-                self.control = control
-                self.model = model
-            }
-    @objc func handleRefreshControl(sender: UIRefreshControl) {
-                sender.endRefreshing()
-                model.fetchPosts()
-            }
-        }
-
-
-}
-/*
-struct HomeFeed_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            HomeFeed()
-        }
-    }
-}*/

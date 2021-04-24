@@ -1,2 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-justice-for-families/Pods-justice-for-families-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/Introspect/Introspect.framework
+${BUILT_PRODUCTS_DIR}/SwiftUIRefresh/SwiftUIRefresh.framework

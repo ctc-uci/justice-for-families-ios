@@ -29,7 +29,7 @@ struct FeedCell: View {
                             .cornerRadius(40)
                             .foregroundColor(J4FColors.darkBlue)
                             .font(J4FFonts.postText)
-                        Text("@\(post.username)")
+                        Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
                     }
@@ -99,7 +99,6 @@ struct FeedCellInteractButtons: View {
             
             Button(action: {
 //                print("Tapped on the comment button!")
-                
             }) {
                 HStack(alignment: .center) {
                     Image(systemName: "bubble.left")
@@ -114,6 +113,7 @@ struct FeedCellInteractButtons: View {
             // Prevents all three buttons from detecting a tap when the row is tapped on
             .buttonStyle(BorderlessButtonStyle())
             
+            Spacer()
             
         }
     }
