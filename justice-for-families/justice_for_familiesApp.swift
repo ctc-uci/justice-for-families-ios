@@ -13,10 +13,11 @@ struct justice_for_familiesApp: App {
     var body: some Scene {
         WindowGroup {
             
-            if (UserDefaults.standard.string(forKey: "LoggedInUser") != nil) {
+            // Depending on if the 'LoggedInUser' key exists in UserDefaults,
+            // present either the 'MainView' or 'LoginView'
+            if UserDefaults.standard.string(forKey: "LoggedInUser") != nil {
                 MainView(model: model)
-            }
-            else{
+            } else {
                 LoginView()
             }
             

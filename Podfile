@@ -7,6 +7,8 @@ target 'justice-for-families' do
 
   # Pods for justice-for-families
     pod 'Alamofire', '~> 5.2'
+    pod "SwiftUIRefresh"
+    
   target 'justice-for-familiesTests' do
     inherit! :search_paths
     # Pods for testing
