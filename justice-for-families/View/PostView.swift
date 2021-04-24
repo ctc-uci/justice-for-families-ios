@@ -67,7 +67,9 @@ struct PostView: View {
                     }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
                 }
 
+
             }
+
 }
 
 struct CommentCell: View {
