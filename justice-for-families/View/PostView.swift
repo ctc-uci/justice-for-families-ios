@@ -27,7 +27,8 @@ struct PostView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.white)
                 }
-            }.textCase(.none)
+            }
+            .textCase(.none)
         }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
     }
 }
@@ -92,7 +93,7 @@ struct PostHeader: View {
                     .resizable()
                     .frame(width: 41, height: 41, alignment: .leading)
                 
-                Text("@\(post.username)")
+                Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                     .font(J4FFonts.username)
                     .foregroundColor(J4FColors.darkBlue)
                 Text("3h")

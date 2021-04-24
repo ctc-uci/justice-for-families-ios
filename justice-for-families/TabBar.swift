@@ -39,7 +39,7 @@ struct CurrentScreen: View{
     @Binding var currentView: Tab
     var body: some View{
         VStack{
-            if currentView == .Tab1{
+            if currentView == .Tab1 {
                 HomeFeed()
             }
             else{
