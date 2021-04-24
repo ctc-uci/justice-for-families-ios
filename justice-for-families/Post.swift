@@ -28,20 +28,37 @@ struct DecodedPost: Decodable {
     
 }
 
-struct Post: Identifiable {
+class Post: Identifiable, ObservableObject {
     
     let id = UUID()
-    let anonymous: Bool
-    
-    let datePosted: String
-    let createdAt: String
-    let updatedAt: String
+    var anonymous: Bool = false
+    var DecodedPost: DecodedPost
+    var datePosted: String = ""
+    var createdAt: String = ""
+    var updatedAt: String = ""
 
-    let numComments: Int
+    @Published var numComments: Int = 0
     
-    let tags: [String]
+    @Published var isLiked: Bool = false
+    @Published var numLikes: Int = 0
+    
+    var tags = [String]()
 
-    let title: String
-    let text: String
-    let username: String
+    var title: String = ""
+    var text: String = ""
+    var username: String = ""
+    
+    init(anonymous: Bool, datePosted: String, createdAt: String, updatedAt: String, numComments: Int, tags: [String], title: String, text: String, username: String, DecodedPost: DecodedPost) {
+        
+        self.anonymous = anonymous
+        self.datePosted = datePosted
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.numComments = numComments
+        self.tags = tags
+        self.title = title
+        self.text = text
+        self.username = username
+        self.DecodedPost = DecodedPost
+    }
 }

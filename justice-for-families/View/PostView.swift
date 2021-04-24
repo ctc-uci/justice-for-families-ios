@@ -45,7 +45,7 @@ struct PostView: View {
     
     init(post: Post) {
         self.post = post
-        self.networkManager = CommentsNetworkManager(postId: post.id.uuidString)
+        self.networkManager = CommentsNetworkManager(postId: post.DecodedPost._id)
         
     }
         
@@ -74,18 +74,18 @@ struct CommentCell: View {
                 .frame(width: 41, height: 41, alignment: .leading)
             VStack(alignment: .leading) {
                 CommentView(comment: comment)
-                HStack(alignment: .top, spacing: 24) {
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Text("Like")
-                            .font(Font.custom("AvenirNext-Regular", size: 12))
-                            .foregroundColor(J4FColors.secondaryText)
-                    })
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        Text("Reply")
-                            .font(Font.custom("AvenirNext-Regular", size: 12))
-                            .foregroundColor(J4FColors.secondaryText)
-                    })
-                }
+//                HStack(alignment: .top, spacing: 24) {
+//                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+//                        Text("Like")
+//                            .font(Font.custom("AvenirNext-Regular", size: 12))
+//                            .foregroundColor(J4FColors.secondaryText)
+//                    })
+//                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+//                        Text("Reply")
+//                            .font(Font.custom("AvenirNext-Regular", size: 12))
+//                            .foregroundColor(J4FColors.secondaryText)
+//                    })
+//                }
             }
             
         }
@@ -160,10 +160,10 @@ struct PostHeader: View {
     }
 }
 
-
+/*
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
-        PostView(post: Post(anonymous: false, datePosted: "11/11/11", createdAt: "", updatedAt: "", numComments: 10, tags: [], title: "title", text: "text", username: "username"))
+        PostView(post: Post())
     }
 }
-
+*/
