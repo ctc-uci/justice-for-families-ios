@@ -53,7 +53,7 @@ struct PostView: View {
         List {
             Section(header: PostHeader(post: post)) {
                 ForEach(networkManager.comments) { i in
-                    CommentCell()
+                    CommentCell(comment: i)
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.white)
                 }
@@ -65,13 +65,15 @@ struct PostView: View {
 
 struct CommentCell: View {
     
+    var comment: Comment
+    
     var body: some View {
         HStack(alignment: .top) {
             Image(systemName: "person.crop.circle")
                 .resizable()
                 .frame(width: 41, height: 41, alignment: .leading)
             VStack(alignment: .leading) {
-                CommentView()
+                CommentView(comment: comment)
                 HStack(alignment: .top, spacing: 24) {
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                         Text("Like")
@@ -94,13 +96,16 @@ struct CommentCell: View {
 }
 
 struct CommentView: View {
+    
+    var comment: Comment
+    
     var body: some View {
         
         VStack(alignment: .leading) {
-            Text("@blackpinkjinsoo")
+            Text(comment.username)
                 .font(J4FFonts.username)
                 .foregroundColor(J4FColors.darkBlue)
-            Text("Very cool!")
+            Text(comment.text)
                 .font(J4FFonts.postText)
                 .foregroundColor(J4FColors.secondaryText)
         }
@@ -154,10 +159,11 @@ struct PostHeader: View {
         .background(Color.white)
     }
 }
-/*
+
+
 struct PostView_Previews: PreviewProvider {
     static var previews: some View {
-        PostView()
+        PostView(post: Post(anonymous: false, datePosted: "11/11/11", createdAt: "", updatedAt: "", numComments: 10, tags: [], title: "title", text: "text", username: "username"))
     }
 }
-*/
+
