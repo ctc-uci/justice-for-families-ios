@@ -35,9 +35,6 @@ class NetworkManager: ObservableObject {
     public func fetchPosts() {
         Network.fetchAllPosts { (posts) in
             self.posts = posts
-            posts.forEach({
-                print($0)
-            })
         }
     }
     
