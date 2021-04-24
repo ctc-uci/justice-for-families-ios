@@ -23,11 +23,11 @@ class CommentsNetworkManager: ObservableObject {
     
     init(postId: String) {
         self.postId = postId
-        fetchComments(postId: postId)
+        fetchComments()
     }
     
-    private func fetchComments(postId: String) {
-        Network.getComments(forPostID: postId,
+    func fetchComments() {
+        Network.getComments(forPostID: self.postId,
                             completionHandler: {(comments) in
                                 self.comments = comments
                                 comments.forEach({
@@ -82,13 +82,15 @@ struct PostView: View {
                                     }
                         // the button triggers creating post
                         
-                        Button(action: {let parameters = ["text" : commentText,
-                                                          "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
-                                                          "numLikes":0,
-                                                          "postId": post.DecodedPost._id, "_id:": post.DecodedPost._id
-                           
-                            ] as [String : Any]
-                        Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)}) {
+                        Button(action: {
+                            let parameters = ["text" : commentText,
+                                              "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
+                                              "numLikes":0,
+                                              "postId": post.DecodedPost._id, "_id:": post.DecodedPost._id] as [String : Any]
+                            Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
+                            commentText = ""
+                            networkManager.fetchComments()
+                        }) {
                             
                             Text("Post")
                                 .font(J4FFonts.postTitle)

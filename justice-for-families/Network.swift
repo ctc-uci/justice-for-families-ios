@@ -177,7 +177,7 @@ struct Network {
                     
                     let decodedComments = try JSONDecoder().decode([DecodedComment].self, from: data)
                     let comments = decodedComments.map { Comment(text: $0.text, username: $0.username, numLikes: $0.numLikes, postId: $0.postId, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt) }
-                    completionHandler(comments)
+                    DispatchQueue.main.async { completionHandler(comments) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
                     Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
