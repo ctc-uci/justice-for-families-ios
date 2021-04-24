@@ -99,7 +99,7 @@ struct Network {
                 guard let data = response.data else { return }
                 do {
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username) }
+                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
                     DispatchQueue.main.async { completionHandler(posts) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
@@ -134,7 +134,7 @@ struct Network {
                 do {
                     
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username) }
+                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
                     DispatchQueue.main.async {
                         completionHandler(posts)
                         print(posts)

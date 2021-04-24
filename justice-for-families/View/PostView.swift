@@ -51,13 +51,13 @@ struct PostView: View {
                         
                                     }
                         // the button triggers creating post
+                        
                         Button(action: {let parameters = ["text" : commentText,
-                              "username": "mingjia",
-                              "numLikes": 0,
-                              "postId": "somepostid",
+                                                          "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
+                              "postId": post.DecodedPost._id,
                            
                             ] as [String : Any]
-                        Network.createNewComment(parameters: parameters,postID: "testingtesting")}) {
+                        Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)}) {
                             
                             Text("Post")
                                 .font(J4FFonts.postTitle)

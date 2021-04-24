@@ -33,7 +33,7 @@ class Post: Identifiable, ObservableObject {
     
     let id = UUID()
     var anonymous: Bool = false
-    
+    var DecodedPost: DecodedPost 
     var datePosted: String = ""
     var createdAt: String = ""
     var updatedAt: String = ""
@@ -49,7 +49,7 @@ class Post: Identifiable, ObservableObject {
     var text: String = ""
     var username: String = ""
     
-    init(anonymous: Bool, datePosted: String, createdAt: String, updatedAt: String, numComments: Int, tags: [String], title: String, text: String, username: String) {
+    init(anonymous: Bool, datePosted: String, createdAt: String, updatedAt: String, numComments: Int, tags: [String], title: String, text: String, username: String, DecodedPost: DecodedPost) {
         
         self.anonymous = anonymous
         self.datePosted = datePosted
@@ -60,6 +60,6 @@ class Post: Identifiable, ObservableObject {
         self.title = title
         self.text = text
         self.username = username
-        
+        self.DecodedPost = DecodedPost
     }
 }
