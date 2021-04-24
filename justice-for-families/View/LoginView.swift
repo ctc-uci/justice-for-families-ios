@@ -20,7 +20,7 @@ struct LoginView: View {
     var body: some View {
         NavigationView {
             VStack (alignment: .center, spacing: 20) {
-                Spacer()
+                //Spacer()
                 Spacer()
                 Image("J4F-Logo")
                     .resizable()
@@ -28,7 +28,7 @@ struct LoginView: View {
                     .frame(width: 270.0, height:62)
                     .padding(.top,35)
                 
-
+                
                 VStack(alignment: .leading, spacing: -30) {
                     Text("Welcome,")
                         .padding()
@@ -39,10 +39,10 @@ struct LoginView: View {
                         .font(.custom("Poppins-Regular", size: 18))
                         .foregroundColor(Constants.secondaryFontColor)
                 }   .frame(width: fieldWidth, height: fieldHeight, alignment: .leading)
-                    .cornerRadius(20)
-                    .padding(.bottom, 26)
-                    .padding(.bottom,25)
-
+                .cornerRadius(20)
+                .padding(.bottom, 26)
+                .padding(.bottom,25)
+                
                 
                 VStack(alignment: .center){
                     HStack{
@@ -69,22 +69,22 @@ struct LoginView: View {
                         }
                         
                     }   .padding()
-                        .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Color.white))
+                    .overlay(RoundedRectangle(cornerRadius:20).stroke(Color.white,lineWidth:1)).background(RoundedRectangle(cornerRadius: 20).fill(Color.white))
                     
                     
                     
-                    Button(action: {}, label: {
-                        Text("Forgot password?")
-                            .font(.custom("Poppins-Regular", size: 13))
-                            .foregroundColor(Constants.primaryFontColor)
-                    })
-                    .frame(width: fieldWidth, height: CGFloat(fieldHeight!/2), alignment: .trailing)
+                    //                    Button(action: {}, label: {
+                    //                        Text("Forgot password?")
+                    //                            .font(.custom("Poppins-Regular", size: 13))
+                    //                            .foregroundColor(Constants.primaryFontColor)
+                    //                    })
+                    //                    .frame(width: fieldWidth, height: CGFloat(fieldHeight!/2), alignment: .trailing)
                 }
                 .padding(.bottom,30)
                 
                 NavigationLink(destination: MainView(model: model), tag: 1, selection: $model.canLogin){
                     Button(action: {
-                        model.login()
+                        print(model.login())
                         //UserDefaults.standard.removeObject(forKey: "LoggedInUser")
                     }) {
                         Text("Login")
@@ -92,9 +92,9 @@ struct LoginView: View {
                             .foregroundColor(Color.white)
                             .fontWeight(.heavy)
                             .padding()
-                            .frame(width: fieldWidth, height: fieldHeight, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            .background(Capsule().fill(Constants.grey))
-                            
+                            .frame(width: fieldWidth, height: fieldHeight, alignment: .center)
+                            .background(Capsule().fill(Constants.primaryFontColor))
+                        
                     }.padding([.leading, .trailing],30)
                 }
                 
@@ -110,16 +110,15 @@ struct LoginView: View {
                         Text("Join Now!")
                             .foregroundColor(Constants.tertiaryFontColor)
                             .font(.custom("Poppins-Medium", size: 16))
-                           
                     }
                 }
                 Spacer()
             }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Constants.loginBackground).ignoresSafeArea()
-                .fullScreenCover(isPresented: $model.isSignUp) {
-                    SignUpView(model: model)
-                }.navigationBarHidden(true)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Constants.loginBackground).ignoresSafeArea()
+            .fullScreenCover(isPresented: $model.isSignUp) {
+                SignUpView(model: model)
+            }.navigationBarHidden(true)
         }.navigationBarHidden(true)
     }
 }
