@@ -39,6 +39,8 @@ class Post: Identifiable, ObservableObject {
     var updatedAt: String = ""
 
     @Published var numComments: Int = 0
+    
+    @Published var isLiked: Bool = false
     @Published var numLikes: Int = 0
     
     var tags = [String]()
