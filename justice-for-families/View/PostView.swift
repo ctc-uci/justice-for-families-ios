@@ -55,7 +55,7 @@ struct PostView: View {
                         Button(action: {let parameters = ["text" : commentText,
                                                           "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
                                                           "numLikes":0,
-                              "postId": post.DecodedPost._id,
+                                                          "postId": post.DecodedPost._id, "_id:": post.DecodedPost._id
                            
                             ] as [String : Any]
                         Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)}) {
