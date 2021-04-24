@@ -38,7 +38,8 @@ class CommentsNetworkManager: ObservableObject {
 }
 
 struct PostView: View {
-    
+    @State private var commentText: String = ""
+    @State private var placeholderString: String = "hello"
     var post: Post
 
     @ObservedObject var networkManager: CommentsNetworkManager
@@ -50,17 +51,54 @@ struct PostView: View {
     }
         
     var body: some View {
-        List {
-            Section(header: PostHeader(post: post)) {
-                ForEach(networkManager.comments) { i in
-                    CommentCell(comment: i)
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.white)
+        VStack{
+                    List {
+                        Section(header: PostHeader(post: post)) {
+                            ForEach(networkManager.comments) { i in
+                                CommentCell(comment: i)
+                                    .listRowInsets(EdgeInsets())
+                                    .listRowBackground(Color.white)
+                            }
+                        }.textCase(.none)
+                    }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+                    HStack {
+                        // this textField generates the value for the composedMessage @State var
+                        ZStack {
+                          
+                            
+                            TextEditor(text: $commentText)
+                                .foregroundColor(self.commentText == placeholderString ? .gray : .primary)
+                                .onTapGesture {
+                                    if self.commentText == placeholderString {
+                                        self.commentText = ""
+                                      
+                                                    }
+                                                }
+                            Text(commentText)
+                           
+                                .opacity(0)
+                                .padding(.all, 8) // <- This will solve the issue if it is in the same ZStack
+                        
+                                    }
+                        // the button triggers creating post
+                        
+                        Button(action: {let parameters = ["text" : commentText,
+                                                          "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
+                                                          "numLikes":0,
+                                                          "postId": post.DecodedPost._id, "_id:": post.DecodedPost._id
+                           
+                            ] as [String : Any]
+                        Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)}) {
+                            
+                            Text("Post")
+                                .font(J4FFonts.postTitle)
+                            
+                                    }
+                    }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
                 }
-            }.textCase(.none)
-        }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
-    }
-    
+
+
+            }
 }
 
 struct CommentCell: View {
@@ -128,7 +166,7 @@ struct PostHeader: View {
                     .resizable()
                     .frame(width: 41, height: 41, alignment: .leading)
                 
-                Text("@\(post.username)")
+                Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                     .font(J4FFonts.username)
                     .foregroundColor(J4FColors.darkBlue)
                 Text("3h")
@@ -147,7 +185,7 @@ struct PostHeader: View {
                 .foregroundColor(J4FColors.black)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 16)
-            FeedCellInteractButtons(numLikes: 5, numComments: post.numComments)
+            FeedCellInteractButtons(post: post)
             
         }
         .padding(20)

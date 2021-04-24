@@ -19,6 +19,7 @@ struct DecodedPost: Decodable {
     let updatedAt: String
 
     let numComments: Int
+//    let numLikes: Int
     
     let tags: [String]
 
@@ -32,6 +33,7 @@ class Post: Identifiable, ObservableObject {
     
     let id = UUID()
     var anonymous: Bool = false
+
     var DecodedPost: DecodedPost
     var datePosted: String = ""
     var createdAt: String = ""
