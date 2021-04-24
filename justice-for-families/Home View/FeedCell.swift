@@ -45,7 +45,7 @@ struct FeedCell: View {
                     .foregroundColor(J4FColors.darkBlue)
                     .multilineTextAlignment(.leading)
                 Spacer(minLength: 16)
-                FeedCellInteractButtons(numLikes: 5, numComments: post.numComments)
+                FeedCellInteractButtons(post: post)
                     
             }
             .padding(20)
@@ -58,31 +58,35 @@ struct FeedCell: View {
 
 struct FeedCellInteractButtons: View {
     
-    @State var numLikes: Int
-    @State var isLiked: Bool = false
-    @State var numComments: Int
+    @StateObject var post: Post
     
     var body: some View {
         HStack {
             
             Button(action: {
-                print("Tapped on the like button!")
-                Network.likePost(parameters: ["username" : UserDefaults.standard.object(forKey: "LoggedInUser")! ])
                 
-                if isLiked {
-                    isLiked = false
-                    numLikes -= 1
+                if post.isLiked {
+                    Network.unlikePost(parameters: ["username": UserDefaults.standard.object(forKey: "LoggedInUser")!])
+                    post.objectWillChange.send()
+                    post.isLiked = false
+                    post.numLikes -= 1
+                    
                 } else {
-                    isLiked = true
-                    numLikes += 1
+                    Network.likePost(parameters: ["username" : UserDefaults.standard.object(forKey: "LoggedInUser")! ])
+                    post.objectWillChange.send()
+                    post.isLiked = true
+                    post.numLikes += 1
+                    
                 }
+                
+                print(post)
                 
             }) {
                 HStack(alignment: .center) {
-                    Image(systemName: isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
+                    Image(systemName: post.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .renderingMode(.template)
                         .foregroundColor(J4FColors.orange)
-                    Text("\(self.numLikes) likes")
+                    Text("\(post.numLikes) likes")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.darkBlue)
                 }
@@ -101,7 +105,7 @@ struct FeedCellInteractButtons: View {
                     Image(systemName: "bubble.left")
                         .renderingMode(.template)
                         .foregroundColor(J4FColors.orange)
-                    Text("\(self.numComments) comments")
+                    Text("\(post.numComments) comments")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.darkBlue)
                 }
@@ -110,23 +114,6 @@ struct FeedCellInteractButtons: View {
             // Prevents all three buttons from detecting a tap when the row is tapped on
             .buttonStyle(BorderlessButtonStyle())
             
-//            Spacer()
-//
-//            Button(action: {
-//                print("Tapped on the share button!")
-//            }) {
-//                HStack(alignment: .center) {
-//                    Image(systemName: "square.and.arrow.up")
-//                        .renderingMode(.template)
-//                        .foregroundColor(J4FColors.orange)
-//                    Text("10 shares")
-//                        .font(J4FFonts.button)
-//                        .foregroundColor(J4FColors.darkBlue)
-//                }
-//
-//            }
-//            // Prevents all three buttons from detecting a tap when the row is tapped on
-//            .buttonStyle(BorderlessButtonStyle())
             
         }
     }

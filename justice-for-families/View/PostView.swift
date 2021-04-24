@@ -148,7 +148,7 @@ struct PostHeader: View {
                 .foregroundColor(J4FColors.black)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 16)
-            FeedCellInteractButtons(numLikes: 5, numComments: post.numComments)
+            FeedCellInteractButtons(post: post)
             
         }
         .padding(20)

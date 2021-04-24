@@ -97,15 +97,10 @@ struct Network {
             switch response.result {
             case .success(_):
                 guard let data = response.data else { return }
-                    
                 do {
-                    
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
                     let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username) }
-                    DispatchQueue.main.async {
-                        completionHandler(posts)
-                        print(posts)
-                    }
+                    DispatchQueue.main.async { completionHandler(posts) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
                     Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")

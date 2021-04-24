@@ -34,19 +34,19 @@ class NetworkManager: ObservableObject {
     
     public func fetchPosts() {
         Network.fetchAllPosts { (posts) in
-            self.posts = posts
+            self.posts = posts.reversed()
             posts.forEach({
                 print($0)
             })
         }
-        self.posts.reverse()
+        
     }
     
     
     
 }
 
-struct HomeFeed: View {
+struct UIFeed: View {
     
     @ObservedObject var networkManager = NetworkManager()
     
@@ -81,7 +81,7 @@ struct HomeFeed: View {
     
     
     var body: some View {
-        NavigationView {
+
             List {
                 
                 Section(header: SectionHeader(title: "Tags you follow")){
@@ -118,11 +118,7 @@ struct HomeFeed: View {
                 .listStyle(SidebarListStyle())
             }
             .navigationTitle("J4F")
-            //.navigationBarBackButtonHidden(true)
-            //.navigationBarHidden(true)
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
+
   
     }
 }
@@ -143,47 +139,62 @@ struct SectionHeader: View {
     }
 }
 
-//struct HomeFeedHelper: UIViewRepresentable {
-//    var width : CGFloat
-//    var height : CGFloat
-//
-//    var networkManager = NetworkManager()
-//
-//    func makeCoordinator() -> Coordinator {
-//        Coordinator(self, model: networkManager)
-//    }
-//
-//    func makeUIView(context: Context) -> UIScrollView {
-//        let control = UIScrollView()
-//        control.refreshControl = UIRefreshControl()
-//        control.refreshControl?.addTarget(context.coordinator, action:
-//            #selector(Coordinator.handleRefreshControl),
-//                                          for: .valueChanged)
-//
-//        let childView = UIHostingController(rootView: UIFeed(networkManager: networkManager))
-//            childView.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
-//
-//            control.addSubview(childView.view)
-//            return control
-//        }
-//
-//    func updateUIView(_ uiView: UIScrollView, context: Context) {}
-//
-//    class Coordinator: NSObject {
-//            var control: HomeFeedHelper
-//        var model : NetworkManager
-//        init(_ control: HomeFeedHelper, model: NetworkManager) {
-//                self.control = control
-//                self.model = model
-//            }
-//    @objc func handleRefreshControl(sender: UIRefreshControl) {
-//                sender.endRefreshing()
-//                //MAKE REFRESH CHANGES HERE  e.g. model.refresh()
-//            }
-//        }
-//
-//
-//}
+struct HomeFeed: View {
+    @State private var showModal = false
+    var body: some View {
+        GeometryReader{
+        geometry in
+        NavigationView{
+                HomeFeedHelper(width: geometry.size.width, height: geometry.size.height)
+                    .navigationBarBackButtonHidden(true).navigationTitle("J4F")
+                                            
+            }
+        .navigationBarHidden(true)
+        }
+    }
+}
+
+struct HomeFeedHelper: UIViewRepresentable {
+    var width : CGFloat
+    var height : CGFloat
+
+    var networkManager = NetworkManager()
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self, model: networkManager)
+    }
+
+    func makeUIView(context: Context) -> UIScrollView {
+        let control = UIScrollView()
+        control.refreshControl = UIRefreshControl()
+        control.refreshControl?.addTarget(context.coordinator, action:
+            #selector(Coordinator.handleRefreshControl),
+                                          for: .valueChanged)
+
+        let childView = UIHostingController(rootView: UIFeed(networkManager: networkManager))
+            childView.view.frame = CGRect(x: 0, y: 0, width: width, height: height)
+
+            control.addSubview(childView.view)
+            return control
+        }
+
+    func updateUIView(_ uiView: UIScrollView, context: Context) {}
+
+    class Coordinator: NSObject {
+            var control: HomeFeedHelper
+        var model : NetworkManager
+        init(_ control: HomeFeedHelper, model: NetworkManager) {
+                self.control = control
+                self.model = model
+            }
+    @objc func handleRefreshControl(sender: UIRefreshControl) {
+                sender.endRefreshing()
+                model.fetchPosts()
+            }
+        }
+
+
+}
 /*
 struct HomeFeed_Previews: PreviewProvider {
     static var previews: some View {
