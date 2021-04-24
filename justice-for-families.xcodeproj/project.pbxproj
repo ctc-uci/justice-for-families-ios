@@ -28,7 +28,6 @@
 		5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
 		5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541F025B3A331008DF7A8 /* AppConstants.swift */; };
-		5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541F825B3A38F008DF7A8 /* PostRow.swift */; };
 		5BE541FE25B3A3FC008DF7A8 /* CommentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */; };
 		5BE5420925B3A43E008DF7A8 /* AddCommentFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE5420825B3A43E008DF7A8 /* AddCommentFooter.swift */; };
 		5BE5421125B3A4E4008DF7A8 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE5421025B3A4E4008DF7A8 /* SignUpView.swift */; };
@@ -94,7 +93,6 @@
 		5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationData.swift; sourceTree = "<group>"; };
 		5B5CB0AD257B094F00357437 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		5BE541F025B3A331008DF7A8 /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
-		5BE541F825B3A38F008DF7A8 /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRow.swift; sourceTree = "<group>"; };
 		5BE5420825B3A43E008DF7A8 /* AddCommentFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentFooter.swift; sourceTree = "<group>"; };
 		5BE5421025B3A4E4008DF7A8 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -264,7 +262,6 @@
 				5AE31D2A262FE70F00382580 /* AddTagsView.swift */,
 				5BE5420825B3A43E008DF7A8 /* AddCommentFooter.swift */,
 				6C2B213225F17F890076691C /* UserProfileView.swift */,
-				5BE541F825B3A38F008DF7A8 /* PostRow.swift */,
 				5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */,
 			);
 			path = View;
@@ -554,7 +551,6 @@
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
 				5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */,
 				4A781E94262F920A00ABDEDF /* Comment.swift in Sources */,
-				5BE541F925B3A38F008DF7A8 /* PostRow.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 				4A781E8F262F91F900ABDEDF /* Post.swift in Sources */,
 			);
