@@ -90,6 +90,7 @@ struct PostView: View {
                             Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
                             commentText = ""
                             networkManager.fetchComments()
+                            post.numComments += 1
                         }) {
                             
                             Text("Post")
