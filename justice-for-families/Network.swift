@@ -39,8 +39,8 @@ struct Network {
             switch response.result {
 
             case .success(_):
-                guard let json = response.value else { return }
-                print(json)
+//                guard let json = response.value else { return }
+                print("🟢 Succesfully liked post with id: \(parameters["postId"] ?? "__")")
                 
             case .failure(let error):
                 print(error)
@@ -99,7 +99,7 @@ struct Network {
                 guard let data = response.data else { return }
                 do {
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
                     DispatchQueue.main.async { completionHandler(posts) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
@@ -134,7 +134,7 @@ struct Network {
                 do {
                     
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
                     DispatchQueue.main.async {
                         completionHandler(posts)
                         print(posts)
@@ -177,7 +177,7 @@ struct Network {
                     
                     let decodedComments = try JSONDecoder().decode([DecodedComment].self, from: data)
                     let comments = decodedComments.map { Comment(text: $0.text, username: $0.username, numLikes: $0.numLikes, postId: $0.postId, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt) }
-                    completionHandler(comments)
+                    DispatchQueue.main.async {completionHandler(comments)}
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
                     Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")

@@ -47,7 +47,6 @@ struct PostView: View {
     init(post: Post) {
         self.post = post
         self.networkManager = CommentsNetworkManager(postId: post.DecodedPost._id)
-        
     }
         
     var body: some View {

@@ -19,7 +19,7 @@ struct DecodedPost: Decodable {
     let updatedAt: String
 
     let numComments: Int
-//    let numLikes: Int
+    let numLikes: Int
     
     let tags: [String]
 
@@ -50,13 +50,14 @@ class Post: Identifiable, ObservableObject {
     var text: String = ""
     var username: String = ""
     
-    init(anonymous: Bool, datePosted: String, createdAt: String, updatedAt: String, numComments: Int, tags: [String], title: String, text: String, username: String, DecodedPost: DecodedPost) {
+    init(anonymous: Bool, datePosted: String, createdAt: String, updatedAt: String, numComments: Int, numLikes: Int, tags: [String], title: String, text: String, username: String, DecodedPost: DecodedPost) {
         
         self.anonymous = anonymous
         self.datePosted = datePosted
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.numComments = numComments
+        self.numLikes = numLikes
         self.tags = tags
         self.title = title
         self.text = text
