@@ -30,9 +30,6 @@ class CommentsNetworkManager: ObservableObject {
         Network.getComments(forPostID: self.postId,
                             completionHandler: {(comments) in
                                 self.comments = comments
-                                comments.forEach({
-                                    print($0)
-                                })
                             })
     }
 }
@@ -171,7 +168,7 @@ struct PostHeader: View {
                 Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                     .font(J4FFonts.username)
                     .foregroundColor(J4FColors.darkBlue)
-                Text("3h")
+                Text(post.datePosted)
                     .font(J4FFonts.postText)
                     .foregroundColor(J4FColors.secondaryText)
                 Spacer()
