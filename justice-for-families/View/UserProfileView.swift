@@ -62,15 +62,15 @@ struct BioView : View {
                 Text(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(profileColors.primaryColor)
-                NavigationLink(destination: EditProfileView()) {
-                    Text("Edit Profile")
-                        .padding()
-                        .frame(width:150, height: 24)
-                        .background(profileColors.primaryColor2)
-                        .foregroundColor(.white)
-                        .cornerRadius(100)
-                        
-                }
+//                NavigationLink(destination: EditProfileView()) {
+//                    Text("Edit Profile")
+//                        .padding()
+//                        .frame(width:150, height: 24)
+//                        .background(profileColors.primaryColor2)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(100)
+//                        
+//                }
             }
         }
     }

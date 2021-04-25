@@ -33,7 +33,7 @@ struct FeedCell: View {
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
                     }
-                    Text("3h")
+                    Text(post.datePosted)
                         .font(J4FFonts.postText)
                         .foregroundColor(J4FColors.darkBlue)
                     Spacer()
