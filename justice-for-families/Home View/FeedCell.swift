@@ -59,23 +59,31 @@ struct FeedCell: View {
 struct FeedCellInteractButtons: View {
     
     @StateObject var post: Post
-    
+    @ObservedObject var networkManager = NetworkManager()
     var body: some View {
         HStack {
             
             Button(action: {
-                
+                let parameters = [
+                                  "username":  UserDefaults.standard.object(forKey: "LoggedInUser")!,
+                                  "date": "2021-04-24",
+                                  "postId": post.DecodedPost._id,
+                                  "_id:": post.DecodedPost._id] as [String : Any]
                 if post.isLiked {
-                    Network.unlikePost(parameters: ["username": UserDefaults.standard.object(forKey: "LoggedInUser")!])
+                    Network.unlikePost(parameters: parameters)
                     post.objectWillChange.send()
                     post.isLiked = false
                     post.numLikes -= 1
                     
                 } else {
-                    Network.likePost(parameters: ["username" : UserDefaults.standard.object(forKey: "LoggedInUser")! ])
+                    
+                    
+                    post.numLikes += 1
+                    Network.likePost(parameters: parameters)
                     post.objectWillChange.send()
                     post.isLiked = true
-                    post.numLikes += 1
+                    networkManager.fetchPosts()
+                    
                     
                 }
                 
