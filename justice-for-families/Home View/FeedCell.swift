@@ -23,7 +23,7 @@ struct FeedCell: View {
                         .frame(width: 41, height: 41, alignment: .leading)
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("resources")
+                        Text(post.tags[0].first == "#" ? post.tags[0] : "#\(post.tags[0])")
                             .frame(width: nil, height: 12, alignment: .center)
                             .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
                             .background(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
