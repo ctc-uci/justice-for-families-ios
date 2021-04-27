@@ -61,12 +61,11 @@ struct TabBarItem: View{
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(5)
-                .frame(width:40, height:30, alignment: .center)
-                .background(Color(currentView == tab ? .blue : .white).opacity(0.2))
-                .foregroundColor(Color(currentView == tab ? .blue : .black))
+                .frame(width:50, height:50, alignment: .center)
+                .foregroundColor(currentView == tab ? J4FColors.lightBlue : J4FColors.black)
                 .cornerRadius(6)
         }
-        .frame(width: 100, height: 30)
+        .frame(width: 100, height: 50)
         .onTapGesture{ currentView = tab }
         .padding(paddingEdges, 15)
     }
@@ -80,11 +79,11 @@ struct TabBar: View{
         HStack{
             TabBarItem(currentView: $currentView, imageName: "house.fill", paddingEdges: .leading, tab: .Tab1)
             Spacer()
-            ShowModalTabBarItem(radius: 30){
+            ShowModalTabBarItem(radius: 40){
                 showModal.toggle()
             }
             Spacer()
-            TabBarItem(currentView: $currentView, imageName: "person", paddingEdges: .trailing, tab: .Tab2)
+            TabBarItem(currentView: $currentView, imageName: "person.fill", paddingEdges: .trailing, tab: .Tab2)
         }
         .frame(minHeight: 40)
     }
@@ -106,7 +105,7 @@ public struct ShowModalTabBarItem: View{
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: radius, height: radius, alignment: .center)
-                .foregroundColor(Color(.systemGray))
+                .foregroundColor(J4FColors.orange)
                 .background(Color(.white))
                 .cornerRadius(radius/2)
 
@@ -116,39 +115,7 @@ public struct ShowModalTabBarItem: View{
     }
 }
 
-/*
-struct HomeView: View{
-    var body: some View{
-        VStack{
-            Spacer()
-            HStack{
-                Spacer()
-                Text("Home Tab")
-                Spacer()
-            }
-            Spacer()
-        }
-        .navigationBarTitle("Home Tab")
-    }
-}*/
 
-
-
-
-struct ProfileView: View{
-    var body: some View{
-        VStack{
-            Spacer()
-            HStack{
-                Spacer()
-                Text("Profile Tab")
-                Spacer()
-            }
-            Spacer()
-        }
-        .navigationBarTitle("Profile Tab")
-    }
-}
 
 /*
 struct TabBar_Previews: PreviewProvider {
