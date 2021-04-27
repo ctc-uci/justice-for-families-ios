@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct FeedCell: View {
     
@@ -33,9 +34,15 @@ struct FeedCell: View {
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
                     }
-                    Text(post.datePosted)
+                    //change string into date
+                    let isoDate = post.datePosted
+                    let dateFormatter = ISO8601DateFormatter()
+                    if let newDate =
+                        dateFormatter.date(from:isoDate) {
+                            Text(newDate.timeAgoDisplay())
                         .font(J4FFonts.postText)
                         .foregroundColor(J4FColors.darkBlue)
+                    }
                     Spacer()
                 }
                 
