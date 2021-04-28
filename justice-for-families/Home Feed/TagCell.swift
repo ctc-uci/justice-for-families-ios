@@ -14,11 +14,12 @@ struct TagCell: View {
     var body: some View {
         
         Text(tag)
-            .frame(width: nil, height: 30, alignment: .center)
+            .frame(width: nil, height: 12, alignment: .center)
             .padding(EdgeInsets(top: 2, leading: 12, bottom: 2, trailing: 12))
             .background(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
             .cornerRadius(40)
             .foregroundColor(J4FColors.darkBlue)
+            .font(J4FFonts.postText)
         
     }
     

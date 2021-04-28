@@ -63,7 +63,9 @@ class Post: Identifiable, ObservableObject {
         self.updatedAt = updatedAt
         self.numComments = numComments
         self.numLikes = numLikes
-        self.tags = tags
+        self.tags = tags.map({
+            $0.replacingOccurrences(of: "#", with: "")
+        })
         self.title = title
         self.text = text
         self.username = username

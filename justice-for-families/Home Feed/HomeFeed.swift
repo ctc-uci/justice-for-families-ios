@@ -44,10 +44,8 @@ class NetworkManager: ObservableObject {
                     case .success(let isLiked):
                         print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                         p.isLiked = isLiked
-                    case .failure(let error):
+                    case .failure(_):
                         print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
-                    default:
-                        break
                     }
                 }
             }

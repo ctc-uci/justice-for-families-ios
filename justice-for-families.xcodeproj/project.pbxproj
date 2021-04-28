@@ -170,19 +170,19 @@
 		3D5FA30F25449D1400888CC8 /* justice-for-families */ = {
 			isa = PBXGroup;
 			children = (
-				4ADEDBE72638DBB600F9E9AB /* Edit Profile View */,
+				4AB894BD263A2710002194F6 /* Notifications View */,
+				4ADEDBDF2638DB4C00F9E9AB /* Home Feed */,
 				4ADEDBE62638DBA800F9E9AB /* Profile View */,
 				4ADEDBE52638DB9800F9E9AB /* Add Post View */,
-				4ADEDBE42638DB8B00F9E9AB /* Post View */,
-				4ADEDBE32638DB7F00F9E9AB /* Authentication Views */,
-				4ADEDBDF2638DB4C00F9E9AB /* Home Feed */,
 				4A64399A25C4E2990014B3FF /* Network.swift */,
 				4AD5DC97262F8B9800A614B1 /* Util */,
 				C278BEFD25EA40A200F50373 /* Custom Fonts */,
-				5B5CB0BC257B0D2700357437 /* View */,
 				3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */,
 				3D5FA31425449D1700888CC8 /* Assets.xcassets */,
 				3D5FA31925449D1700888CC8 /* Info.plist */,
+				4ADEDBE32638DB7F00F9E9AB /* Authentication Views */,
+				4ADEDBE42638DB8B00F9E9AB /* Post View */,
+				4ADEDBE72638DBB600F9E9AB /* Edit Profile View */,
 				3D5FA31625449D1700888CC8 /* Preview Content */,
 				5BE541F025B3A331008DF7A8 /* AppConstants.swift */,
 				6CFB7DEB25B243F5009A11AA /* TabBar.swift */,
@@ -225,6 +225,13 @@
 				5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */,
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		4AB894BD263A2710002194F6 /* Notifications View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Notifications View";
 			sourceTree = "<group>";
 		};
 		4AD5DC97262F8B9800A614B1 /* Util */ = {
@@ -288,13 +295,6 @@
 				6C2B212D25F17F820076691C /* EditProfileView.swift */,
 			);
 			path = "Edit Profile View";
-			sourceTree = "<group>";
-		};
-		5B5CB0BC257B0D2700357437 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		C278BEFD25EA40A200F50373 /* Custom Fonts */ = {
