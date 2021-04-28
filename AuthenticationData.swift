@@ -17,9 +17,11 @@ class AuthenticationData: ObservableObject {
     @Published var email_SignUp = ""
     @Published var password_SignUp = ""
     @Published var reEnterPassword = ""
+    
     func logout() {
         resetQueries()
     }
+    
     func resetQueries() {
         //resetQueries when switching between login and signup views, when you log out
         email = ""
