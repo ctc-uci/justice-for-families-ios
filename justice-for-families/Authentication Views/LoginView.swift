@@ -106,7 +106,7 @@ struct LoginView: View {
                         model.isSignUp.toggle()
                         model.resetQueries()
                     }) {
-                        Text("Join Now!")
+                        Text("Sign Up")
                             .foregroundColor(Constants.tertiaryFontColor)
                             .font(.custom("Poppins-Medium", size: 16))
                     }

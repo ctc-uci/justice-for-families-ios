@@ -27,10 +27,9 @@ class CommentsNetworkManager: ObservableObject {
     }
     
     func fetchComments() {
-        Network.getComments(forPostID: self.postId,
-                            completionHandler: {(comments) in
-                                self.comments = comments
-                            })
+        Network.getComments(forPostID: self.postId, completionHandler: { (comments) in
+            self.comments = comments
+        })
     }
 }
 
@@ -47,56 +46,51 @@ struct PostView: View {
     }
         
     var body: some View {
-        VStack{
-                    List {
-                        Section(header: PostHeader(post: post)) {
-                            ForEach(networkManager.comments) { i in
-                                CommentCell(comment: i)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowBackground(Color.white)
-                            }
-                        }.textCase(.none)
-                    }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
-                    HStack {
-                        // this textField generates the value for the composedMessage @State var
-                        ZStack {
-                          
-                            
-                            TextEditor(text: $commentText)
-                                .foregroundColor(self.commentText == placeholderString ? .gray : .primary)
-                                .onTapGesture {
-                                    if self.commentText == placeholderString {
-                                        self.commentText = ""
-                                      
-                                                    }
-                                                }
-                            Text(commentText)
-                           
-                                .opacity(0)
-                                .padding(.all, 8) // <- This will solve the issue if it is in the same ZStack
-                        
-                                    }
-                        // the button triggers creating post
-                        
-                        Button(action: {
-                            let parameters = ["text" : commentText,
-                                              "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
-                                              "numLikes":0,
-                                              "postId": post.DecodedPost._id, "_id:": post.DecodedPost._id] as [String : Any]
-                            Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
-                            commentText = ""
-                            networkManager.fetchComments()
-                        }) {
-                            
-                            Text("Post")
-                                .font(J4FFonts.postTitle)
-                            
-                                    }
-                    }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
+        VStack {
+            List {
+                Section(header: PostHeader(post: post)) {
+                    ForEach(networkManager.comments) { i in
+                        CommentCell(comment: i)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                    }
+                }.textCase(.none)
+            }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+            
+            HStack {
+                // this textField generates the value for the composedMessage @State var
+                ZStack {
+                    TextEditor(text: $commentText)
+                        .foregroundColor(self.commentText == placeholderString ? .gray : .primary)
+                        .onTapGesture {
+                            self.commentText == placeholderString ? self.commentText = "" : nil
+                        }
+                    Text(commentText)
+                        .opacity(0)
+                        .padding(.all, 8) // <- This will solve the issue if it is in the same ZStack
                 }
+                // the button triggers creating post
+                
+                Button(action: {
+                    let parameters = ["text" : commentText,
+                                      "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
+                                      "numLikes":0,
+                                      "postId": post.DecodedPost._id,
+                                      "_id:": post.DecodedPost._id] as [String : Any]
+                    Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
+                    let newComment = Comment(text: commentText, username: UserDefaults.standard.string(forKey: "LoggedInUser")!, numLikes: 0, postId: post.DecodedPost._id, datePosted: nil, createdAt: nil, updatedAt: nil)
+                    networkManager.comments.append(newComment)
+                    post.numComments += 1
+                    commentText = ""
+                }) {
+                    Text("Post")
+                        .font(J4FFonts.postTitle)
+                }
+            }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
+        }
 
 
-            }
+    }
 }
 
 struct CommentCell: View {
@@ -163,14 +157,24 @@ struct PostHeader: View {
                 Image(systemName: "person.crop.circle")
                     .resizable()
                     .frame(width: 41, height: 41, alignment: .leading)
-                
-                Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
-                    .font(J4FFonts.username)
-                    .foregroundColor(J4FColors.darkBlue)
-                Text(post.datePosted)
-                    .font(J4FFonts.postText)
-                    .foregroundColor(J4FColors.secondaryText)
-                Spacer()
+                VStack(alignment: .leading) {
+                    Text(post.tags[0].first == "#" ? post.tags[0] : "#\(post.tags[0])")
+                        .frame(width: nil, height: 12, alignment: .center)
+                        .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
+                        .background(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
+                        .cornerRadius(40)
+                        .foregroundColor(J4FColors.darkBlue)
+                        .font(J4FFonts.postText)
+                    HStack {
+                        Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
+                            .font(J4FFonts.username)
+                            .foregroundColor(J4FColors.darkBlue)
+                        Text(post.datePosted)
+                            .font(J4FFonts.postText)
+                            .foregroundColor(J4FColors.secondaryText)
+                        Spacer()
+                    }
+                }
             }
             Spacer(minLength: 16)
             Text(post.title)

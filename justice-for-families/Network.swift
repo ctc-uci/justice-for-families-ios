@@ -99,7 +99,11 @@ struct Network {
                 guard let data = response.data else { return }
                 do {
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    let posts: [Post] = decodedPosts.map {
+                        print("\($0.title) -- \($0.numComments)")
+                        return Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0)
+                    }
+
                     DispatchQueue.main.async { completionHandler(posts) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
@@ -134,10 +138,18 @@ struct Network {
                 do {
                     
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    
+
+                    posts.forEach({ p in
+                        AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(username)/hasLiked")!, method: .get).responseString { response in
+                            
+                        }
+                        
+                    })
+                    
                     DispatchQueue.main.async {
                         completionHandler(posts)
-                        print(posts)
                     }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
@@ -195,6 +207,27 @@ struct Network {
                 print(error)
                 break
             }
+        }
+    }
+    
+//    j4f-backend.herokuapp.com/posts/:postId/user/:username/hasLiked
+    static func hasLiked(forPostID postID: String, username: String, completion: @escaping(Result<Bool, Error>) -> Void) {
+        guard let url = URL(string: "\(self.baseURL)/posts/\(postID)/user/\(username)/hasLiked") else {
+            return
+        }
+        
+        AF.request(url, method: .get).responseString { (response) in
+            
+            switch response.result {
+            case .success(_):
+                guard let data = response.data else { return }
+                guard let result = try? JSONDecoder().decode(HasLikedResponse.self, from: data) else { return }
+                DispatchQueue.main.async { completion(.success(result.hasLiked)) }
+                
+            case .failure(let error):
+                DispatchQueue.main.async { completion(.failure(error)) }
+            }
+
         }
     }
     

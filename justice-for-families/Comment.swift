@@ -31,7 +31,7 @@ struct Comment: Identifiable {
     let numLikes: Int
     let postId: String
     
-    let datePosted: String
-    let createdAt: String
-    let updatedAt: String
+    let datePosted: String?
+    let createdAt: String?
+    let updatedAt: String?
 }

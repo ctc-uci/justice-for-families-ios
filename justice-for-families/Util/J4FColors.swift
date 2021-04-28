@@ -15,4 +15,5 @@ struct J4FColors {
     static let orange = Color("orange")
     static let lightGray = Color("lightGray")
     static let background = Color("background")
+    static let lightBlue = Color("lightBlue")
 }
