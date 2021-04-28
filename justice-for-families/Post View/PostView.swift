@@ -158,7 +158,7 @@ struct PostHeader: View {
                     .resizable()
                     .frame(width: 41, height: 41, alignment: .leading)
                 VStack(alignment: .leading) {
-                    TagCell(tag: post.tags[0].first == "#" ? post.tags[0] : "\(post.tags[0])")
+                    TagCell(tag: post.tags[0])
                     HStack {
                         Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                             .font(J4FFonts.username)

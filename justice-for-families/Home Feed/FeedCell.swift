@@ -22,7 +22,7 @@ struct FeedCell: View {
                         .frame(width: 41, height: 41, alignment: .leading)
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        TagCell(tag: post.tags[0].first == "#" ? post.tags[0] : "\(post.tags[0])")
+                        TagCell(tag: post.tags[0])
                         Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
