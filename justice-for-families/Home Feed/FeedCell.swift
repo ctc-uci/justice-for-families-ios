@@ -32,12 +32,31 @@ struct FeedCell: View {
                         Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
+                            .lineLimit(1)
                     }
-                    Text(post.datePosted)
+                    Spacer()
+                    //change string into date
+                    let isoDate = post.datePosted
+                    let trimmedIsoString = isoDate.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)
+
+                    let dateFormatter = ISO8601DateFormatter()
+                    //Text(isoDate)
+                    if let newDate =
+                        dateFormatter.date(from:trimmedIsoString) {
+                        Text(newDate.timeAgoDisplay())
+                            .multilineTextAlignment(.trailing)
                         .font(J4FFonts.postText)
                         .foregroundColor(J4FColors.darkBlue)
-                    Spacer()
+                                
+                    }
+                   
                 }
+                
+             
+
+                
+                
+                
                 
                 Spacer(minLength: 16)
                 Text(post.title)

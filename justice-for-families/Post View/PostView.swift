@@ -167,11 +167,25 @@ struct PostHeader: View {
                         .font(J4FFonts.postText)
                     HStack {
                         Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
+                            .allowsTightening(true)
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
-                        Text(post.datePosted)
+                            .lineLimit(1)
+                        Spacer()
+                        //change string into date
+                        let isoDate = post.datePosted
+                        let trimmedIsoString = isoDate.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)
+
+                        let dateFormatter = ISO8601DateFormatter()
+                        //Text(isoDate)
+                        if let newDate =
+                            dateFormatter.date(from:trimmedIsoString) {
+                            Text(newDate.timeAgoDisplay())
+                                .multilineTextAlignment(.trailing)
                             .font(J4FFonts.postText)
-                            .foregroundColor(J4FColors.secondaryText)
+                            .foregroundColor(J4FColors.darkBlue)
+                                    
+                        }
                         Spacer()
                     }
                 }
