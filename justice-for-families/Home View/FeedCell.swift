@@ -21,30 +21,44 @@ struct FeedCell: View {
                     Image(systemName: "person.crop.circle")
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(post.tags[0].first == "#" ? post.tags[0] : "#\(post.tags[0])")
-                            .frame(width: nil, height: 12, alignment: .center)
-                            .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
-                            .background(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
-                            .cornerRadius(40)
-                            .foregroundColor(J4FColors.darkBlue)
-                            .font(J4FFonts.postText)
-                        Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
-                            .font(J4FFonts.username)
-                            .foregroundColor(J4FColors.darkBlue)
-                    }
-                    //change string into date
-                    let isoDate = post.datePosted
-                    let dateFormatter = ISO8601DateFormatter()
-                    if let newDate =
-                        dateFormatter.date(from:isoDate) {
+                    HStack(){
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(post.tags[0].first == "#" ? post.tags[0] : "#\(post.tags[0])")
+                                .frame(width: nil, height: 12, alignment: .center)
+                                .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
+                                .background(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
+                                .cornerRadius(40)
+                                .foregroundColor(J4FColors.darkBlue)
+                                .font(J4FFonts.postText)
+                            Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
+                                .font(J4FFonts.username)
+                                .foregroundColor(J4FColors.darkBlue)
+                        }
+                        
+                        Spacer()
+                        //change string into date
+                        let isoDate = post.datePosted
+                        let trimmedIsoString = isoDate.replacingOccurrences(of: "\\.\\d+", with: "", options: .regularExpression)
+
+                        let dateFormatter = ISO8601DateFormatter()
+                        //Text(isoDate)
+                        if let newDate =
+                            dateFormatter.date(from:trimmedIsoString) {
                             Text(newDate.timeAgoDisplay())
-                        .font(J4FFonts.postText)
-                        .foregroundColor(J4FColors.darkBlue)
+                                .multilineTextAlignment(.trailing)
+                            .font(J4FFonts.postText)
+                            .foregroundColor(J4FColors.darkBlue)
+                                    
+                        }
+                        
                     }
-                    Spacer()
+                    //Spacer()
+                  
                 }
+                
+               
+                
+
                 
                 Spacer(minLength: 16)
                 Text(post.title)
