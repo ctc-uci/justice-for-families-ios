@@ -297,6 +297,21 @@
 			path = "Edit Profile View";
 			sourceTree = "<group>";
 		};
+		5B5CB0BC257B0D2700357437 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Profile View";
+			sourceTree = "<group>";
+		};
+		4ADEDBE72638DBB600F9E9AB /* Edit Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				6C2B212D25F17F820076691C /* EditProfileView.swift */,
+			);
+			path = "Edit Profile View";
+			sourceTree = "<group>";
+		};
 		C278BEFD25EA40A200F50373 /* Custom Fonts */ = {
 			isa = PBXGroup;
 			children = (
