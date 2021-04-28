@@ -258,8 +258,8 @@
 		4ADEDBE42638DB8B00F9E9AB /* Post View */ = {
 			isa = PBXGroup;
 			children = (
-				5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */,
 				5B5CB0AD257B094F00357437 /* PostView.swift */,
+				5BE541FD25B3A3FC008DF7A8 /* CommentRow.swift */,
 				5BE5420825B3A43E008DF7A8 /* AddCommentFooter.swift */,
 			);
 			path = "Post View";

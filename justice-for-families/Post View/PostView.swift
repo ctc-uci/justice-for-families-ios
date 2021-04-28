@@ -75,10 +75,12 @@ struct PostView: View {
                     let parameters = ["text" : commentText,
                                       "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
                                       "numLikes":0,
-                                      "postId": post.DecodedPost._id, "_id:": post.DecodedPost._id] as [String : Any]
+                                      "postId": post.DecodedPost._id,
+                                      "_id:": post.DecodedPost._id] as [String : Any]
                     Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
+                    let newComment = Comment(text: commentText, username: UserDefaults.standard.string(forKey: "LoggedInUser")!, numLikes: 0, postId: post.DecodedPost._id, datePosted: nil, createdAt: nil, updatedAt: nil)
+                    networkManager.comments.append(newComment)
                     commentText = ""
-                    networkManager.fetchComments()
                 }) {
                     Text("Post")
                         .font(J4FFonts.postTitle)
