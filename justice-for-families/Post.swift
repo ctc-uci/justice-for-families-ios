@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct HasLikedResponse: Decodable {
+    
+    var hasLiked: Bool
+}
+
 struct DecodedPost: Decodable {
     
     var __v: Int
@@ -63,5 +68,6 @@ class Post: Identifiable, ObservableObject {
         self.text = text
         self.username = username
         self.DecodedPost = DecodedPost
+        
     }
 }

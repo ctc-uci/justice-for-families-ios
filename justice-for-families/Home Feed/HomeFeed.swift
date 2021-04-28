@@ -21,7 +21,9 @@ struct Update: Identifiable {
 }
 
 class NetworkManager: ObservableObject {
+    
     var didChange = PassthroughSubject<NetworkManager, Never>()
+    var username = UserDefaults.standard.string(forKey: "LoggedInUser") ?? ""
     
     @Published var posts = [Post]() {
         didSet {
@@ -36,6 +38,19 @@ class NetworkManager: ObservableObject {
     public func fetchPosts() {
         Network.fetchAllPosts { (posts) in
             self.posts = posts.reversed()
+            posts.forEach { (p) in
+                Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
+                    switch result {
+                    case .success(let isLiked):
+                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
+                        p.isLiked = isLiked
+                    case .failure(let error):
+                        print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+                    default:
+                        break
+                    }
+                }
+            }
         }
     }
     
