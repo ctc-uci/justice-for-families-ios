@@ -80,7 +80,7 @@ struct PostView: View {
                     Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
                     let newComment = Comment(text: commentText, username: UserDefaults.standard.string(forKey: "LoggedInUser")!, numLikes: 0, postId: post.DecodedPost._id, datePosted: nil, createdAt: nil, updatedAt: nil)
                     networkManager.comments.append(newComment)
-                    post.numComments += 1
+                    post.numComments += 1 
                     commentText = ""
                 }) {
                     Text("Post")
@@ -183,7 +183,7 @@ struct PostHeader: View {
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 16)
             Text(post.text)
-                .font(J4FFonts.username)
+                .font(J4FFonts.postText)
                 .foregroundColor(J4FColors.black)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 16)

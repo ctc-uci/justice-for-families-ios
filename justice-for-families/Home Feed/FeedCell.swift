@@ -44,6 +44,12 @@ struct FeedCell: View {
                     .font(J4FFonts.headline)
                     .foregroundColor(J4FColors.darkBlue)
                     .multilineTextAlignment(.leading)
+                    .lineLimit(4)
+                Spacer(minLength: 16)
+                Text(post.text)
+                    .font(J4FFonts.postText)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(4)
                 Spacer(minLength: 16)
                 FeedCellInteractButtons(post: post)
                     
