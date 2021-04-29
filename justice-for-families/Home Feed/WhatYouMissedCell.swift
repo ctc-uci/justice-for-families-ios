@@ -10,16 +10,15 @@ import Foundation
 import SwiftUI
 
 struct WhatYouMissedCell: View {
-    //let post: Post
+    //let post: Any
     
-
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .fill(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
             VStack(alignment: .center){
                 Button(action: {
-                    Network.getWhatYouMissed()
+                    //Network.getWhatYouMissed()
                 }) {
                     Text("@person commented on your post!").fixedSize(horizontal: false, vertical: true).font(.system(size: 12))
                 }

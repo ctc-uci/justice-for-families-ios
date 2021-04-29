@@ -231,7 +231,7 @@ struct Network {
         }
     }
     
-    static func getWhatYouMissed() {
+    static func getWhatYouMissed(completionHandler: @escaping (_ posts: [String: [Any]]) -> Void) {
         var dayComponent = DateComponents()
         dayComponent.day = -2 //two days ago
         let calendar = Calendar.current
@@ -241,16 +241,15 @@ struct Network {
         iso8601DateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         let date = iso8601DateFormatter.string(from: twoDaysAgo)
         let parameters = ["username": UserDefaults.standard.string(forKey: "LoggedInUser")!, "startingFrom": date] as [String : Any]
-        print(parameters)
+       
         guard let url = URL(string: "\(baseURL)/activity") else { return }
         
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
-
             switch response.result {
             
             case .success(_):
-//                guard let json = response.value else { return }
                 print(response.result)
+                
                 
             case .failure(let error):
                 print(error)
