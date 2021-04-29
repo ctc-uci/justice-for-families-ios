@@ -82,6 +82,7 @@ struct HomeFeed: View {
                         WhatYouMissedCell()
                         WhatYouMissedCell()
                         WhatYouMissedCell()
+                        WhatYouMissedCell()
 
                     }
                 })
