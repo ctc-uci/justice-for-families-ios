@@ -5,10 +5,6 @@
 //  Created by Jules Labador on 1/11/21.
 //
 
-//2/25 Josh https://betterprogramming.pub/pull-to-refresh-in-swiftui-6604f54a01d5 followed this guide for "pull-to-refresh" feature
-//made some kinda heavy changes but essentially just make any changes in the UIFeed struct
-//feel free to rearrange functions/ rename stuff
-//make "pull-to-refresh" updates in HomeFeedHelper's handleRefreshControl function
 
 import SwiftUI
 import Combine
@@ -26,6 +22,11 @@ class NetworkManager: ObservableObject {
     var username = UserDefaults.standard.string(forKey: "LoggedInUser") ?? ""
     
     @Published var posts = [Post]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    @Published var whatYouMissedPosts = [Post]() {
         didSet {
             didChange.send(self)
         }
@@ -66,20 +67,38 @@ struct HomeFeed: View {
     var body: some View {
 
         NavigationView {
-            List(networkManager.posts) { p in
-                FeedCell(post: p)
+            VStack{
+                ScrollView(.horizontal, showsIndicators: false, content: {
+                    HStack {
+                       
+                        WhatYouMissedCell()
+                        WhatYouMissedCell()
+                        WhatYouMissedCell()
+                        WhatYouMissedCell()
+                        WhatYouMissedCell()
+                        WhatYouMissedCell()
+                    }
+                })
+                .listRowInsets(EdgeInsets())
+                .background(J4FColors.background)
+
+
+                List(networkManager.posts) { p in
+                    FeedCell(post: p)
+                }
+            }.pullToRefresh(isShowing: $isShowing) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                   networkManager.fetchPosts()
+                   self.isShowing = false
+                }
+           
+            
             }
-            .navigationBarTitle("J4F")
-            .pullToRefresh(isShowing: $isShowing) {
-                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    networkManager.fetchPosts()
-                    self.isShowing = false
-                 }
-            }
+            
         }
         // Goodbye 5head :)
         .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
+        .navigationBarTitle("J4F")
     }
 }
     
