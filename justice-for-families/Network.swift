@@ -100,7 +100,7 @@ struct Network {
                 do {
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
                     let posts: [Post] = decodedPosts.map {
-                        print("\($0.title) -- \($0.numComments)")
+//                        print("\($0.title) -- \($0.numComments)")
                         return Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0)
                     }
 
@@ -186,7 +186,6 @@ struct Network {
                 guard let data = response.data else { return }
                     
                 do {
-                    
                     let decodedComments = try JSONDecoder().decode([DecodedComment].self, from: data)
                     let comments = decodedComments.map { Comment(text: $0.text, username: $0.username, numLikes: $0.numLikes, postId: $0.postId, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt) }
                     DispatchQueue.main.async { completionHandler(comments) }
@@ -231,4 +230,48 @@ struct Network {
         }
     }
     
+
+    static func getWhatYouMissed(completionHandler: @escaping (_ posts: Activity) -> Void) {
+
+        var dayComponent = DateComponents()
+        dayComponent.day = -2 //two days ago
+        let calendar = Calendar.current
+        let twoDaysAgo =  calendar.date(byAdding: dayComponent, to: Date())!
+        
+        let iso8601DateFormatter = ISO8601DateFormatter()
+        iso8601DateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let date = iso8601DateFormatter.string(from: twoDaysAgo)
+        let parameters = ["username": UserDefaults.standard.string(forKey: "LoggedInUser")!, "startingFrom": date] as [String : Any]
+        
+        guard let url = URL(string: "\(baseURL)/activity") else { return }
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
+
+            switch response.result {
+            
+            case .success(_):
+                print(response.result)
+                guard let data = response.data else { return }
+                do {
+                    let activities = try JSONDecoder().decode(Activity.self, from: data)
+                    DispatchQueue.main.async { completionHandler(activities) }
+                    
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+
+            case .failure(let error):
+                print(error)
+                
+            }
+        }
+    }
 }
