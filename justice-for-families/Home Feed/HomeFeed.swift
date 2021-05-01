@@ -26,7 +26,7 @@ class NetworkManager: ObservableObject {
             didChange.send(self)
         }
     }
-    @Published var whatYouMissedPosts = [Any]() {
+    @Published var whatYouMissedPosts = [ActivityComment]() {
         didSet {
             didChange.send(self)
         }
@@ -57,7 +57,9 @@ class NetworkManager: ObservableObject {
     
     public func fetchWhatYouMissed() {
         Network.getWhatYouMissed { (posts) in
-            print("🟡 \(posts)")
+            //print("🟡 \(posts)")
+            self.whatYouMissedPosts = posts.comments
+            print(self.whatYouMissedPosts)
         }
         
     }
@@ -75,15 +77,13 @@ struct HomeFeed: View {
         NavigationView {
             VStack{
                 ScrollView(.horizontal, showsIndicators: false, content: {
-                    HStack {
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-
+                    
+                    HStack{
+                        ForEach(networkManager.whatYouMissedPosts, id: \.self){ p in
+                            WhatYouMissedCell(post: p)
+                        }
                     }
+                    //WhatYouMissedCell(post: networkManager.whatYouMissedPosts[0])
                 })
                 .listRowInsets(EdgeInsets())
                 .background(J4FColors.background)
@@ -95,6 +95,7 @@ struct HomeFeed: View {
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                    networkManager.fetchPosts()
+                    networkManager.fetchWhatYouMissed()
                    self.isShowing = false
                 }
            

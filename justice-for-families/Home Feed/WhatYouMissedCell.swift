@@ -10,21 +10,13 @@ import Foundation
 import SwiftUI
 
 struct WhatYouMissedCell: View {
-    //let post: Any
-    
-
+    let post: ActivityComment
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .fill(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
             VStack(alignment: .center){
-                Button(action: {
-
-                    //Network.getWhatYouMissed()
-                }) {
-                    Text("@person commented on your post!").fixedSize(horizontal: false, vertical: true).font(.system(size: 12))
-                }
-                
+                Text("@\(post.commentUsername) commented on your post!").fixedSize(horizontal: false, vertical: true).font(.system(size: 12))
                 Spacer()
                 Text("x hours ago").font(.system(size: 12)).frame(maxWidth: .infinity, alignment: .trailing)
             }
