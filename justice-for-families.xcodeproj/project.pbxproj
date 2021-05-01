@@ -16,6 +16,7 @@
 		3D95CE03263A2C9900BCE72F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D95CE02263A2C9900BCE72F /* Time.swift */; };
 		4A50F168263092C4005A1413 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50F167263092C4005A1413 /* TagCell.swift */; };
 		4A64399B25C4E2990014B3FF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64399A25C4E2990014B3FF /* Network.swift */; };
+		4A71FDD7263DEF9300866219 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A71FDD6263DEF9300866219 /* Activity.swift */; };
 		4A781E7B262F915900ABDEDF /* HomeFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E79262F915900ABDEDF /* HomeFeed.swift */; };
 		4A781E7C262F915900ABDEDF /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E7A262F915900ABDEDF /* FeedCell.swift */; };
 		4A781E8A262F91C800ABDEDF /* AuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E89262F91C800ABDEDF /* AuthenticationData.swift */; };
@@ -77,6 +78,7 @@
 		3D95CE02263A2C9900BCE72F /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		4A50F167263092C4005A1413 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		4A64399A25C4E2990014B3FF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		4A71FDD6263DEF9300866219 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		4A781E79262F915900ABDEDF /* HomeFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeed.swift; sourceTree = "<group>"; };
 		4A781E7A262F915900ABDEDF /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		4A781E89262F91C800ABDEDF /* AuthenticationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationData.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				4A781E8E262F91F900ABDEDF /* Post.swift */,
 				4A781E93262F920A00ABDEDF /* Comment.swift */,
 				3D45909826334529006DA56D /* SearchBar.swift */,
+				4A71FDD6263DEF9300866219 /* Activity.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */,
 				4A781E94262F920A00ABDEDF /* Comment.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
+				4A71FDD7263DEF9300866219 /* Activity.swift in Sources */,
 				4A781E8F262F91F900ABDEDF /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

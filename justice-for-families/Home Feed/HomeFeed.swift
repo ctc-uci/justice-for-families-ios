@@ -44,7 +44,7 @@ class NetworkManager: ObservableObject {
                 Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
                     switch result {
                     case .success(let isLiked):
-                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
+//                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                         p.isLiked = isLiked
                     case .failure(_):
                         print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
@@ -57,8 +57,7 @@ class NetworkManager: ObservableObject {
     
     public func fetchWhatYouMissed() {
         Network.getWhatYouMissed { (posts) in
-            self.whatYouMissedPosts = posts["comments"]!
-            print(self.whatYouMissedPosts)
+            print("🟡 \(posts)")
         }
         
     }
