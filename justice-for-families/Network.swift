@@ -173,28 +173,31 @@ struct Network {
         
     }
     
-    static func getPost(fromPostID postID: String, completionHandler: @escaping (_ posts: [Post]) -> Void) {
+    static func getPost(fromPostID postID: String, completionHandler: @escaping (_ posts: Post) -> Void) {
         guard let url = URL(string: "\(self.baseURL)/posts/id") else {
             return
         }
-        AF.request(url, method: .get).responseString { (response) in
+        let parameters = ["postID": postID] as [String : String]
+        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseString { (response) in
 
             switch response.result {
             case .success(_):
+                print("Hi there")
                 guard let data = response.data else { return }
                     
                 do {
-                    
-                    let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    print("Hi there2")
+                    let decodedPosts = try JSONDecoder().decode(DecodedPost.self, from: data)//error seems to be coming from this line
+                    let posts: Post =   Post(anonymous: decodedPosts.anonymous, datePosted: decodedPosts.datePosted, createdAt: decodedPosts.createdAt, updatedAt: decodedPosts.updatedAt, numComments: decodedPosts.numComments, numLikes: decodedPosts.numLikes, tags: decodedPosts.tags, title: decodedPosts.title, text: decodedPosts.text, username: decodedPosts.username, DecodedPost: decodedPosts)
                     
                     print("Hi")
+                    /*
                     posts.forEach({ p in
                         AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(UserDefaults.standard.string(forKey: "LoggedInUser")!)/hasLiked")!, method: .get).responseString { response in
                             
                         }
                         
-                    })
+                    })*/
                     print("Hi2")
                     DispatchQueue.main.async {
                         completionHandler(posts)
@@ -299,7 +302,6 @@ struct Network {
                 do {
                     let activities = try JSONDecoder().decode(Activity.self, from: data)
                     DispatchQueue.main.async { completionHandler(activities) }
-                    
                 } catch DecodingError.keyNotFound(let key, let context) {
                     Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
                 } catch DecodingError.valueNotFound(let type, let context) {
