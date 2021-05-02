@@ -136,7 +136,6 @@ struct Network {
                 guard let data = response.data else { return }
                     
                 do {
-                    
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
                     let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
                     
@@ -147,7 +146,7 @@ struct Network {
                         }
                         
                     })
-                    
+                  
                     DispatchQueue.main.async {
                         completionHandler(posts)
                     }
@@ -172,6 +171,51 @@ struct Network {
     
     static func getPost(fromDate date: Date) {
         
+    }
+    
+    static func getPost(fromPostID postID: String, completionHandler: @escaping (_ posts: [Post]) -> Void) {
+        guard let url = URL(string: "\(self.baseURL)/posts/id") else {
+            return
+        }
+        AF.request(url, method: .get).responseString { (response) in
+
+            switch response.result {
+            case .success(_):
+                guard let data = response.data else { return }
+                    
+                do {
+                    
+                    let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
+                    let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    
+                    print("Hi")
+                    posts.forEach({ p in
+                        AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(UserDefaults.standard.string(forKey: "LoggedInUser")!)/hasLiked")!, method: .get).responseString { response in
+                            
+                        }
+                        
+                    })
+                    print("Hi2")
+                    DispatchQueue.main.async {
+                        completionHandler(posts)
+                    }
+                    
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+                
+            case .failure(let error):
+                print("🔥 \(error)")
+            }
+        }
     }
     
     static func getComments(forPostID postID: String, completionHandler: @escaping (_ comments: [Comment]) -> Void) {
@@ -250,7 +294,7 @@ struct Network {
             switch response.result {
             
             case .success(_):
-                print(response.result)
+                //print(response.result)
                 guard let data = response.data else { return }
                 do {
                     let activities = try JSONDecoder().decode(Activity.self, from: data)

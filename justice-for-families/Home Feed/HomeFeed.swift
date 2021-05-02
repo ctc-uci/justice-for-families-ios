@@ -59,7 +59,6 @@ class NetworkManager: ObservableObject {
         Network.getWhatYouMissed { (posts) in
             //print("🟡 \(posts)")
             self.whatYouMissedPosts = posts.comments
-            print(self.whatYouMissedPosts)
         }
         
     }
