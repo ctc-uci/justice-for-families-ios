@@ -24,12 +24,12 @@ class ActivityNetworkManager: ObservableObject {
     }
     
     public func fetchActivity() {
-        activity.append(Activity())
-        activity.append(Activity())
-        activity.append(Activity())
-        activity.append(Activity())
-        activity.append(Activity())
-        activity.append(Activity())
+//        activity.append(Activity())
+//        activity.append(Activity())
+//        activity.append(Activity())
+//        activity.append(Activity())
+//        activity.append(Activity())
+//        activity.append(Activity())
     }
 }
 
@@ -38,15 +38,16 @@ struct ActivityView: View {
     @ObservedObject var networkManager = ActivityNetworkManager()
     
     var body: some View {
-        NavigationView {
-            List(networkManager.activity) { a in
-                ActivityCell(activity: a)
-            }
-            .navigationBarTitle("Activity")
-        }
-        // Goodbye 5head :)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
+        Text("hello")
+//        NavigationView {
+//            List(networkManager.activity) { a in
+////                ActivityCell(activity: a)
+//            }
+//            .navigationBarTitle("Activity")
+//        }
+//        // Goodbye 5head :)
+//        .navigationBarBackButtonHidden(true)
+//        .navigationBarHidden(true)
     }
 }
 
