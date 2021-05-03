@@ -21,6 +21,7 @@ struct ActivityComment: Decodable, Hashable {
     var commentDatePosted: String
     var commentText: String
 }
+
 extension ActivityComment: Identifiable {
     var id: String { return commentID}
 }

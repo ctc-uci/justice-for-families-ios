@@ -20,11 +20,13 @@ struct Network {
             switch response.result {
 
             case .success(_):
-                guard let json = response.value else { return }
-                print(json)
+                break
+//                guard let json = response.value else { return }
+//                print(json)
                 
             case .failure(let error):
-                print(error)
+                break
+//                print(error)
                 
             }
         }
@@ -76,13 +78,13 @@ struct Network {
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
             switch response.result {
             case .success(_):
-                if let json = response.value {
-                    print(json)
-                    print("LETS GOOOOOOOOOOO")
-                }
+                print("🟢 Comment succesfully created")
+//                if let json = response.value {
+//                    print(json)
+//                    print("LETS GOOOOOOOOOOO")
+//                }
             case .failure(let error):
-                print("ruh roh, error:")
-                print(error)
+                print("🔴 Error creating comment: \(error)")
             }
         }
     }
@@ -134,8 +136,10 @@ struct Network {
             switch response.result {
             case .success(_):
                 guard let data = response.data else { return }
-                    
+                print("🟡", response.result)
+                
                 do {
+                    
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
                     let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
                     
@@ -177,20 +181,20 @@ struct Network {
         guard let url = URL(string: "\(self.baseURL)/posts/id") else {
             return
         }
-        let parameters = ["postID": postID] as [String : String]
-        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default).responseString { (response) in
+        let parameters = ["_id": postID] as [String : String]
+        AF.request(url, method: .get, parameters: parameters).responseString { (response) in
 
+//            print("🟡 Trying to get comment for post id: \(postID)")
             switch response.result {
             case .success(_):
-                print("Hi there")
+//                print("🟢 Success: \(response.result)")
                 guard let data = response.data else { return }
                     
                 do {
-                    print("Hi there2")
+                    
                     let decodedPosts = try JSONDecoder().decode(DecodedPost.self, from: data)//error seems to be coming from this line
                     let posts: Post =   Post(anonymous: decodedPosts.anonymous, datePosted: decodedPosts.datePosted, createdAt: decodedPosts.createdAt, updatedAt: decodedPosts.updatedAt, numComments: decodedPosts.numComments, numLikes: decodedPosts.numLikes, tags: decodedPosts.tags, title: decodedPosts.title, text: decodedPosts.text, username: decodedPosts.username, DecodedPost: decodedPosts)
                     
-                    print("Hi")
                     /*
                     posts.forEach({ p in
                         AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(UserDefaults.standard.string(forKey: "LoggedInUser")!)/hasLiked")!, method: .get).responseString { response in
@@ -198,19 +202,18 @@ struct Network {
                         }
                         
                     })*/
-                    print("Hi2")
                     DispatchQueue.main.async {
                         completionHandler(posts)
                     }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
-                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET POST ERROR: could not find key \(key) in JSON: \(context.debugDescription)")
                 } catch DecodingError.valueNotFound(let type, let context) {
-                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET POST ERROR: could not find type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.typeMismatch(let type, let context) {
-                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET POST ERROR: type mismatch for type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.dataCorrupted(let context) {
-                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET POST ERROR: data found to be corrupted in JSON: \(context.debugDescription)")
                 } catch let error as NSError {
                     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }
@@ -230,6 +233,7 @@ struct Network {
             switch response.result {
 
             case .success(_):
+                print("🟢 getComments result: -- \(postID) --", response.result)
                 guard let data = response.data else { return }
                     
                 do {
@@ -238,19 +242,19 @@ struct Network {
                     DispatchQueue.main.async { completionHandler(comments) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
-                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET COMMENTS ERROR: could not find key \(key) in JSON: \(context.debugDescription)")
                 } catch DecodingError.valueNotFound(let type, let context) {
-                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET COMMENTS ERROR: could not find type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.typeMismatch(let type, let context) {
-                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET COMMENTS ERROR: type mismatch for type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.dataCorrupted(let context) {
-                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET COMMENTS ERROR: data found to be corrupted in JSON: \(context.debugDescription)")
                 } catch let error as NSError {
                     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }
                 break
             case .failure(let error):
-                print(error)
+                print("🔴 Error trying to retrieve comments for post ID: \(postID): \(error)")
                 break
             }
         }
@@ -297,19 +301,19 @@ struct Network {
             switch response.result {
             
             case .success(_):
-                //print(response.result)
+                print("🟡 WYM SUCCESS:", response.result)
                 guard let data = response.data else { return }
                 do {
                     let activities = try JSONDecoder().decode(Activity.self, from: data)
                     DispatchQueue.main.async { completionHandler(activities) }
                 } catch DecodingError.keyNotFound(let key, let context) {
-                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET WYM ERROR: could not find key \(key) in JSON: \(context.debugDescription)")
                 } catch DecodingError.valueNotFound(let type, let context) {
-                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET WYM ERROR: could not find type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.typeMismatch(let type, let context) {
-                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET WYM ERROR: type mismatch for type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.dataCorrupted(let context) {
-                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET WYM ERROR: data found to be corrupted in JSON: \(context.debugDescription)")
                 } catch let error as NSError {
                     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }

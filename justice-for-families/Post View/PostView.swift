@@ -26,7 +26,9 @@ class CommentsNetworkManager: ObservableObject {
         fetchComments()
     }
     
+    
     func fetchComments() {
+        print("Fetching comment for postID: \(self.postId)")
         Network.getComments(forPostID: self.postId, completionHandler: { (comments) in
             self.comments = comments
         })

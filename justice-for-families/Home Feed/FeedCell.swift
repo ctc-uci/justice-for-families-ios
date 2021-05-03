@@ -100,7 +100,7 @@ struct FeedCellInteractButtons: View {
                     
                 }
                 
-                print(post)
+//                print(post)
                 
             }) {
                 HStack(alignment: .center) {

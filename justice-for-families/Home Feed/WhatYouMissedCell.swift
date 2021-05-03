@@ -20,13 +20,14 @@ class WYMNetworkManager: ObservableObject {
     }
     
     init(fromActivityComment activityComment: ActivityComment) {
-        print(activityComment)
+//        print(activityComment)
         self.activityComment = activityComment
         self.post = Post(anonymous: true, datePosted: "", createdAt: "", updatedAt: "", numComments: 0, numLikes: 0, tags: [], title: "", text: "", username: "", DecodedPost: DecodedPost(__v: 0, _id: "", anonymous: true, datePosted: "", createdAt: "", updatedAt: "", numComments: 0, numLikes: 0, tags: [], title: "", text: "", username: ""))
         
+        
         Network.getPost(fromPostID: activityComment.postID){ (post) in
             self.post = post
-            print(post)
+//            print(post)
             /*
             posts.forEach { (p) in
                 Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
