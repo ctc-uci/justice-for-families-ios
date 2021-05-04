@@ -24,12 +24,11 @@ class ActivityNetworkManager: ObservableObject {
     }
     
     public func fetchActivity() {
-//        activity.append(Activity())
-//        activity.append(Activity())
-//        activity.append(Activity())
-//        activity.append(Activity())
-//        activity.append(Activity())
-//        activity.append(Activity())
+        activity.append(Activity(comments: []))
+        activity.append(Activity(comments: []))
+        activity.append(Activity(comments: []))
+        activity.append(Activity(comments: []))
+        activity.append(Activity(comments: []))
     }
 }
 
@@ -39,15 +38,15 @@ struct ActivityView: View {
     
     var body: some View {
         Text("hello")
-//        NavigationView {
-//            List(networkManager.activity) { a in
-////                ActivityCell(activity: a)
+        NavigationView {
+//            List(networkManager.activity) { activity in
+//                ActivityCell(activity: activity)
 //            }
 //            .navigationBarTitle("Activity")
-//        }
-//        // Goodbye 5head :)
-//        .navigationBarBackButtonHidden(true)
-//        .navigationBarHidden(true)
+        }
+        // Goodbye 5head :)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 }
 
