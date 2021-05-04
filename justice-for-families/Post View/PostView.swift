@@ -36,30 +36,54 @@ class CommentsNetworkManager: ObservableObject {
     }
 }
 
-struct PostView: View {
-    @State private var commentText: String = ""
-    @State private var placeholderString: String = "hello"
-    var post: Post
-
+class PostModel: ObservableObject {
+    
     @ObservedObject var networkManager: CommentsNetworkManager
+    var post: Post!
     
     init(post: Post?) {
         guard let post = post else {
             self.post = Post(anonymous: false, datePosted: "Jan 4, 2021", createdAt: "Jan 4, 2021", updatedAt: "Jan 4, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "Post Placeholder", text: "Post Placeholder", username: "System", DecodedPost: DecodedPost(__v: 123, _id: "123", anonymous: false, datePosted: "Jan 4, 2021", createdAt: "Jan 4, 2021", updatedAt: "Jan 4, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "Post Placeholder", text: "Post Placeholder", username: "System"))
-            self.networkManager = CommentsNetworkManager(postID: self.post.DecodedPost._id)
+            self.networkManager = CommentsNetworkManager(postID: self.post.decodedPost._id)
             self.networkManager.fetchComments()
             return
         }
         self.post = post
-        self.networkManager = CommentsNetworkManager(postID: post.DecodedPost._id)
+        self.networkManager = CommentsNetworkManager(postID: post.decodedPost._id)
         self.networkManager.fetchComments()
+    }
+    
+    init(postID: String) {
+        // Download the post
+        self.networkManager = CommentsNetworkManager(postID: postID)
+        self.networkManager.fetchComments()
+        
+        Network.getPost(fromPostID: postID) { post in
+            self.post = post
+        }
+    }
+    
+}
+
+struct PostView: View {
+    @State private var commentText: String = ""
+    @State private var placeholderString: String = "hello"
+    
+    var postModel: PostModel
+    
+    init(post: Post?) {
+        self.postModel = PostModel(post: post)
+    }
+    
+    init(postID: String) {
+        self.postModel = PostModel(postID: postID)
     }
         
     var body: some View {
         VStack {
             List {
-                Section(header: PostHeader(post: post)) {
-                    ForEach(networkManager.comments) { i in
+                Section(header: PostHeader(post: postModel.post)) {
+                    ForEach(postModel.networkManager.comments) { i in
                         CommentCell(comment: i)
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
@@ -85,12 +109,12 @@ struct PostView: View {
                     let parameters = ["text" : commentText,
                                       "username":  UserDefaults.standard.string(forKey: "LoggedInUser")!,
                                       "numLikes":0,
-                                      "postId": post.DecodedPost._id,
-                                      "_id:": post.DecodedPost._id] as [String : Any]
-                    Network.createNewComment(parameters: parameters,postID: post.DecodedPost._id)
-                    let newComment = Comment(text: commentText, username: UserDefaults.standard.string(forKey: "LoggedInUser")!, numLikes: 0, postId: post.DecodedPost._id, datePosted: nil, createdAt: nil, updatedAt: nil)
-                    networkManager.comments.append(newComment)
-                    post.numComments += 1
+                                      "postId": postModel.post.decodedPost._id,
+                                      "_id:": postModel.post.decodedPost._id] as [String : Any]
+                    Network.createNewComment(parameters: parameters,postID: postModel.post.decodedPost._id)
+                    let newComment = Comment(text: commentText, username: UserDefaults.standard.string(forKey: "LoggedInUser")!, numLikes: 0, postId: postModel.post.decodedPost._id, datePosted: nil, createdAt: nil, updatedAt: nil)
+                    postModel.networkManager.comments.append(newComment)
+                    postModel.post.numComments += 1
                     commentText = ""
                 }) {
                     Text("Post")

@@ -81,8 +81,8 @@ struct FeedCellInteractButtons: View {
                 if post.isLiked {
                     Network.unlikePost(parameters: [
                         "username": UserDefaults.standard.object(forKey: "LoggedInUser")!,
-                        "postId": post.DecodedPost._id,
-                        "_id": post.DecodedPost._id
+                        "postId": post.decodedPost._id,
+                        "_id": post.decodedPost._id
                     ])
                     post.objectWillChange.send()
                     post.isLiked = false
@@ -91,8 +91,8 @@ struct FeedCellInteractButtons: View {
                 } else {
                     Network.likePost(parameters: [
                         "username": UserDefaults.standard.object(forKey: "LoggedInUser")!,
-                        "postId": post.DecodedPost._id,
-                        "_id": post.DecodedPost._id
+                        "postId": post.decodedPost._id,
+                        "_id": post.decodedPost._id
                     ])
                     post.objectWillChange.send()
                     post.isLiked = true

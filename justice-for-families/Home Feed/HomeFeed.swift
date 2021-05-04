@@ -41,13 +41,13 @@ class NetworkManager: ObservableObject {
         Network.fetchAllPosts { (posts) in
             self.posts = posts.reversed()
             posts.forEach { (p) in
-                Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
+                Network.hasLiked(forPostID: p.decodedPost._id, username: self.username) { (result) in
                     switch result {
                     case .success(let isLiked):
 //                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                         p.isLiked = isLiked
                     case .failure(_):
-                        print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+                        print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
                     }
                 }
             }
@@ -79,9 +79,9 @@ struct HomeFeed: View {
                 ScrollView(.horizontal, showsIndicators: false, content: {
                     
                     HStack{
-                        ForEach(networkManager.whatYouMissedPosts, id: \.self){ p in
-                            NavigationLink(destination: postView) {
-                                WhatYouMissedCell(post: p)
+                        ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
+                            NavigationLink(destination: PostView(postID: activityComment.postID)) {
+                                WhatYouMissedCell(post: activityComment)
                             }
                         }
                     }

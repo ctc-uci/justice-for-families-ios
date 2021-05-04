@@ -145,7 +145,7 @@ struct Network {
                     
 
                     posts.forEach({ p in
-                        AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(username)/hasLiked")!, method: .get).responseString { response in
+                        AF.request(URL(string: "\(self.baseURL)/\(p.decodedPost._id)/user/\(username)/hasLiked")!, method: .get).responseString { response in
                             
                         }
                         
