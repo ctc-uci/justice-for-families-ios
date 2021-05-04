@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "justice-for-families/justice_for_familiesApp.swift"
@@ -20,34 +20,34 @@
             landmarkType = "0">
             <Locations>
                <Location
-                  uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA - 5463fce9870e6521"
+                  uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA - f59a9d43683ee98e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "justice_for_families.justice_for_familiesApp.init(model: @autoclosure () -&gt; justice_for_families.AuthenticationData) -&gt; justice_for_families.justice_for_familiesApp"
+                  symbolName = "justice_for_families.justice_for_familiesApp.init(model: @autoclosure () -&gt; justice_for_families.AuthenticationData, loggedInUser: justice_for_families.LoggedInUser) -&gt; justice_for_families.justice_for_familiesApp"
                   moduleName = "justice-for-families"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sydneychiang/Desktop/fix-mr/justice-for-families-ios/justice-for-families/justice_for_familiesApp.swift"
+                  urlString = "file:///Users/sydneychiang/Desktop/j4f/justice-for-families-ios/justice-for-families/justice_for_familiesApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0"
-                  offsetFromSymbolStart = "4">
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "49">
                </Location>
                <Location
-                  uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA - 7aac130d1e07dcab"
+                  uuid = "FF263E8B-8868-454E-9AD0-54AC966CD0CA - b1f3f9514070299a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "justice_for_families.justice_for_familiesApp.init() -&gt; justice_for_families.justice_for_familiesApp"
                   moduleName = "justice-for-families"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/sydneychiang/Desktop/fix-mr/justice-for-families-ios/justice-for-families/justice_for_familiesApp.swift"
+                  urlString = "file:///Users/sydneychiang/Desktop/j4f/justice-for-families-ios/justice-for-families/justice_for_familiesApp.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "12"
                   endingLineNumber = "12"
-                  offsetFromSymbolStart = "19">
+                  offsetFromSymbolStart = "29">
                </Location>
             </Locations>
          </BreakpointContent>

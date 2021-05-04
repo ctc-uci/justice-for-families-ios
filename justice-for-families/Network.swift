@@ -142,10 +142,15 @@ struct Network {
                     
 
                     posts.forEach({ p in
-                        AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(username)/hasLiked")!, method: .get).responseString { response in
-                            
+                        Network.hasLiked(forPostID: p.DecodedPost._id, username: username) { (result) in
+                            switch result {
+                            case .success(let isLiked):
+                                print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
+                                p.isLiked = isLiked
+                            case .failure(_):
+                                print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+                            }
                         }
-                        
                     })
                     
                     DispatchQueue.main.async {
@@ -164,6 +169,58 @@ struct Network {
                     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }
                 
+            case .failure(let error):
+                print("🔥 \(error)")
+            }
+        }
+    }
+    
+ 
+    static func getLikedPosts(fromUsername username: String, completionHandler: @escaping (_ posts: [Post]) -> Void) {
+        let parameters : [String: String] = ["username": username]
+        guard let url = URL(string: "\(self.baseURL)/likes/byUser?username=\(username)") else {
+            return
+        }
+
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
+
+            switch response.result {
+            case .success(_):
+                guard let data = response.data else { return }
+
+                do {
+                    let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
+                    let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+
+                    posts.forEach({ p in
+                        Network.hasLiked(forPostID: p.DecodedPost._id, username: username) { (result) in
+                            switch result {
+                            case .success(let isLiked):
+                                print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
+                                p.isLiked = isLiked
+                            case .failure(_):
+                                print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+                            }
+                        }
+
+                    })
+
+                    DispatchQueue.main.async {
+                        completionHandler(posts)
+                    }
+
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+
             case .failure(let error):
                 print("🔥 \(error)")
             }
