@@ -193,7 +193,6 @@ struct Network {
                     let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
 
                     posts.forEach({ p in
-//                        AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(username)/hasLiked")!, method: .get).responseString { response in
                         Network.hasLiked(forPostID: p.DecodedPost._id, username: username) { (result) in
                             switch result {
                             case .success(let isLiked):
@@ -203,7 +202,6 @@ struct Network {
                                 print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
                             }
                         }
-//                        }
 
                     })
 
