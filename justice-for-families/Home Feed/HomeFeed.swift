@@ -70,7 +70,6 @@ struct HomeFeed: View {
     
     @State private var isShowing = false
     @ObservedObject var networkManager = NetworkManager()
-    let postView = PostView(post: nil)
     
     var body: some View {
 

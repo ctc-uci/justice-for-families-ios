@@ -178,16 +178,15 @@ struct Network {
     }
     
     static func getPost(fromPostID postID: String, completionHandler: @escaping (_ posts: Post) -> Void) {
-        guard let url = URL(string: "\(self.baseURL)/posts/id") else {
-            return
-        }
-        let parameters = ["_id": postID] as [String : String]
-        AF.request(url, method: .post, parameters: parameters).responseString { (response) in
+        
+        guard let url = URL(string: "\(self.baseURL)/posts/id") else { return }
+        let parameters = ["postId": postID] as [String : String]
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
 
-//            print("🟡 Trying to get comment for post id: \(postID)")
             switch response.result {
             case .success(_):
-//                print("🟢 Success: \(response.result)")
+                print("🟢 Success: \(response.result) for post with ID: \(postID)")
                 guard let data = response.data else { return }
                     
                 do {
@@ -225,15 +224,13 @@ struct Network {
     }
     
     static func getComments(forPostID postID: String, completionHandler: @escaping (_ comments: [Comment]) -> Void) {
-        guard let url = URL(string: "\(self.baseURL)/comments/post/\(postID)") else {
-            return
-        }
+        guard let url = URL(string: "\(self.baseURL)/comments/post/\(postID)") else { return }
+        
         AF.request(url, method: .get).responseString { (response) in
 
             switch response.result {
 
             case .success(_):
-                print("🟢 getComments result: -- \(postID) --", response.result)
                 guard let data = response.data else { return }
                     
                 do {
@@ -242,13 +239,13 @@ struct Network {
                     DispatchQueue.main.async { completionHandler(comments) }
                     
                 } catch DecodingError.keyNotFound(let key, let context) {
-                    Swift.print("🔴 GET COMMENTS ERROR: could not find key \(key) in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET COMMENTS ERROR: could not find key \(key) in JSON: \(context.debugDescription)\n     for comment ID: \(postID)")
                 } catch DecodingError.valueNotFound(let type, let context) {
                     Swift.print("🔴 GET COMMENTS ERROR: could not find type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.typeMismatch(let type, let context) {
                     Swift.print("🔴 GET COMMENTS ERROR: type mismatch for type \(type) in JSON: \(context.debugDescription)")
                 } catch DecodingError.dataCorrupted(let context) {
-                    Swift.print("🔴 GET COMMENTS ERROR: data found to be corrupted in JSON: \(context.debugDescription)")
+                    Swift.print("🔴 GET COMMENTS ERROR: data found to be corrupted in JSON: \(context.debugDescription)\n     for comment ID: \(postID)")
                 } catch let error as NSError {
                     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }

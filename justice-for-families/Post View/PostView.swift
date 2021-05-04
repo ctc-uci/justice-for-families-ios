@@ -23,13 +23,12 @@ class CommentsNetworkManager: ObservableObject {
     
     init(postID: String = "") {
         self.postID = postID
-        print("🟡 PostView init with ID: \(postID)")
+//        print("🟡 PostView init with ID: \(postID)")
 //        fetchComments()
     }
     
     
     func fetchComments() {
-        print("🟡 Fetching comment for postID: \(self.postID)")
         Network.getComments(forPostID: self.postID, completionHandler: { (comments) in
             self.comments = comments
         })
@@ -41,13 +40,7 @@ class PostModel: ObservableObject {
     @ObservedObject var networkManager: CommentsNetworkManager
     var post: Post!
     
-    init(post: Post?) {
-        guard let post = post else {
-            self.post = Post(anonymous: false, datePosted: "Jan 4, 2021", createdAt: "Jan 4, 2021", updatedAt: "Jan 4, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "Post Placeholder", text: "Post Placeholder", username: "System", DecodedPost: DecodedPost(__v: 123, _id: "123", anonymous: false, datePosted: "Jan 4, 2021", createdAt: "Jan 4, 2021", updatedAt: "Jan 4, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "Post Placeholder", text: "Post Placeholder", username: "System"))
-            self.networkManager = CommentsNetworkManager(postID: self.post.decodedPost._id)
-            self.networkManager.fetchComments()
-            return
-        }
+    init(post: Post!) {
         self.post = post
         self.networkManager = CommentsNetworkManager(postID: post.decodedPost._id)
         self.networkManager.fetchComments()
