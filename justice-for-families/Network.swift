@@ -172,22 +172,20 @@ struct Network {
     
  
     static func getLikedPosts(fromUsername username: String, completionHandler: @escaping (_ posts: [Post]) -> Void) {
-        guard let url = URL(string: "\(self.baseURL)/likes/byUser") else {
+        let parameters : [String: String] = ["username": username]
+        guard let url = URL(string: "\(self.baseURL)/likes/byUser?username=\(username)") else {
             return
         }
-        AF.request(url, method: .post).responseString { (response) in
+
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
 
             switch response.result {
             case .success(_):
                 guard let data = response.data else { return }
 
                 do {
-                    
-                    print("debug 1")
                     let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
-                    print("debug 2")
                     let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
-
 
                     posts.forEach({ p in
                         AF.request(URL(string: "\(self.baseURL)/\(p.DecodedPost._id)/user/\(username)/hasLiked")!, method: .get).responseString { response in
