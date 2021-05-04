@@ -72,7 +72,7 @@ struct FeedCell: View {
 struct FeedCellInteractButtons: View {
     
     @StateObject var post: Post
-    
+    @State private var action: Int? = 0
     var body: some View {
         HStack {
             
@@ -117,10 +117,14 @@ struct FeedCellInteractButtons: View {
             .buttonStyle(BorderlessButtonStyle())
             
             Spacer()
-            
+
             Button(action: {
 //                print("Tapped on the comment button!")
+                self.action = 1
             }) {
+                NavigationLink(destination: PostView(post: post), tag: 1, selection: $action) {
+                    EmptyView()
+                }
                 HStack(alignment: .center) {
                     Image(systemName: "bubble.left")
                         .renderingMode(.template)
