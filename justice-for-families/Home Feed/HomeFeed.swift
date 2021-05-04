@@ -57,7 +57,6 @@ class NetworkManager: ObservableObject {
     
     public func fetchWhatYouMissed() {
         Network.getWhatYouMissed { (posts) in
-            //print("🟡 \(posts)")
             self.whatYouMissedPosts = posts.comments
         }
         
@@ -71,6 +70,8 @@ struct HomeFeed: View {
     
     @State private var isShowing = false
     @ObservedObject var networkManager = NetworkManager()
+    let postView = PostView(post: nil)
+    
     var body: some View {
 
         NavigationView {
@@ -79,18 +80,21 @@ struct HomeFeed: View {
                     
                     HStack{
                         ForEach(networkManager.whatYouMissedPosts, id: \.self){ p in
-                            WhatYouMissedCell(post: p)
+                            NavigationLink(destination: postView) {
+                                WhatYouMissedCell(post: p)
+                            }
                         }
                     }
-                    //WhatYouMissedCell(post: networkManager.whatYouMissedPosts[0])
                 })
                 .listRowInsets(EdgeInsets())
                 .background(J4FColors.background)
 
-
                 List(networkManager.posts) { p in
-                    FeedCell(post: p)
+                    NavigationLink(destination: PostView(post: p)) {
+                        FeedCell(post: p)
+                    }
                 }
+                
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                    networkManager.fetchPosts()

@@ -63,8 +63,8 @@ struct FeedCell: View {
             }
             .padding(20)
             // Removes arrow indicators on the right side of the cell
-            NavigationLink(destination: PostView(post: post)) { EmptyView() }
-            .opacity(0.0)
+//            NavigationLink(destination: PostView(post: post)) { EmptyView() }
+//            .opacity(0.0)
         }
     }
 }

@@ -13,7 +13,7 @@ import Combine
 
 class CommentsNetworkManager: ObservableObject {
     var didChange = PassthroughSubject<CommentsNetworkManager, Never>()
-    private var postId: String
+    private var postID: String
     
     @Published var comments = [Comment]() {
         didSet {
@@ -21,15 +21,16 @@ class CommentsNetworkManager: ObservableObject {
         }
     }
     
-    init(postId: String) {
-        self.postId = postId
-        fetchComments()
+    init(postID: String = "") {
+        self.postID = postID
+        print("🟡 PostView init with ID: \(postID)")
+//        fetchComments()
     }
     
     
     func fetchComments() {
-        print("Fetching comment for postID: \(self.postId)")
-        Network.getComments(forPostID: self.postId, completionHandler: { (comments) in
+        print("🟡 Fetching comment for postID: \(self.postID)")
+        Network.getComments(forPostID: self.postID, completionHandler: { (comments) in
             self.comments = comments
         })
     }
@@ -42,9 +43,16 @@ struct PostView: View {
 
     @ObservedObject var networkManager: CommentsNetworkManager
     
-    init(post: Post) {
+    init(post: Post?) {
+        guard let post = post else {
+            self.post = Post(anonymous: false, datePosted: "Jan 4, 2021", createdAt: "Jan 4, 2021", updatedAt: "Jan 4, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "Post Placeholder", text: "Post Placeholder", username: "System", DecodedPost: DecodedPost(__v: 123, _id: "123", anonymous: false, datePosted: "Jan 4, 2021", createdAt: "Jan 4, 2021", updatedAt: "Jan 4, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "Post Placeholder", text: "Post Placeholder", username: "System"))
+            self.networkManager = CommentsNetworkManager(postID: self.post.DecodedPost._id)
+            self.networkManager.fetchComments()
+            return
+        }
         self.post = post
-        self.networkManager = CommentsNetworkManager(postId: post.DecodedPost._id)
+        self.networkManager = CommentsNetworkManager(postID: post.DecodedPost._id)
+        self.networkManager.fetchComments()
     }
         
     var body: some View {

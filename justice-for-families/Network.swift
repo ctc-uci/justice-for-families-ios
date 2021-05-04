@@ -182,7 +182,7 @@ struct Network {
             return
         }
         let parameters = ["_id": postID] as [String : String]
-        AF.request(url, method: .get, parameters: parameters).responseString { (response) in
+        AF.request(url, method: .post, parameters: parameters).responseString { (response) in
 
 //            print("🟡 Trying to get comment for post id: \(postID)")
             switch response.result {
@@ -301,7 +301,7 @@ struct Network {
             switch response.result {
             
             case .success(_):
-                print("🟡 WYM SUCCESS:", response.result)
+//                print("🟡 WYM SUCCESS:", response.result)
                 guard let data = response.data else { return }
                 do {
                     let activities = try JSONDecoder().decode(Activity.self, from: data)

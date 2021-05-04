@@ -10,9 +10,11 @@ import Combine
 import SwiftUI
 
 class WYMNetworkManager: ObservableObject {
+    
     var didChange = PassthroughSubject<WYMNetworkManager, Never>()
     var username = UserDefaults.standard.string(forKey: "LoggedInUser") ?? ""
     var activityComment: ActivityComment
+    
     @Published var post : Post{
         didSet {
             didChange.send(self)
@@ -20,27 +22,25 @@ class WYMNetworkManager: ObservableObject {
     }
     
     init(fromActivityComment activityComment: ActivityComment) {
-//        print(activityComment)
         self.activityComment = activityComment
         self.post = Post(anonymous: true, datePosted: "", createdAt: "", updatedAt: "", numComments: 0, numLikes: 0, tags: [], title: "", text: "", username: "", DecodedPost: DecodedPost(__v: 0, _id: "", anonymous: true, datePosted: "", createdAt: "", updatedAt: "", numComments: 0, numLikes: 0, tags: [], title: "", text: "", username: ""))
         
         
-        Network.getPost(fromPostID: activityComment.postID){ (post) in
-            self.post = post
-//            print(post)
-            /*
-            posts.forEach { (p) in
-                Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
-                    switch result {
-                    case .success(let isLiked):
+//        Network.getPost(fromPostID: activityComment.postID){ (post) in
+//            self.post = post
+//            
+//            posts.forEach { (p) in
+//                Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
+//                    switch result {
+//                    case .success(let isLiked):
 //                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
-                        p.isLiked = isLiked
-                    case .failure(_):
-                        print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
-                    }
-                }
-            }*/
-        }
+//                        p.isLiked = isLiked
+//                    case .failure(_):
+//                        print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+//                    }
+//                }
+//            }
+//        }
             
     }
     
@@ -51,7 +51,9 @@ class WYMNetworkManager: ObservableObject {
     
     
 }
+
 struct WhatYouMissedCell: View {
+    
     let post: ActivityComment
 
     var body: some View {
@@ -77,9 +79,9 @@ struct WhatYouMissedCell: View {
                 }
             }
             .padding(20)
-            let networkManager = WYMNetworkManager(fromActivityComment: post)
-            NavigationLink(destination: PostView(post: networkManager.post)) { EmptyView() }
-            .opacity(0.0)
+//            let networkManager = WYMNetworkManager(fromActivityComment: post)
+//            NavigationLink(destination: PostView(post: networkManager.post)) { EmptyView() }
+//            .opacity(0.0)
         }
         .frame(width: 140, height: 80)
     }
