@@ -7,11 +7,16 @@
 
 import Foundation
 
-struct Activity: Decodable {
+struct ActivityDecodable: Decodable {
     var comments: [ActivityComment]
 }
 
-struct ActivityComment: Decodable, Hashable {
+struct Activity: Identifiable, Decodable {
+    var id = UUID()
+    var comments: [ActivityComment]
+}
+
+struct ActivityComment: Codable, Hashable {
     var postID: String
     var postUsername: String
     var postTitle: String
@@ -20,6 +25,8 @@ struct ActivityComment: Decodable, Hashable {
     var commentUsername: String
     var commentDatePosted: String
     var commentText: String
+    
+    
 }
 
 extension ActivityComment: Identifiable {

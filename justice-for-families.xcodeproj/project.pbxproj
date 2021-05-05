@@ -27,7 +27,6 @@
 		4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */; };
 		4AD5DCA0262F8BAD00A614B1 /* J4FColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC9A262F8BAD00A614B1 /* J4FColors.swift */; };
 		5AE31D2B262FE70F00382580 /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE31D2A262FE70F00382580 /* AddTagsView.swift */; };
-		5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3EE6E425EC84C7005FCA29 /* AuthenticationData.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
 		5BA5F07D263A221C00706B25 /* WhatYouMissedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA5F07C263A221C00706B25 /* WhatYouMissedCell.swift */; };
 		5BE541F125B3A331008DF7A8 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE541F025B3A331008DF7A8 /* AppConstants.swift */; };
@@ -402,7 +401,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					3D5FA30C25449D1400888CC8 = {
 						CreatedOnToolsVersion = 12.0.1;
@@ -596,7 +595,6 @@
 				4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */,
 				4A1F83B4263A2F4B00BD1CF8 /* ActivityCell.swift in Sources */,
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
-				5B3EE6E525EC84C7005FCA29 /* AuthenticationData.swift in Sources */,
 				4A781E94262F920A00ABDEDF /* Comment.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 				4A71FDD7263DEF9300866219 /* Activity.swift in Sources */,

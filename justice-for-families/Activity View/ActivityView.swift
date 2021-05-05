@@ -34,17 +34,17 @@ class ActivityNetworkManager: ObservableObject {
 
 struct ActivityView: View {
     
-    @ObservedObject var networkManager = ActivityNetworkManager()
+    @ObservedObject var networkManager: ActivityNetworkManager
     
     var body: some View {
-        Text("hello")
+                
         NavigationView {
-//            List(networkManager.activity) { activity in
-//                ActivityCell(activity: activity)
-//            }
-//            .navigationBarTitle("Activity")
+            List(networkManager.activity) { activity in
+                ActivityCell(activity: activity)
+            }
         }
-        // Goodbye 5head :)
+        .navigationBarTitle("Activity")
+//        // Goodbye 5head :)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
     }
@@ -52,6 +52,6 @@ struct ActivityView: View {
 
 struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityView()
+        ActivityView(networkManager: ActivityNetworkManager())
     }
 }

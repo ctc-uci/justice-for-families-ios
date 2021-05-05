@@ -18,7 +18,6 @@ struct justice_for_familiesApp: App {
             // present either the 'MainView' or 'LoginView'
             if (loggedInUser.user != nil) {
                 Main(model: model)
-                
             } else {
                 LoginView()
             }

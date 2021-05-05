@@ -24,7 +24,7 @@ struct Network {
 //                guard let json = response.value else { return }
 //                print(json)
                 
-            case .failure(let error):
+            case .failure(_):
                 break
 //                print(error)
                 
@@ -300,7 +300,8 @@ struct Network {
 //                print("🟡 WYM SUCCESS:", response.result)
                 guard let data = response.data else { return }
                 do {
-                    let activities = try JSONDecoder().decode(Activity.self, from: data)
+                    let activitiesDecoded = try JSONDecoder().decode(ActivityDecodable.self, from: data)
+                    let activities = Activity(comments: activitiesDecoded.comments)
                     DispatchQueue.main.async { completionHandler(activities) }
                 } catch DecodingError.keyNotFound(let key, let context) {
                     Swift.print("🔴 GET WYM ERROR: could not find key \(key) in JSON: \(context.debugDescription)")
