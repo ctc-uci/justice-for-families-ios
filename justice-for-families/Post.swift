@@ -39,7 +39,7 @@ class Post: Identifiable, ObservableObject {
     let id = UUID()
     var anonymous: Bool = false
 
-    var DecodedPost: DecodedPost
+    var decodedPost: DecodedPost
     var datePosted: String = ""
     var createdAt: String = ""
     var updatedAt: String = ""
@@ -69,7 +69,21 @@ class Post: Identifiable, ObservableObject {
         self.title = title
         self.text = text
         self.username = username
-        self.DecodedPost = DecodedPost
-        
+        self.decodedPost = DecodedPost
+    }
+    
+    // This init() just makes it easier to create an empty Post object
+    init() {
+        anonymous = false
+        datePosted = "Jan 04, 2021"
+        createdAt = "Jan 04, 2021"
+        updatedAt = "Jan 04, 2021"
+        numComments = 0
+        numLikes = 0
+        tags = ["J4F"]
+        title = ""
+        text = ""
+        username = ""
+        decodedPost = DecodedPost(__v: 0, _id: "", anonymous: false, datePosted: "Jan 04, 2021", createdAt: "Jan 04, 2021", updatedAt: "Jan 04, 2021", numComments: 0, numLikes: 0, tags: ["J4F"], title: "", text: "", username: "")
     }
 }
