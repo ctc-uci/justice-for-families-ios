@@ -17,7 +17,8 @@ struct justice_for_familiesApp: App {
             // Depending on if the 'LoggedInUser' key exists in UserDefaults,
             // present either the 'MainView' or 'LoginView'
             if (loggedInUser.user != nil) {
-                MainView(model: model)
+                Main(model: model)
+                
             } else {
                 LoginView()
             }

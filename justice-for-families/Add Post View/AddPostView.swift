@@ -9,8 +9,20 @@ import SwiftUI
 import Combine
 import Alamofire
 
+struct SheetPresenter<Main>: View where Main: View {
+    @Binding var presentingSheet: Bool
+    var content: Main
+    var body: some View {
+        Text("")
+            .sheet(isPresented: self.$presentingSheet, content: { self.content })
+            .onAppear {
+                DispatchQueue.main.async { self.presentingSheet = true }
+            }
+    }
+}
 
-struct PopUp: View{
+
+struct AddPostView: View {
     @State private var showingTags = false
     
     @State var title: String = ""
@@ -148,7 +160,7 @@ struct PopUp: View{
 struct Post_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            PopUp()
+            AddPostView()
         }
     }
 }

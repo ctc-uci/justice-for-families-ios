@@ -14,6 +14,27 @@ enum Tab{
     case Tab2
 }
 
+struct Main: View {
+    @StateObject var model = AuthenticationData()
+    @State var newPostPresented = false
+    var body: some View {
+        TabView {
+            HomeFeed(networkManager: NetworkManager())
+                .tabItem({
+                    Text("HOME")
+                })
+            SheetPresenter(presentingSheet: $newPostPresented, content: AddPostView())
+                .tabItem({
+                    Text("ADD POST")
+                })
+            UserProfileView(model: model)
+                .tabItem({
+                    Text("PROFILE")
+                })
+        }
+    }
+}
+
 
 struct MainView: View{
     @StateObject var model: AuthenticationData
@@ -26,9 +47,9 @@ struct MainView: View{
             TabBar(currentView: $currentView, showModal: $showModal)
         }
         .edgesIgnoringSafeArea(.all)
-        .sheet(isPresented: $showModal){
-            PopUp()
-        }
+//        .sheet(isPresented: $showModal){
+//            AddPostView()
+//        }
     }
 }
 
@@ -78,6 +99,7 @@ struct TabBar: View{
     var body: some View{
         HStack{
             TabBarItem(currentView: $currentView, imageName: "house.fill", paddingEdges: .leading, tab: .Tab1)
+//            TabBarItem(currentView: <#T##Binding<Tab>#>, imageName: <#T##String#>, paddingEdges: <#T##Edge.Set#>, tab: <#T##Tab#>)
             Spacer()
             ShowModalTabBarItem(radius: 40){
                 showModal.toggle()
