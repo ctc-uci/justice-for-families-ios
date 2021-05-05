@@ -186,7 +186,6 @@ struct Network {
 
             switch response.result {
             case .success(_):
-                print("🟢 Success: \(response.result) for post with ID: \(postID)")
                 guard let data = response.data else { return }
                     
                 do {
