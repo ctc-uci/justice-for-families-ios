@@ -5,10 +5,6 @@
 //  Created by Jules Labador on 1/11/21.
 //
 
-//2/25 Josh https://betterprogramming.pub/pull-to-refresh-in-swiftui-6604f54a01d5 followed this guide for "pull-to-refresh" feature
-//made some kinda heavy changes but essentially just make any changes in the UIFeed struct
-//feel free to rearrange functions/ rename stuff
-//make "pull-to-refresh" updates in HomeFeedHelper's handleRefreshControl function
 
 import SwiftUI
 import Combine
@@ -30,26 +26,40 @@ class NetworkManager: ObservableObject {
             didChange.send(self)
         }
     }
+    @Published var whatYouMissedPosts = [ActivityComment]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
     
     init() {
         fetchPosts()
+        fetchWhatYouMissed()
     }
     
     public func fetchPosts() {
         Network.fetchAllPosts { (posts) in
             self.posts = posts.reversed()
             posts.forEach { (p) in
-                Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
+                Network.hasLiked(forPostID: p.decodedPost._id, username: self.username) { (result) in
                     switch result {
                     case .success(let isLiked):
-                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
+//                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                         p.isLiked = isLiked
                     case .failure(_):
-                        print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+                        print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
                     }
                 }
             }
         }
+        
+    }
+    
+    public func fetchWhatYouMissed() {
+        Network.getWhatYouMissed { (posts) in
+            self.whatYouMissedPosts = posts.comments
+        }
+        
     }
     
     
@@ -64,20 +74,40 @@ struct HomeFeed: View {
     var body: some View {
 
         NavigationView {
-            List(networkManager.posts) { p in
-                FeedCell(post: p)
+            VStack{
+                ScrollView(.horizontal, showsIndicators: false, content: {
+                    
+                    HStack{
+                        ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
+                            NavigationLink(destination: PostView(postID: activityComment.postID)) {
+                                WhatYouMissedCell(post: activityComment)
+                            }
+                        }
+                    }
+                })
+                .listRowInsets(EdgeInsets())
+                .background(J4FColors.background)
+
+                List(networkManager.posts) { p in
+                    NavigationLink(destination: PostView(post: p)) {
+                        FeedCell(post: p)
+                    }
+                }
+                
+            }.pullToRefresh(isShowing: $isShowing) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                   networkManager.fetchPosts()
+                    networkManager.fetchWhatYouMissed()
+                   self.isShowing = false
+                }
+           
+            
             }
-            .navigationBarTitle("J4F")
-            .pullToRefresh(isShowing: $isShowing) {
-                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    networkManager.fetchPosts()
-                    self.isShowing = false
-                 }
-            }
+            
         }
         // Goodbye 5head :)
         .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
+        .navigationBarTitle("J4F")
     }
 }
     
