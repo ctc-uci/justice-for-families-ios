@@ -26,7 +26,7 @@ class NetworkManager: ObservableObject {
             didChange.send(self)
         }
     }
-    @Published var whatYouMissedPosts = [Any]() {
+    @Published var whatYouMissedPosts = [ActivityComment]() {
         didSet {
             didChange.send(self)
         }
@@ -41,13 +41,13 @@ class NetworkManager: ObservableObject {
         Network.fetchAllPosts { (posts) in
             self.posts = posts.reversed()
             posts.forEach { (p) in
-                Network.hasLiked(forPostID: p.DecodedPost._id, username: self.username) { (result) in
+                Network.hasLiked(forPostID: p.decodedPost._id, username: self.username) { (result) in
                     switch result {
                     case .success(let isLiked):
 //                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                         p.isLiked = isLiked
                     case .failure(_):
-                        print("🔴 Error trying to check if logged in user has liked post: \(p.DecodedPost._id)")
+                        print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
                     }
                 }
             }
@@ -57,7 +57,7 @@ class NetworkManager: ObservableObject {
     
     public func fetchWhatYouMissed() {
         Network.getWhatYouMissed { (posts) in
-            print("🟡 \(posts)")
+            self.whatYouMissedPosts = posts.comments
         }
         
     }
@@ -70,31 +70,34 @@ struct HomeFeed: View {
     
     @State private var isShowing = false
     @ObservedObject var networkManager = NetworkManager()
+    
     var body: some View {
 
         NavigationView {
             VStack{
                 ScrollView(.horizontal, showsIndicators: false, content: {
-                    HStack {
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-                        WhatYouMissedCell()
-
+                    
+                    HStack{
+                        ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
+                            NavigationLink(destination: PostView(postID: activityComment.postID)) {
+                                WhatYouMissedCell(post: activityComment)
+                            }
+                        }
                     }
                 })
                 .listRowInsets(EdgeInsets())
                 .background(J4FColors.background)
 
-
                 List(networkManager.posts) { p in
-                    FeedCell(post: p)
+                    NavigationLink(destination: PostView(post: p)) {
+                        FeedCell(post: p)
+                    }
                 }
+                
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                    networkManager.fetchPosts()
+                    networkManager.fetchWhatYouMissed()
                    self.isShowing = false
                 }
            

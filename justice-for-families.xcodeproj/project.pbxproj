@@ -181,10 +181,10 @@
 			isa = PBXGroup;
 			children = (
 				4AB894BD263A2710002194F6 /* Activity View */,
+				4A64399A25C4E2990014B3FF /* Network.swift */,
 				4ADEDBDF2638DB4C00F9E9AB /* Home Feed */,
 				4ADEDBE62638DBA800F9E9AB /* Profile View */,
 				4ADEDBE52638DB9800F9E9AB /* Add Post View */,
-				4A64399A25C4E2990014B3FF /* Network.swift */,
 				4AD5DC97262F8B9800A614B1 /* Util */,
 				C278BEFD25EA40A200F50373 /* Custom Fonts */,
 				3D5FA31025449D1400888CC8 /* justice_for_familiesApp.swift */,

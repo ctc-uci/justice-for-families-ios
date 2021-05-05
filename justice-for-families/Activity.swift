@@ -11,7 +11,7 @@ struct Activity: Decodable {
     var comments: [ActivityComment]
 }
 
-struct ActivityComment: Decodable {
+struct ActivityComment: Decodable, Hashable {
     var postID: String
     var postUsername: String
     var postTitle: String
@@ -20,6 +20,10 @@ struct ActivityComment: Decodable {
     var commentUsername: String
     var commentDatePosted: String
     var commentText: String
+}
+
+extension ActivityComment: Identifiable {
+    var id: String { return commentID}
 }
 
 //{"comments":
