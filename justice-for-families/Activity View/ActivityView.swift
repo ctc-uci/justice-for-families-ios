@@ -13,7 +13,7 @@ class ActivityNetworkManager: ObservableObject {
     var didChange = PassthroughSubject<ActivityNetworkManager, Never>()
     var username = UserDefaults.standard.string(forKey: "LoggedInUser") ?? ""
     
-    @Published var activity = [Activity]() {
+    @Published var comments = [ActivityComment]() {
         didSet {
             didChange.send(self)
         }
@@ -24,11 +24,9 @@ class ActivityNetworkManager: ObservableObject {
     }
     
     public func fetchActivity() {
-        activity.append(Activity(comments: []))
-        activity.append(Activity(comments: []))
-        activity.append(Activity(comments: []))
-        activity.append(Activity(comments: []))
-        activity.append(Activity(comments: []))
+        Network.getWhatYouMissed { a in
+            self.comments = a.comments
+        }
     }
 }
 
@@ -39,11 +37,18 @@ struct ActivityView: View {
     var body: some View {
                 
         NavigationView {
-            List(networkManager.activity) { activity in
-                ActivityCell(activity: activity)
+            List(networkManager.comments) { c in
+                NavigationLink(destination: PostView(postID: c.postID)) {
+                    ActivityCell(c)
+                        .background(J4FColors.background)
+                }
             }
+            .background(J4FColors.background)
+            
         }
+        .background(J4FColors.background)
         .navigationBarTitle("Activity")
+        
 //        // Goodbye 5head :)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
