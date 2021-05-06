@@ -22,10 +22,10 @@ struct Main: View {
                 .tabItem({
                     Text("ACTIVITY")
                 })
-//            SheetPresenter(presentingSheet: $newPostPresented, content: AddPostView())
-//                .tabItem({
-//                    Text("ADD POST")
-//                })
+            SheetPresenter(presentingSheet: $newPostPresented, content: AddPostView())
+                .tabItem({
+                    Text("ADD POST")
+                })
             UserProfileView(model: model)
                 .tabItem({
                     Text("PROFILE")
