@@ -10,58 +10,113 @@ import SwiftUI
 import Combine
 import SwiftUIRefresh
 
-struct profileColors {
-    
-    static let primaryColor = Color(.sRGB, red: 16/255.0, green: 83/255.0, blue: 110/255.0, opacity: 1)
-    static let primaryColorOpaque = Color(.sRGB, red: 16/255.0, green: 83/255.0, blue: 110/255.0, opacity: 0.75)
-    
-    static let primaryColor2 = Color(.sRGB, red: 25/255.0, green: 118/255.0, blue: 157/255.0, opacity: 1)
-    static let primaryColor3 = Color(.sRGB, red: 50/255.0, green: 83/255.0, blue: 98/255.0, opacity: 1)
-    static let accentColor = Color(.sRGB, red: 252/255.0, green: 129/255.0, blue: 97/255.0, opacity: 1)
-}
 
-struct UIUserProfileFeed: View {
-    
-    @ObservedObject var networkManager: ProfileNetworkManager = ProfileNetworkManager()
+
+
+struct UIUserProfileView : View{
+    @State var index = 0
     @StateObject var model: AuthenticationData
+    @ObservedObject var networkManager: ProfileNetworkManager = ProfileNetworkManager()
     @State private var isShowing = false
     
-    var body: some View {
-   
-        List {
-            Section(header: BioView()) {
-                ForEach(networkManager.posts) { p in
-                    FeedCell(post: p)
-                        .listRowBackground(J4FColors.background)
-                }
+    @ViewBuilder
+    var body: some View{
+        VStack{
+            BioView()
+            HStack(spacing: 0){
+                Spacer()
+                Text("Posts")
+                    .foregroundColor(self.index == 0 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
+                    .fontWeight(.bold)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 15)
+                    .onTapGesture {
+                        self.index = 0
+                    }
+                Spacer()
+                Text("Liked")
+                    .foregroundColor(self.index == 1 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 15)
+                    .onTapGesture {
+                        self.index = 1
+                    }
+                Spacer()
             }
-        }
-        .listStyle(GroupedListStyle())
-        .pullToRefresh(isShowing: $isShowing, onRefresh: {
-            networkManager.getPosts()
-            self.isShowing = false
-        })
-        .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
-        .navigationBarItems(trailing:
-                                
-            Menu("...") {
-                Button("Logout", action: {model.logout()
-            })
-        })
+            .padding(.horizontal)
+            .padding(.top, 25)
 
+            TabView(selection: self.$index){
+                VStack{
+                    if(self.index == 0){
+                        List {
+                            
+                            Section() {
+                                ForEach(networkManager.posts) { p in
+                                    FeedCell(post: p)
+                                        .listRowBackground(J4FColors.background)
+                                }
+                            }
+                        }
+                        .listStyle(GroupedListStyle())
+                        .pullToRefresh(isShowing: $isShowing, onRefresh: {
+                            networkManager.getPosts()
+                            self.isShowing = false
+                        })
+
+                    }
+                    else{
+                        List {
+                            
+                            Section() {
+                                ForEach(networkManager.likedPosts) { p in
+                                    FeedCell(post: p)
+                                        .listRowBackground(J4FColors.background)
+                                }
+                            }
+                        }
+                        .listStyle(GroupedListStyle())
+                        .pullToRefresh(isShowing: $isShowing, onRefresh: {
+                            networkManager.getLikedPosts()
+                            self.isShowing = false
+                        })
+                    }
+
+                }
+                .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
+                .navigationBarItems(trailing:
+
+                    Menu("...") {
+                        Button("Logout", action: {model.logout()
+                    })
+                })
+
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+
+        }
+        .padding(.top)
     }
 
 }
 
+
+
+
+
+
 struct BioView : View {
 
     var body: some View {
+        
         HStack {
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading) {
                 Text(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
                     .font(.custom("Poppins-Medium", size: 19))
-                    .foregroundColor(profileColors.primaryColor)
+                    .foregroundColor(J4FColors.darkBlue)
+                
 //                NavigationLink(destination: EditProfileView()) {
 //                    Text("Edit Profile")
 //                        .padding()
@@ -69,19 +124,27 @@ struct BioView : View {
 //                        .background(profileColors.primaryColor2)
 //                        .foregroundColor(.white)
 //                        .cornerRadius(100)
-//                        
+//
 //                }
             }
         }
+
+
     }
-    
+
 }
 
 
 class ProfileNetworkManager: ObservableObject {
     var didChange = PassthroughSubject<ProfileNetworkManager, Never>()
-    
+
     @Published var posts = [Post]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+
+    @Published var likedPosts = [Post]() {
         didSet {
             didChange.send(self)
         }
@@ -89,21 +152,35 @@ class ProfileNetworkManager: ObservableObject {
     
     init() {
         getPosts()
+        getLikedPosts()
     }
-    
+
     public func getPosts() {
         Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
             (posts) in self.posts = posts.reversed()
         }
     }
     
+    public func getLikedPosts() {
+        Network.getLikedPosts(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
+            (posts) in self.likedPosts = posts.reversed()
+        }
+    }
+    
+    
+    
+
 }
+
+
+
 
 struct UserProfileView: View {
     @StateObject var model: AuthenticationData
     var body: some View {
         NavigationView {
-            UIUserProfileFeed(model: model)
+            UIUserProfileView(model: model)
         }
     }
 }
+

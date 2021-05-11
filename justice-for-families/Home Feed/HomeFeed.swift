@@ -76,6 +76,7 @@ struct HomeFeed: View {
         NavigationView {
             VStack{
                 ScrollView(.horizontal, showsIndicators: false, content: {
+                    
                     HStack{
                         ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
                             NavigationLink(destination: PostView(postID: activityComment.postID)) {
