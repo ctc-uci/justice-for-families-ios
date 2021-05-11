@@ -22,7 +22,7 @@ struct UIUserProfileView : View{
     @ViewBuilder
     var body: some View{
         VStack{
-            BioView()
+            BioView(model: model)
             HStack(spacing: 0){
                 Spacer()
                 Text("Posts")
@@ -107,7 +107,7 @@ struct UIUserProfileView : View{
 
 
 struct BioView : View {
-
+    @StateObject var model: AuthenticationData
     var body: some View {
         
         HStack {
@@ -117,15 +117,15 @@ struct BioView : View {
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(J4FColors.darkBlue)
                 
-//                NavigationLink(destination: EditProfileView()) {
-//                    Text("Edit Profile")
-//                        .padding()
-//                        .frame(width:150, height: 24)
-//                        .background(profileColors.primaryColor2)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(100)
-//
-//                }
+                NavigationLink(destination: EditProfileView(model: model)) {
+                    Text("Edit Profile")
+                        .padding()
+                        .frame(width:150, height: 24)
+                        .background(J4FColors.darkBlue)
+                        .foregroundColor(.white)
+                        .cornerRadius(100)
+
+                }
             }
         }
 

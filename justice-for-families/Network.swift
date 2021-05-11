@@ -377,4 +377,43 @@ struct Network {
             }
         }
     }
+    
+    
+    static func changePassword(fromUsername username: String, fromPassword password: String, fromNewPassword newPassword: String) {
+        let parameters : [String: String] = ["username": username, "password": password, "newPassword": newPassword]
+        guard let url = URL(string: "\(self.baseURL)/authentication/changePassword") else {
+            return
+        }
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
+
+            switch response.result {
+
+            case .success(_):
+                guard let data = response.data else { return }
+                    
+                do {
+
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
+    
+    
+
+
+
 }
