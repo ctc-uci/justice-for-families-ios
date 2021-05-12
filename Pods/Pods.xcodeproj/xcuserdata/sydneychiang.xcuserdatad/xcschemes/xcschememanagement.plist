@@ -7,12 +7,20 @@
 		<key>Alamofire.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
+			<integer>0</integer>
+=======
 			<integer>5</integer>
+>>>>>>> bbdf2282766c68fec704c70f26507820c937382a
 		</dict>
 		<key>Introspect.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
+			<integer>5</integer>
+=======
 			<integer>0</integer>
+>>>>>>> bbdf2282766c68fec704c70f26507820c937382a
 		</dict>
 		<key>Pods-justice-for-families-justice-for-familiesUITests.xcscheme_^#shared#^_</key>
 		<dict>
@@ -22,7 +30,11 @@
 		<key>Pods-justice-for-families.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
+			<integer>1</integer>
+=======
 			<integer>4</integer>
+>>>>>>> bbdf2282766c68fec704c70f26507820c937382a
 		</dict>
 		<key>Pods-justice-for-familiesTests.xcscheme_^#shared#^_</key>
 		<dict>
@@ -32,7 +44,11 @@
 		<key>SwiftUIRefresh.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
+			<integer>2</integer>
+=======
 			<integer>1</integer>
+>>>>>>> bbdf2282766c68fec704c70f26507820c937382a
 		</dict>
 	</dict>
 </dict>

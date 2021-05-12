@@ -70,6 +70,7 @@ struct HomeFeed: View {
     
     @State private var isShowing = false
     @ObservedObject var networkManager = NetworkManager()
+    @StateObject var model: AuthenticationData
     
     var body: some View {
 
@@ -79,7 +80,7 @@ struct HomeFeed: View {
                     
                     HStack{
                         ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
-                            NavigationLink(destination: PostView(postID: activityComment.postID)) {
+                            NavigationLink(destination: PostView(postID: activityComment.postID, model: model)) {
                                 WhatYouMissedCell(post: activityComment)
                             }
                         }
@@ -89,8 +90,8 @@ struct HomeFeed: View {
                 .background(J4FColors.background)
 
                 List(networkManager.posts) { p in
-                    NavigationLink(destination: PostView(post: p)) {
-                        FeedCell(post: p)
+                    NavigationLink(destination: PostView(post: p, model: model)) {
+                        FeedCell(post: p, model: model)
                     }
                 }
                 

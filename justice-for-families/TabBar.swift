@@ -40,10 +40,10 @@ struct CurrentScreen: View{
     var body: some View{
         VStack{
             if currentView == .Tab1 {
-                HomeFeed()
+                HomeFeed(model: model)
             }
             else{
-                UserProfileView(model: model)
+                UserProfileView(model: model, username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
             }
         }
     }
