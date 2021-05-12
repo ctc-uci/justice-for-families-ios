@@ -16,13 +16,20 @@ import SwiftUIRefresh
 struct UIUserProfileView : View{
     @State var index = 0
     @StateObject var model: AuthenticationData
-    @ObservedObject var networkManager: ProfileNetworkManager = ProfileNetworkManager()
     @State private var isShowing = false
+    var username: String
+    @ObservedObject var networkManager: ProfileNetworkManager
+    
+    init(model: AuthenticationData, username: String){
+        self._model = StateObject(wrappedValue: model)
+        self.username = username
+        self.networkManager = ProfileNetworkManager(username: username)
+    }
     
     @ViewBuilder
     var body: some View{
         VStack{
-            BioView(model: model)
+            BioView(model: model, username: username)
             HStack(spacing: 0){
                 Spacer()
                 Text("Posts")
@@ -34,15 +41,18 @@ struct UIUserProfileView : View{
                         self.index = 0
                     }
                 Spacer()
-                Text("Liked")
-                    .foregroundColor(self.index == 1 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 15)
-                    .onTapGesture {
-                        self.index = 1
-                    }
-                Spacer()
+                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
+                    Text("Liked")
+                        .foregroundColor(self.index == 1 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 15)
+                        .onTapGesture {
+                            self.index = 1
+                        }
+                    Spacer()
+                }
+
             }
             .padding(.horizontal)
             .padding(.top, 25)
@@ -53,9 +63,16 @@ struct UIUserProfileView : View{
                         List {
                             
                             Section() {
-                                ForEach(networkManager.posts) { p in
-                                    FeedCell(post: p)
-                                        .listRowBackground(J4FColors.background)
+                                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
+                                    ForEach(networkManager.posts) { p in
+                                        FeedCell(post: p, model: model)
+                                            .listRowBackground(J4FColors.background)
+                                    }
+                                }else{
+                                    ForEach(networkManager.anonPosts) { p in
+                                        FeedCell(post: p, model: model)
+                                            .listRowBackground(J4FColors.background)
+                                    }
                                 }
                             }
                         }
@@ -71,7 +88,7 @@ struct UIUserProfileView : View{
                             
                             Section() {
                                 ForEach(networkManager.likedPosts) { p in
-                                    FeedCell(post: p)
+                                    FeedCell(post: p, model: model)
                                         .listRowBackground(J4FColors.background)
                                 }
                             }
@@ -91,6 +108,7 @@ struct UIUserProfileView : View{
                         Button("Logout", action: {model.logout()
                     })
                 })
+//                .navigationBarHidden(true)
 
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -108,23 +126,26 @@ struct UIUserProfileView : View{
 
 struct BioView : View {
     @StateObject var model: AuthenticationData
+    var username: String
+
     var body: some View {
         
         HStack {
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading) {
-                Text(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
+                Text(username)
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(J4FColors.darkBlue)
-                
-                NavigationLink(destination: EditProfileView(model: model)) {
-                    Text("Edit Profile")
-                        .padding()
-                        .frame(width:150, height: 24)
-                        .background(J4FColors.darkBlue)
-                        .foregroundColor(.white)
-                        .cornerRadius(100)
+                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
+                    NavigationLink(destination: EditProfileView(model: model)) {
+                        Text("Edit Profile")
+                            .padding()
+                            .frame(width:150, height: 24)
+                            .background(J4FColors.darkBlue)
+                            .foregroundColor(.white)
+                            .cornerRadius(100)
 
+                    }
                 }
             }
         }
@@ -137,7 +158,8 @@ struct BioView : View {
 
 class ProfileNetworkManager: ObservableObject {
     var didChange = PassthroughSubject<ProfileNetworkManager, Never>()
-
+    var username: String
+    
     @Published var posts = [Post]() {
         didSet {
             didChange.send(self)
@@ -150,24 +172,37 @@ class ProfileNetworkManager: ObservableObject {
         }
     }
     
-    init() {
+    @Published var anonPosts = [Post]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init(username: String) {
+        self.username = username
         getPosts()
         getLikedPosts()
+        getAnonPosts()
+
     }
 
     public func getPosts() {
-        Network.getPost(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
+        Network.getPost(fromUsername: username) {
             (posts) in self.posts = posts.reversed()
         }
     }
     
     public func getLikedPosts() {
-        Network.getLikedPosts(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "") {
+        Network.getLikedPosts(fromUsername: username) {
             (posts) in self.likedPosts = posts.reversed()
         }
     }
     
-    
+    public func getAnonPosts() {
+        Network.getAnonPosts(fromUsername: username) {
+            (posts) in self.anonPosts = posts.reversed()
+        }
+    }
     
 
 }
@@ -177,10 +212,11 @@ class ProfileNetworkManager: ObservableObject {
 
 struct UserProfileView: View {
     @StateObject var model: AuthenticationData
+    var username: String
     var body: some View {
         NavigationView {
-            UIUserProfileView(model: model)
-        }
+            UIUserProfileView(model: model, username: username)
+        }.navigationBarHidden(true)
     }
 }
 
