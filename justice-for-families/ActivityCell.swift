@@ -34,8 +34,8 @@ struct ActivityCell: View {
     }
 }
 
-struct ActivityCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityCell(ActivityComment())
-    }
-}
+//struct ActivityCell_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ActivityCell(ActivityComment())
+//    }
+//}
