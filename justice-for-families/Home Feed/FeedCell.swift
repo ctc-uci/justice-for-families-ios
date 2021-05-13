@@ -24,7 +24,7 @@ struct FeedCell: View {
                     
                     VStack(alignment: .leading, spacing: 4) {
                         TagCell(tag: post.tags[0])
-                        Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
+                        Text(post.anonymous  == false ? Network.getDisplayUsername(fromUsername: post.username) : "anonymous")
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
                             .lineLimit(1)

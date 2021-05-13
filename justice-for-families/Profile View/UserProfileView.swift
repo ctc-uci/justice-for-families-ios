@@ -29,7 +29,7 @@ struct UIUserProfileView : View{
     @ViewBuilder
     var body: some View{
         VStack{
-            BioView(model: model, username: username)
+            BioView(model: model, networkManager: networkManager, username: username)
             HStack(spacing: 0){
                 Spacer()
                 Text("Posts")
@@ -126,6 +126,7 @@ struct UIUserProfileView : View{
 
 struct BioView : View {
     @StateObject var model: AuthenticationData
+    @ObservedObject var networkManager: ProfileNetworkManager
     var username: String
 
     var body: some View {
@@ -133,7 +134,7 @@ struct BioView : View {
         HStack {
             Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
             VStack(alignment: .leading) {
-                Text(username)
+                Text(Network.getDisplayUsername(fromUsername: username))
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(J4FColors.darkBlue)
                 if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
@@ -183,7 +184,7 @@ class ProfileNetworkManager: ObservableObject {
         getPosts()
         getLikedPosts()
         getAnonPosts()
-
+        
     }
 
     public func getPosts() {

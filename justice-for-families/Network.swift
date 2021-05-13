@@ -32,6 +32,12 @@ struct Network {
         }
     }
     
+    static func getDisplayUsername(fromUsername username: String) -> String{
+        let usernameComponents = username.components(separatedBy: "@")
+        return "@" + usernameComponents[0]
+    }
+    
+    
     static func likePost(parameters:[String: Any]) {
         
         guard let url = URL(string: "\(baseURL)/likes/like") else { return }
