@@ -10,17 +10,24 @@ import Combine
 import Alamofire
 
 struct SheetPresenter<Main>: View where Main: View {
-    @Binding var presentingSheet: Bool
+    @Binding var isPresentingSheet: Bool {
+        didSet {
+            print("🟡 SET NEW POST PRESENTED AHHHHH ----- \(isPresentingSheet)")
+        }
+    }
     var content: Main
     var body: some View {
         Text("")
-            .sheet(isPresented: self.$presentingSheet, content: { self.content })
+            .sheet(isPresented: self.$isPresentingSheet, content: { self.content })
             .onAppear {
-                DispatchQueue.main.async { self.presentingSheet = true }
+                print("🔴", isPresentingSheet)
+                DispatchQueue.main.async { self.isPresentingSheet = true }
+            }
+            .onDisappear {
+                print("🔴", isPresentingSheet)
             }
     }
 }
-
 
 struct AddPostView: View {
     @State private var showingTags = false

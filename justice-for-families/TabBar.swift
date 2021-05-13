@@ -8,29 +8,29 @@
 import Foundation
 import SwiftUI
 
-
 struct Main: View {
     @StateObject var model = AuthenticationData()
     @State var newPostPresented = false
+    @State var previouslySelectedTab = -1
+    @State var selectedTab = 0
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             HomeFeed(networkManager: NetworkManager())
                 .tabItem({
-                    Text("HOME")
+                    Image("home")
                 })
             ActivityView(networkManager: ActivityNetworkManager())
                 .tabItem({
-                    Text("ACTIVITY")
+                    Image("bell")
                 })
-            SheetPresenter(presentingSheet: $newPostPresented, content: AddPostView())
+            SheetPresenter(isPresentingSheet: $newPostPresented, content: AddPostView())
                 .tabItem({
                     Text("ADD POST")
                 })
             UserProfileView(model: model)
                 .tabItem({
-                    Text("PROFILE")
+                    Image("person")
                 })
-            
         }
     }
 }
