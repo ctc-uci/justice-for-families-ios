@@ -152,7 +152,7 @@ struct CommentView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            Text(comment.username)
+            Text(Network.getDisplayUsername(fromUsername: comment.username))
                 .font(J4FFonts.username)
                 .foregroundColor(J4FColors.darkBlue)
             Text(comment.text)
@@ -199,7 +199,7 @@ struct PostHeader: View {
                                 .lineLimit(1)
                         }else{
                             NavigationLink(destination: UserProfileView(model: model, username: post.username)) {
-                                Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
+                                Text(Network.getDisplayUsername(fromUsername: post.username))
                                     .font(J4FFonts.username)
                                     .foregroundColor(J4FColors.darkBlue)
                                     .lineLimit(1)
