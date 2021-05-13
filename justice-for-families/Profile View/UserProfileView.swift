@@ -10,9 +10,6 @@ import SwiftUI
 import Combine
 import SwiftUIRefresh
 
-
-
-
 struct UIUserProfileView : View{
     @State var index = 0
     @StateObject var model: AuthenticationData

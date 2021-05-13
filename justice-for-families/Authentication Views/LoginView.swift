@@ -82,7 +82,7 @@ struct LoginView: View {
                 }
                 .padding(.bottom,30)
                 
-                NavigationLink(destination: Main(model: model), tag: 1, selection: $model.canLogin){
+                NavigationLink(destination: MainView(model: model), tag: 1, selection: $model.canLogin){
                     Button(action: {
                         print(model.login())
                     }) {
