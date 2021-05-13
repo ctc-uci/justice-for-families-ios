@@ -58,10 +58,14 @@ struct WhatYouMissedCell: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 5, style: .continuous)
-                .fill(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .fill(J4FColors.paleBlue)
             VStack(alignment: .center){
-                Text("\(Network.getDisplayUsername(fromUsername: post.commentUsername)) commented on your post!").fixedSize(horizontal: false, vertical: true).font(.system(size: 12))
+                Spacer()
+                Text("\(Network.getDisplayUsername(fromUsername: post.commentUsername)) commented on your post!").fixedSize(horizontal: false, vertical: true)
+                    .font(J4FFonts.username)
+                    .foregroundColor(J4FColors.darkBlue)
+                    .multilineTextAlignment(.center)
                 Spacer()
                 
                 //copied from FeedCell time
@@ -77,12 +81,13 @@ struct WhatYouMissedCell: View {
                     .foregroundColor(J4FColors.darkBlue)
                             
                 }
+                Spacer()
             }
             .padding(20)
 //            let networkManager = WYMNetworkManager(fromActivityComment: post)
 //            NavigationLink(destination: PostView(post: networkManager.post)) { EmptyView() }
 //            .opacity(0.0)
         }
-        .frame(width: 140, height: 80)
+        .frame(width: 150, height: 100)
     }
 }

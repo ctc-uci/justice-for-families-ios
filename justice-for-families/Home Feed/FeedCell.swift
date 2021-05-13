@@ -67,6 +67,7 @@ struct FeedCell: View {
             NavigationLink(destination: PostView(post: post, model: model)) { EmptyView() }
             .opacity(0.0)
         }
+        .listRowBackground(J4FColors.background)
     }
 }
 
@@ -101,7 +102,6 @@ struct FeedCellInteractButtons: View {
                     
                 }
                 
-//                print(post)
                 
             }) {
                 HStack(alignment: .center) {

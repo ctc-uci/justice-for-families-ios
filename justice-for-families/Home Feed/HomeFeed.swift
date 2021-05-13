@@ -75,25 +75,38 @@ struct HomeFeed: View {
     var body: some View {
 
         NavigationView {
-            VStack{
+            VStack(alignment: .leading){
+                
+                Text("What you missed...")
+                    .font(J4FFonts.postTitle)
+                    .padding(.leading, 15)
                 ScrollView(.horizontal, showsIndicators: false, content: {
                     
                     HStack{
+                        Spacer(minLength: 15)
                         ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
                             NavigationLink(destination: PostView(postID: activityComment.postID, model: model)) {
                                 WhatYouMissedCell(post: activityComment)
                             }
                         }
+                        Spacer(minLength: 15)
                     }
+
+            
                 })
                 .listRowInsets(EdgeInsets())
-                .background(J4FColors.background)
+                
+                
 
                 List(networkManager.posts) { p in
                     NavigationLink(destination: PostView(post: p, model: model)) {
                         FeedCell(post: p, model: model)
+                            .listStyle(PlainListStyle())
+                            
                     }
+                    .listStyle(PlainListStyle())
                 }
+                
                 
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -101,14 +114,16 @@ struct HomeFeed: View {
                     networkManager.fetchWhatYouMissed()
                    self.isShowing = false
                 }
-           
-            
+
+
             }
-            
+//            .navigationBarHidden(true)
+            .navigationBarTitle("J4F")
         }
+
         // Goodbye 5head :)
         .navigationBarBackButtonHidden(true)
-        .navigationBarTitle("J4F")
+
     }
 }
     

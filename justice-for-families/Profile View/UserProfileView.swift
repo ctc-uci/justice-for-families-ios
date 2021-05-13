@@ -61,22 +61,18 @@ struct UIUserProfileView : View{
                 VStack{
                     if(self.index == 0){
                         List {
-                            
-                            Section() {
-                                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
-                                    ForEach(networkManager.posts) { p in
-                                        FeedCell(post: p, model: model)
-                                            .listRowBackground(J4FColors.background)
-                                    }
-                                }else{
-                                    ForEach(networkManager.anonPosts) { p in
-                                        FeedCell(post: p, model: model)
-                                            .listRowBackground(J4FColors.background)
-                                    }
+                            if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
+                                ForEach(networkManager.posts) { p in
+                                    FeedCell(post: p, model: model)
+                                        .listRowBackground(J4FColors.background)
+                                }
+                            }else{
+                                ForEach(networkManager.anonPosts) { p in
+                                    FeedCell(post: p, model: model)
+                                        .listRowBackground(J4FColors.background)
                                 }
                             }
                         }
-                        .listStyle(GroupedListStyle())
                         .pullToRefresh(isShowing: $isShowing, onRefresh: {
                             networkManager.getPosts()
                             self.isShowing = false
@@ -85,15 +81,11 @@ struct UIUserProfileView : View{
                     }
                     else{
                         List {
-                            
-                            Section() {
-                                ForEach(networkManager.likedPosts) { p in
-                                    FeedCell(post: p, model: model)
-                                        .listRowBackground(J4FColors.background)
-                                }
+                            ForEach(networkManager.likedPosts) { p in
+                                FeedCell(post: p, model: model)
                             }
+                            
                         }
-                        .listStyle(GroupedListStyle())
                         .pullToRefresh(isShowing: $isShowing, onRefresh: {
                             networkManager.getLikedPosts()
                             self.isShowing = false
@@ -145,13 +137,10 @@ struct BioView : View {
                             .background(J4FColors.darkBlue)
                             .foregroundColor(.white)
                             .cornerRadius(100)
-
                     }
                 }
             }
         }
-
-
     }
 
 }
