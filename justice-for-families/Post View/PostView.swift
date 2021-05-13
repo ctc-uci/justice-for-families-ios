@@ -114,10 +114,18 @@ struct PostView: View {
                     postModel.networkManager.comments.append(newComment)
                     postModel.post.numComments += 1
                     commentText = ""
-                }) {
-                    Text("Post")
-                        .font(J4FFonts.postTitle)
                 }
+                ) {
+                    Text("Post")
+                        .padding(.horizontal)
+                        .background(
+                            Capsule(style: .continuous)
+                                .fill(J4FColors.reallyLightBlue)
+                                )
+                                
+                        .font(J4FFonts.postTitle)
+                        .accentColor(J4FColors.darkBlue)             
+                }.disabled(commentText=="")
             }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
         }
 
@@ -133,7 +141,7 @@ struct CommentCell: View {
         HStack(alignment: .top) {
             Image(systemName: "person.crop.circle")
                 .resizable()
-                .frame(width: 41, height: 41, alignment: .leading)
+                .frame(width: 35, height: 35, alignment: .leading)
             VStack(alignment: .leading) {
                 CommentView(comment: comment)
             }
