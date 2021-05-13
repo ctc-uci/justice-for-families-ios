@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum Tab{
+enum Tab {
     case Tab1
     case Tab2
+    case Tab3
 }
 
 
@@ -36,14 +37,14 @@ struct MainView: View{
 struct CurrentScreen: View{
     @StateObject var model: AuthenticationData
     @Binding var currentView: Tab
-    var body: some View{
+    var body: some View {
         VStack{
             if currentView == .Tab1 {
                 HomeFeed()
-            }
-            else{
+            } else if currentView == .Tab2 {
+                ActivityView(networkManager: ActivityNetworkManager())
+            } else {
                 UserProfileView(model: model)
-//                UIUserProfileView(model: model, username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
             }
         }
     }
@@ -60,14 +61,15 @@ struct TabBarItem: View{
             Image(systemName: imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .padding(5)
+//                .padding(5)
                 .frame(width:50, height:50, alignment: .center)
                 .foregroundColor(currentView == tab ? J4FColors.lightBlue : J4FColors.black)
                 .cornerRadius(6)
+                .background(Color.red)
         }
         .frame(width: 100, height: 50)
         .onTapGesture{ currentView = tab }
-        .padding(paddingEdges, 15)
+//        .padding(paddingEdges, 15)
     }
 }
 
@@ -77,13 +79,14 @@ struct TabBar: View{
     
     var body: some View{
         HStack{
+            Spacer()
             TabBarItem(currentView: $currentView, imageName: "house.fill", paddingEdges: .leading, tab: .Tab1)
             Spacer()
-            ShowModalTabBarItem(radius: 40){
-                showModal.toggle()
-            }
+            TabBarItem(currentView: $currentView, imageName: "bell", paddingEdges: .trailing, tab: .Tab3)
+            ShowModalTabBarItem(radius: 40){ showModal.toggle() }
             Spacer()
             TabBarItem(currentView: $currentView, imageName: "person.fill", paddingEdges: .trailing, tab: .Tab2)
+            Spacer()
         }
         .frame(minHeight: 40)
     }
