@@ -33,12 +33,13 @@ class ActivityNetworkManager: ObservableObject {
 struct ActivityView: View {
     
     @ObservedObject var networkManager: ActivityNetworkManager
+    @StateObject var model: AuthenticationData
     
     var body: some View {
                 
         NavigationView {
             List(networkManager.comments) { c in
-                NavigationLink(destination: PostView(postID: c.postID)) {
+                NavigationLink(destination: PostView(postID: c.postID, model: model)) {
                     ActivityCell(c)
                         .background(J4FColors.background)
                 }
@@ -55,8 +56,8 @@ struct ActivityView: View {
     }
 }
 
-struct ActivityView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivityView(networkManager: ActivityNetworkManager())
-    }
-}
+//struct ActivityView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ActivityView(networkManager: ActivityNetworkManager())
+//    }
+//}
