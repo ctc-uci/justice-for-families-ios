@@ -27,27 +27,36 @@ struct EditProfileView: View{
             VStack{
                 ProfileImgView()
 //                TextFieldView()
-                VStack{
-                    HStack{
-                        Text("Username")
-                        TextField("@johnnyapples", text: $username)
-                    }
-                    HStack{
-                        Text("Email")
-                        TextField("johnnyapple123@gmail.com", text: $email)
-                    }
-                    HStack{
-                        Text("Old Password")
-                        TextField("Old Password", text: $password)
-                    }
-                    HStack{
-                        Text("New Password")
-                        TextField("New Password", text: $newPassword)
-                    }
-                    Spacer()
-                }
-            }   
+            
+                HStack{
+             
+                    Text("Username")
+                        .font(J4FFonts.headline)
+                        .foregroundColor(J4FColors.darkBlue)
+                        .opacity(0.6)
+                    TextField("@johnnyapples", text: $username)
+           
+                        
+                }.padding()
+//                    HStack{
+//                        Text("Email")
+//                        TextField("johnnyapple123@gmail.com", text: $email)
+//                    }
+//                    HStack{
+//                        Text("Old Password")
+//                        TextField("Old Password", text: $password)
+//                    }
+//                    HStack{
+//                        Text("New Password")
+//                        TextField("New Password", text: $newPassword)
+//                    }
+                    //Spacer()
+                
+                Spacer()
+                    .frame(minHeight:400)
+            }
         }
+        .navigationBarColor(J4FColors.paleBlue)
         .navigationBarTitle("Edit Profile", displayMode: .inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
@@ -60,7 +69,9 @@ struct EditProfileView: View{
                 }
 
             }){
-                Image(systemName: "xmark").font(.system(size: 16, weight: .regular))
+                Image(systemName: "xmark")
+                    .font(.system(size: 16, weight: .regular))
+                    .foregroundColor(J4FColors.darkBlue)
             },
             trailing:
                 Button(action: {
@@ -81,6 +92,7 @@ struct EditProfileView: View{
                     self.presentationMode.wrappedValue.dismiss()
                 }){
                     Text("Save")
+                        .foregroundColor(J4FColors.lightBlue)
                 }
             
         )
@@ -151,6 +163,8 @@ struct ProfileImgView: View{
                 self.showingImagePicker = true
             }) {
                 Text("Change Profile Photo")
+                    .foregroundColor(J4FColors.lightBlue)
+                    .font(J4FFonts.headline)
             }
             .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
                 ImagePicker(image: self.$inputImage)
@@ -167,6 +181,44 @@ struct ProfileImgView: View{
     }
 }
 
+struct NavigationBarModifier: ViewModifier {
+    var backgroundColor: UIColor?
+    init(backgroundColor: Color) {
+        self.backgroundColor = UIColor(backgroundColor)
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = .clear
+        coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+        UINavigationBar.appearance().tintColor = .white
 
+    }
+    
+    func body(content: Content) -> some View {
+        ZStack{
+            content
+            VStack {
+                GeometryReader { geometry in
+                    Color(self.backgroundColor ?? .clear)
+                        .frame(height: geometry.safeAreaInsets.top)
+                        .edgesIgnoringSafeArea(.top)
+                    Spacer()
+                }
+            }
+        }
+    }
+}
+
+extension View {
+ 
+    func navigationBarColor(_ backgroundColor: Color) -> some View {
+        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
+    }
+
+}
 
 
