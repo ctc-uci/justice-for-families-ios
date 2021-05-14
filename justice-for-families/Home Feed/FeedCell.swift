@@ -10,6 +10,7 @@ import SwiftUI
 struct FeedCell: View {
     
     let post: Post
+    @StateObject var model: AuthenticationData
     
     var body: some View {
         ZStack {
@@ -23,7 +24,7 @@ struct FeedCell: View {
                     
                     VStack(alignment: .leading, spacing: 4) {
                         TagCell(tag: post.tags[0])
-                        Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
+                        Text(post.anonymous  == false ? Network.getDisplayUsername(fromUsername: post.username) : "anonymous")
                             .font(J4FFonts.username)
                             .foregroundColor(J4FColors.darkBlue)
                             .lineLimit(1)
@@ -63,8 +64,8 @@ struct FeedCell: View {
             }
             .padding(20)
             // Removes arrow indicators on the right side of the cell
-//            NavigationLink(destination: PostView(post: post)) { EmptyView() }
-//            .opacity(0.0)
+            NavigationLink(destination: PostView(post: post, model: model)) { EmptyView() }
+            .opacity(0.0)
         }
     }
 }

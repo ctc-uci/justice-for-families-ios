@@ -61,7 +61,7 @@ struct WhatYouMissedCell: View {
             RoundedRectangle(cornerRadius: 5, style: .continuous)
                 .fill(Color(.sRGB, red: 196/255.0, green: 215/255.0, blue: 235/255.0, opacity: 0.3))
             VStack(alignment: .center){
-                Text("@\(post.commentUsername) commented on your post!").fixedSize(horizontal: false, vertical: true).font(.system(size: 12))
+                Text("\(Network.getDisplayUsername(fromUsername: post.commentUsername)) commented on your post!").fixedSize(horizontal: false, vertical: true).font(.system(size: 12))
                 Spacer()
                 
                 //copied from FeedCell time

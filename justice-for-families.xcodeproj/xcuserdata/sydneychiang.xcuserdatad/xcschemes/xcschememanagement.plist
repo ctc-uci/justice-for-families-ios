@@ -7,7 +7,11 @@
 		<key>justice-for-families.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+<<<<<<< HEAD
+			<integer>4</integer>
+=======
+			<integer>2</integer>
+>>>>>>> bbdf2282766c68fec704c70f26507820c937382a
 		</dict>
 	</dict>
 </dict>

@@ -61,21 +61,26 @@ class PostModel: ObservableObject {
 struct PostView: View {
     @State private var commentText: String = ""
     @State private var placeholderString: String = "hello"
+    @StateObject var model: AuthenticationData
     
     var postModel: PostModel
     
-    init(post: Post?) {
+    init(post: Post?, model: AuthenticationData) {
         self.postModel = PostModel(post: post)
+        self._model = StateObject(wrappedValue: model)
     }
     
-    init(postID: String) {
+    init(postID: String, model: AuthenticationData) {
         self.postModel = PostModel(postID: postID)
+        self._model = StateObject(wrappedValue: model)
     }
+    
+    
         
     var body: some View {
         VStack {
             List {
-                Section(header: PostHeader(post: postModel.post)) {
+                Section(header: PostHeader(post: postModel.post, model: model)) {
                     ForEach(postModel.networkManager.comments) { i in
                         CommentCell(comment: i)
                             .listRowInsets(EdgeInsets())
@@ -131,18 +136,6 @@ struct CommentCell: View {
                 .frame(width: 41, height: 41, alignment: .leading)
             VStack(alignment: .leading) {
                 CommentView(comment: comment)
-//                HStack(alignment: .top, spacing: 24) {
-//                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-//                        Text("Like")
-//                            .font(Font.custom("AvenirNext-Regular", size: 12))
-//                            .foregroundColor(J4FColors.secondaryText)
-//                    })
-//                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-//                        Text("Reply")
-//                            .font(Font.custom("AvenirNext-Regular", size: 12))
-//                            .foregroundColor(J4FColors.secondaryText)
-//                    })
-//                }
             }
             
         }
@@ -159,7 +152,7 @@ struct CommentView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            Text(comment.username)
+            Text(Network.getDisplayUsername(fromUsername: comment.username))
                 .font(J4FFonts.username)
                 .foregroundColor(J4FColors.darkBlue)
             Text(comment.text)
@@ -177,20 +170,42 @@ struct CommentView: View {
 struct PostHeader: View {
     
     var post: Post
+    @StateObject var model: AuthenticationData
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "person.crop.circle")
-                    .resizable()
-                    .frame(width: 41, height: 41, alignment: .leading)
+                if post.anonymous{
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .frame(width: 41, height: 41, alignment: .leading)
+                } else{
+                    NavigationLink(destination: UserProfileView(model: model, username: post.username)) {
+                        Image(systemName: "person.crop.circle")
+                            .resizable()
+                            .frame(width: 41, height: 41, alignment: .leading)
+                    }
+                    
+                }
+
+
                 VStack(alignment: .leading) {
                     TagCell(tag: post.tags[0])
                     HStack {
-                        Text(post.anonymous  == false ? "@\(post.username)" : "anonymous")
-                            .font(J4FFonts.username)
-                            .foregroundColor(J4FColors.darkBlue)
-                            .lineLimit(1)
+                        if post.anonymous{
+                            Text("anonymous")
+                                .font(J4FFonts.username)
+                                .foregroundColor(J4FColors.darkBlue)
+                                .lineLimit(1)
+                        }else{
+                            NavigationLink(destination: UserProfileView(model: model, username: post.username)) {
+                                Text(Network.getDisplayUsername(fromUsername: post.username))
+                                    .font(J4FFonts.username)
+                                    .foregroundColor(J4FColors.darkBlue)
+                                    .lineLimit(1)
+                            }
+                        }
+
                         Spacer()
                          //change string into date
                          let isoDate = post.datePosted

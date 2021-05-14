@@ -32,6 +32,12 @@ struct Network {
         }
     }
     
+    static func getDisplayUsername(fromUsername username: String) -> String{
+        let usernameComponents = username.components(separatedBy: "@")
+        return "@" + usernameComponents[0]
+    }
+    
+    
     static func likePost(parameters:[String: Any]) {
         
         guard let url = URL(string: "\(baseURL)/likes/like") else { return }
@@ -230,6 +236,57 @@ struct Network {
         }
     }
     
+    static func getAnonPosts(fromUsername username: String, completionHandler: @escaping (_ posts: [Post]) -> Void) {
+        guard let url = URL(string: "\(self.baseURL)/posts/visitor/username/\(username)") else {
+            return
+        }
+        AF.request(url, method: .get).responseString { (response) in
+
+            switch response.result {
+            case .success(_):
+                guard let data = response.data else { return }
+                print("🟡", response.result)
+                
+                do {
+                    
+                    let decodedPosts = try JSONDecoder().decode([DecodedPost].self, from: data)
+                    let posts: [Post] = decodedPosts.map { Post(anonymous: $0.anonymous, datePosted: $0.datePosted, createdAt: $0.createdAt, updatedAt: $0.updatedAt, numComments: $0.numComments, numLikes: $0.numLikes, tags: $0.tags, title: $0.title, text: $0.text, username: $0.username, DecodedPost: $0) }
+                    
+
+                    posts.forEach({ p in
+                        Network.hasLiked(forPostID: p.decodedPost._id, username: username) { (result) in
+                            switch result {
+                            case .success(let isLiked):
+                                print("🟡 (\(p.decodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
+                                p.isLiked = isLiked
+                            case .failure(_):
+                                print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
+                            }
+                        }
+                    })
+                  
+                    DispatchQueue.main.async {
+                        completionHandler(posts)
+                    }
+                    
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+                
+            case .failure(let error):
+                print("🔥 \(error)")
+            }
+        }
+    }
+    
     static func getPost(fromDate date: Date) {
         
     }
@@ -377,4 +434,43 @@ struct Network {
             }
         }
     }
+    
+    
+    static func changePassword(fromUsername username: String, fromPassword password: String, fromNewPassword newPassword: String) {
+        let parameters : [String: String] = ["username": username, "password": password, "newPassword": newPassword]
+        guard let url = URL(string: "\(self.baseURL)/authentication/changePassword") else {
+            return
+        }
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { (response) in
+
+            switch response.result {
+
+            case .success(_):
+                guard let data = response.data else { return }
+                    
+                do {
+
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+                break
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
+    
+    
+
+
+
 }
