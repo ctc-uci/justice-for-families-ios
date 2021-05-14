@@ -61,11 +61,10 @@ struct TabBarItem: View{
             Image(systemName: imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-//                .padding(5)
+                .padding(5)
                 .frame(width:50, height:50, alignment: .center)
                 .foregroundColor(currentView == tab ? J4FColors.lightBlue : J4FColors.black)
                 .cornerRadius(6)
-                .background(Color.red)
         }
         .frame(width: 100, height: 50)
         .onTapGesture{ currentView = tab }
