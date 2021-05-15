@@ -20,12 +20,13 @@ struct EditProfileView: View{
     @State var email = ""
     @State var password = ""
     @State var newPassword = ""
-
+    
+    var profileimgview = ProfileImgView()
     
     var body: some View{
         NavigationView {
             VStack{
-                ProfileImgView()
+                profileimgview
 //                TextFieldView()
                 VStack{
                     HStack{
@@ -68,7 +69,7 @@ struct EditProfileView: View{
                     print("email: \(email)")
                     print("password: \(password)")
                     print("new password: \(newPassword)")
-                    
+                    profileimgview.uploadImage()
                     
 //                    UNCOMMENT THIS IF YOU WANT TO CHANGE PASSWORD
 //                    if newPassword.count > 0 { //check if valid? add error messages?
@@ -78,7 +79,7 @@ struct EditProfileView: View{
 //                        print("new password invalid")
 //                    }
 
-                    self.presentationMode.wrappedValue.dismiss()
+                    //self.presentationMode.wrappedValue.dismiss()
                 }){
                     Text("Save")
                 }
@@ -132,6 +133,7 @@ struct ProfileImgView: View{
     @State private var image: Image?
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    @State private var inputImageUrl: URL?
     
     var body: some View{
         VStack{
@@ -153,7 +155,7 @@ struct ProfileImgView: View{
                 Text("Change Profile Photo")
             }
             .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
-                ImagePicker(image: self.$inputImage)
+                ImagePicker(image: self.$inputImage, imageUrl: self.$inputImageUrl)
 
             }
         }
@@ -164,7 +166,15 @@ struct ProfileImgView: View{
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
+        print(self.inputImageUrl?.pathExtension as Any)
     }
+    
+    
+    func uploadImage(){
+        let contentType = "image/" + self.inputImageUrl!.pathExtension
+        Network.getUrls(contentType: contentType)
+    }
+    
 }
 
 

@@ -17,17 +17,25 @@ struct ImagePicker: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            if let uiImage = info[.originalImage] as? UIImage {
-                parent.image = uiImage
-            }
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey:Any]) {
 
+            guard let fileUrl = info[UIImagePickerController.InfoKey.imageURL] as? URL else { return }
+            parent.imageUrl = (fileUrl)
+            
+            
+            if let uiImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                    parent.image = uiImage
+                  }
+            
             parent.presentationMode.wrappedValue.dismiss()
+
         }
+       
     }
     
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: UIImage?
+    @Binding var imageUrl: URL?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)

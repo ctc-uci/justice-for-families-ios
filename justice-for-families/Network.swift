@@ -469,8 +469,25 @@ struct Network {
         }
     }
     
+
+    static func getUrls(contentType : String) {
+        
+        guard let url = URL(string: "\(baseURL)/s3Upload?contentType=\(contentType)") else { return }
+        
+        AF.request(url, method: .get, encoding: JSONEncoding.default).responseString { (response) in
+
+            switch response.result {
+
+            case .success(_):
+                guard let json = response.value else { return }
+                print(json)
+                
+            case .failure(let error):
+                print(error)
+                
+            }
+        }
+    }
     
-
-
 
 }
