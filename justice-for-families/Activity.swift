@@ -25,9 +25,3 @@ struct ActivityComment: Decodable, Hashable {
 extension ActivityComment: Identifiable {
     var id: String { return commentID}
 }
-
-//{"comments":
-//    [
-//    {"postID":"6089eacb9ad8890004fee450","postUsername":"nguyenethan01@gmail.com","postTitle":"Testing long posts","postText":"This post\nshould have\nmore than\n4 lines\nin its\ntext body","commentID":"608db7cc1044d70004c90403","commentUsername":"jlabador@uci.edu","commentDatePosted":"2021-05-01T20:19:24.811Z","commentText":"Test test test test est"}
-//    ]
-//}

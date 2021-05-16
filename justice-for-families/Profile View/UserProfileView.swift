@@ -255,7 +255,7 @@ struct UserProfileView: View {
     var username: String
     var body: some View {
         UIUserProfileView(model: model, username: username)
-            .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
+            .navigationBarTitle(username, displayMode: .inline)
             .navigationBarItems(trailing:
                 Menu("...") {
                     Button("Logout", action: {model.logout()
