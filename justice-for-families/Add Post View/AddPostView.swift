@@ -9,8 +9,27 @@ import SwiftUI
 import Combine
 import Alamofire
 
+struct SheetPresenter<Main>: View where Main: View {
+    @Binding var isPresentingSheet: Bool {
+        didSet {
+            print("🟡 SET NEW POST PRESENTED AHHHHH ----- \(isPresentingSheet)")
+        }
+    }
+    var content: Main
+    var body: some View {
+        Text("")
+            .sheet(isPresented: self.$isPresentingSheet, content: { self.content })
+            .onAppear {
+                print("🔴", isPresentingSheet)
+                DispatchQueue.main.async { self.isPresentingSheet = true }
+            }
+            .onDisappear {
+                print("🔴", isPresentingSheet)
+            }
+    }
+}
 
-struct PopUp: View{
+struct AddPostView: View {
     @State private var showingTags = false
     
     @State var title: String = ""
@@ -148,7 +167,7 @@ struct PopUp: View{
 struct Post_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            PopUp()
+            AddPostView()
         }
     }
 }
