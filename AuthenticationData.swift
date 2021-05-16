@@ -33,6 +33,7 @@ class AuthenticationData: ObservableObject {
         reEnterPassword = ""
         UserDefaults.standard.removeObject(forKey: "LoggedInUser")
     }
+    
     func login() {
         //can also use http://localhost:3000/authentication/login
         //this way is good since it tells you specifically what went wrong(e.g. incorrect user/pass, user not yet confirmed, ...)

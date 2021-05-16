@@ -471,7 +471,6 @@ struct Network {
     
 
     static func getUrls(contentType : String) {
-        
         guard let url = URL(string: "\(baseURL)/s3Upload?contentType=\(contentType)") else { return }
         
         AF.request(url, method: .get, encoding: JSONEncoding.default).responseString { (response) in

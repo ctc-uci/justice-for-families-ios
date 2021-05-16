@@ -132,8 +132,8 @@ class EditProfileNetworkManager: ObservableObject {
 struct ProfileImgView: View{
     @State private var image: Image?
     @State private var showingImagePicker = false
-    @State private var inputImage: UIImage?
-    @State private var inputImageUrl: URL?
+    @State var inputImage: UIImage?
+    @State var inputImageUrl: URL?
     
     var body: some View{
         VStack{
@@ -166,12 +166,14 @@ struct ProfileImgView: View{
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
-        print(self.inputImageUrl?.pathExtension as Any)
+        print("🔴", inputImageUrl)
     }
     
     
     func uploadImage(){
-        let contentType = "image/" + self.inputImageUrl!.pathExtension
+        guard let imageUrl = self.inputImageUrl else { return }
+        print("🔴", inputImageUrl)
+        let contentType = "image/\(imageUrl.pathExtension)"
         Network.getUrls(contentType: contentType)
     }
     
