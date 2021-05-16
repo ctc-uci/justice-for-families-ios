@@ -18,6 +18,7 @@ struct justice_for_familiesApp: App {
             // present either the 'MainView' or 'LoginView'
             if (loggedInUser.user != nil) {
                 MainView(model: model)
+//                HomeFeed(networkManager: NetworkManager(), model: model)
             } else {
                 LoginView()
             }

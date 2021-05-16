@@ -22,7 +22,7 @@ struct MainView: View{
     
     var body: some View{
         VStack{
-            CurrentScreen( model: model ,currentView: $currentView)
+            CurrentScreen( model: model, currentView: $currentView)
             TabBar(currentView: $currentView, showModal: $showModal)
         }
         .edgesIgnoringSafeArea(.all)

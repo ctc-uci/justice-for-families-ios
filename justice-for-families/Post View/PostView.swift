@@ -198,7 +198,11 @@ struct PostHeader: View {
 
 
                 VStack(alignment: .leading) {
-                    TagCell(tag: post.tags[0])
+                    HStack {
+                        TagCell(tag: post.tags[0])
+                        // Checks to see if a second tag exists, then displays another TagCell
+                        post.tags.indices.contains(1) == true ? TagCell(tag: post.tags[1]) : nil
+                    }
                     HStack {
                         if post.anonymous{
                             Text("anonymous")

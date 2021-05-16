@@ -10,10 +10,97 @@ import SwiftUI
 import Combine
 import SwiftUIRefresh
 
+struct PostsAndLikedView: View {
+    
+    var username: String
+    @Binding var index: Int
+    var body: some View {
+        HStack(spacing: 0){
+            Spacer()
+            Text("Posts")
+                .foregroundColor(self.index == 0 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
+                .fontWeight(.bold)
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15)
+                .onTapGesture {
+                    self.index = 0
+                }
+            Spacer()
+            if UserDefaults.standard.string(forKey: "LoggedInUser")  == username {
+                Text("Liked")
+                    .foregroundColor(self.index == 1 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
+                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 15)
+                    .onTapGesture {
+                        self.index = 1
+                    }
+                Spacer()
+            }
 
+        }
+        .padding(.horizontal)
+        .padding(.top, 25)
+    }
+}
 
+struct UserLikedPostsView: View {
+    
+    @Binding var isShowing: Bool
+    @ObservedObject var networkManager: ProfileNetworkManager
+    var username: String
+    @StateObject var model: AuthenticationData
+    
+    var body: some View {
+        List {
+            Section() {
+                ForEach(networkManager.likedPosts) { p in
+                    FeedCell(post: p, model: model)
+                        .listRowBackground(J4FColors.background)
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())
+        .pullToRefresh(isShowing: $isShowing, onRefresh: {
+            networkManager.getLikedPosts()
+            self.isShowing = false
+        })
+    }
+}
+
+struct UserPostsView: View {
+    
+    @Binding var isShowing: Bool
+    @ObservedObject var networkManager: ProfileNetworkManager
+    var username: String
+    @StateObject var model: AuthenticationData
+    
+    var body: some View {
+        List {
+            Section() {
+                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username {
+                    ForEach(networkManager.posts) { p in
+                        FeedCell(post: p, model: model)
+                            .listRowBackground(J4FColors.background)
+                    }
+                }else{
+                    ForEach(networkManager.anonPosts) { p in
+                        FeedCell(post: p, model: model)
+                            .listRowBackground(J4FColors.background)
+                    }
+                }
+            }
+        }
+        .listStyle(GroupedListStyle())
+        .pullToRefresh(isShowing: $isShowing, onRefresh: {
+            networkManager.getPosts()
+            self.isShowing = false
+        })
+    }
+}
 
 struct UIUserProfileView : View{
+    
     @State var index = 0
     @StateObject var model: AuthenticationData
     @State private var isShowing = false
@@ -27,36 +114,11 @@ struct UIUserProfileView : View{
     }
     
     @ViewBuilder
-    var body: some View{
-        VStack{
+    var body: some View {
+        
+        VStack {
             BioView(model: model, networkManager: networkManager, username: username)
-            HStack(spacing: 0){
-                Spacer()
-                Text("Posts")
-                    .foregroundColor(self.index == 0 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
-                    .fontWeight(.bold)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 15)
-                    .onTapGesture {
-                        self.index = 0
-                    }
-                Spacer()
-                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
-                    Text("Liked")
-                        .foregroundColor(self.index == 1 ? J4FColors.darkBlue : J4FColors.darkBlue.opacity(0.7))
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 15)
-                        .onTapGesture {
-                            self.index = 1
-                        }
-                    Spacer()
-                }
-
-            }
-            .padding(.horizontal)
-            .padding(.top, 25)
-
+            PostsAndLikedView(username: username, index: $index)
             TabView(selection: self.$index){
                 VStack{
                     if(self.index == 0){
@@ -93,18 +155,8 @@ struct UIUserProfileView : View{
                     }
 
                 }
-                .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
-                .navigationBarItems(trailing:
-
-                    Menu("...") {
-                        Button("Logout", action: {model.logout()
-                    })
-                })
-//                .navigationBarHidden(true)
-
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-
         }
         .padding(.top)
     }
@@ -141,6 +193,7 @@ struct BioView : View {
                 }
             }
         }
+
     }
 
 }
@@ -197,16 +250,17 @@ class ProfileNetworkManager: ObservableObject {
 
 }
 
-
-
-
 struct UserProfileView: View {
     @StateObject var model: AuthenticationData
     var username: String
     var body: some View {
-        NavigationView {
-            UIUserProfileView(model: model, username: username)
-        }.navigationBarHidden(true)
+        UIUserProfileView(model: model, username: username)
+            .navigationBarTitle(UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Menu("...") {
+                    Button("Logout", action: {model.logout()
+                })
+            })
     }
 }
 

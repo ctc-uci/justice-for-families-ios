@@ -47,7 +47,7 @@ struct PopUp: View{
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack (spacing: 4) {
                                     ForEach(tags, id: \.self) { tag in
-                                        Text("#\(tag.description)")
+                                        Text(tag.description)
                                             .font(.custom("Poppins-Regular", size:11))
                                             .frame(alignment: .center)
                                             .padding(EdgeInsets(top: 4, leading: 9, bottom: 4, trailing: 9))
