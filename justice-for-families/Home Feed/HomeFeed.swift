@@ -16,6 +16,90 @@ struct Update: Identifiable {
     var numberOfComments: Int
 }
 
+
+struct HomeFeed: View {
+    
+    @State private var isShowing = false
+    @ObservedObject var networkManager = NetworkManager()
+    @StateObject var model: AuthenticationData
+    
+    var body: some View {
+
+        NavigationView {
+            VStack(alignment: .leading){
+                List{
+                    Text("What you missed...")
+                        .font(J4FFonts.postTitle)
+                        .padding(.leading, 15)
+                    ScrollView(.horizontal, showsIndicators: false, content: {
+                        
+                        HStack{
+                            Spacer(minLength: 15)
+                            ForEach(networkManager.whatYouMissedPosts.reversed(), id: \.self){ activityComment in
+                                NavigationLink(destination: PostView(postID: activityComment.postID, model: model)) {
+                                    ZStack{
+                                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                            .fill(J4FColors.paleBlue).frame(width: 150, height: 100)
+                                        WhatYouMissedCell(post: activityComment)
+                                    }
+
+                                }
+                            }
+                            NavigationLink(destination: ActivityView(networkManager: ActivityNetworkManager(), model: model)) {
+                                CheckNotificationsCell()
+                            }
+                            
+                            Spacer(minLength: 15)
+                        }
+                    })
+                    .listRowInsets(EdgeInsets())
+
+                    Text("Feed")
+                        .font(J4FFonts.postTitle)
+                        .padding(.leading, 15)
+
+                    ForEach(networkManager.posts) { p in
+                    
+                        NavigationLink(destination: PostView(post: p, model: model)) {
+                            FeedCell(post: p, model: model)
+                        }
+                    }
+                }
+
+            }.pullToRefresh(isShowing: $isShowing) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                   networkManager.fetchPosts()
+                    networkManager.fetchWhatYouMissed()
+                   self.isShowing = false
+                }
+            }
+            .navigationBarTitle("J4F")
+        }
+
+        // Goodbye 5head :)
+        .navigationBarBackButtonHidden(true)
+
+    }
+}
+    
+
+struct SectionHeader: View {
+    
+    let title: String
+    
+    var body: some View {
+        Text(title)
+            .padding(EdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 0))
+            .textCase(.none)
+            .font(J4FFonts.sectionTitle)
+            .frame(width: UIScreen.main.bounds.width, height: 60, alignment: .leading)
+            .background(J4FColors.background)
+            .foregroundColor(J4FColors.darkBlue)
+    }
+}
+
+
+
 class NetworkManager: ObservableObject {
     
     var didChange = PassthroughSubject<NetworkManager, Never>()
@@ -44,7 +128,6 @@ class NetworkManager: ObservableObject {
                 Network.hasLiked(forPostID: p.decodedPost._id, username: self.username) { (result) in
                     switch result {
                     case .success(let isLiked):
-//                        print("🟡 (\(p.DecodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                         p.isLiked = isLiked
                     case .failure(_):
                         print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
@@ -64,79 +147,4 @@ class NetworkManager: ObservableObject {
     
     
     
-}
-
-struct HomeFeed: View {
-    
-    @State private var isShowing = false
-    @ObservedObject var networkManager = NetworkManager()
-    @StateObject var model: AuthenticationData
-    
-    var body: some View {
-
-        NavigationView {
-
-//            Text("HI")
-            VStack{
-
-                ScrollView(.horizontal, showsIndicators: false, content: {
-
-                    HStack{
-                        Spacer(minLength: 15)
-                        ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
-                            NavigationLink(destination: PostView(postID: activityComment.postID, model: model)) {
-                                WhatYouMissedCell(post: activityComment)
-                            }
-                        }
-                        Spacer(minLength: 15)
-                    }
-
-            
-                })
-                .listRowInsets(EdgeInsets())
-                
-                
-
-                List(networkManager.posts) { p in
-                    NavigationLink(destination: PostView(post: p, model: model)) {
-                        FeedCell(post: p, model: model)
-                            .listStyle(PlainListStyle())
-                            
-                    }
-                    .listStyle(PlainListStyle())
-                }
-
-            }.pullToRefresh(isShowing: $isShowing) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                   networkManager.fetchPosts()
-                    networkManager.fetchWhatYouMissed()
-                   self.isShowing = false
-                }
-
-
-            }
-//            .navigationBarHidden(true)
-            .navigationBarTitle("J4F")
-        }
-
-        // Goodbye 5head :)
-        .navigationBarBackButtonHidden(true)
-
-    }
-}
-    
-
-struct SectionHeader: View {
-    
-    let title: String
-    
-    var body: some View {
-        Text(title)
-            .padding(EdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 0))
-            .textCase(.none)
-            .font(J4FFonts.sectionTitle)
-            .frame(width: UIScreen.main.bounds.width, height: 60, alignment: .leading)
-            .background(J4FColors.background)
-            .foregroundColor(J4FColors.darkBlue)
-    }
 }

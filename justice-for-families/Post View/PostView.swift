@@ -11,29 +11,7 @@
 import SwiftUI
 import Combine
 
-class CommentsNetworkManager: ObservableObject {
-    var didChange = PassthroughSubject<CommentsNetworkManager, Never>()
-    private var postID: String
-    
-    @Published var comments = [Comment]() {
-        didSet {
-            didChange.send(self)
-        }
-    }
-    
-    init(postID: String = "") {
-        self.postID = postID
-//        print("🟡 PostView init with ID: \(postID)")
-//        fetchComments()
-    }
-    
-    
-    func fetchComments() {
-        Network.getComments(forPostID: self.postID, completionHandler: { (comments) in
-            self.comments = comments
-        })
-    }
-}
+
 
 class PostModel: ObservableObject {
     
@@ -79,15 +57,18 @@ struct PostView: View {
         
     var body: some View {
         VStack {
-            List {
-                Section(header: PostHeader(post: postModel.post, model: model)) {
+                List {
+                    Section(header: PostHeader(post: postModel.post, model: model)) {
                     ForEach(postModel.networkManager.comments) { i in
                         CommentCell(comment: i)
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.white)
+                        
                     }
                 }.textCase(.none)
-            }.listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
+//                .listRowInsets(EdgeInsets())
+            }
+            .listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
             
             HStack {
                 // this textField generates the value for the composedMessage @State var
@@ -141,11 +122,8 @@ struct CommentCell: View {
         HStack(alignment: .top) {
             Image(systemName: "person.crop.circle")
                 .resizable()
-                .frame(width: 35, height: 35, alignment: .leading)
-            VStack(alignment: .leading) {
-                CommentView(comment: comment)
-            }
-            
+                .frame(width: 41, height: 41, alignment: .leading)
+            CommentView(comment: comment)
         }
         .frame(height: 120, alignment: .leading)
         .padding(.horizontal, 20)
@@ -260,10 +238,26 @@ struct PostHeader: View {
     }
 }
 
-/*
-struct PostView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostView(post: Post())
+class CommentsNetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<CommentsNetworkManager, Never>()
+    private var postID: String
+    
+    @Published var comments = [Comment]() {
+        didSet {
+            didChange.send(self)
+        }
+    }
+    
+    init(postID: String = "") {
+        self.postID = postID
+//        print("🟡 PostView init with ID: \(postID)")
+//        fetchComments()
+    }
+    
+    
+    func fetchComments() {
+        Network.getComments(forPostID: self.postID, completionHandler: { (comments) in
+            self.comments = comments
+        })
     }
 }
-*/

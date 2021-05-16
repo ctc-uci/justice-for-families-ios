@@ -31,14 +31,13 @@ class WYMNetworkManager: ObservableObject {
 struct WhatYouMissedCell: View {
     
     let post: ActivityComment
-
+    
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .fill(J4FColors.paleBlue)
             VStack(alignment: .center){
                 Spacer()
-                Text("\(Network.getDisplayUsername(fromUsername: post.commentUsername)) commented on your post!").fixedSize(horizontal: false, vertical: true)
+                Text("\(Network.getDisplayUsername(fromUsername: post.commentUsername)) commented on your post!")
+                    .fixedSize(horizontal: false, vertical: true)
                     .font(J4FFonts.username)
                     .foregroundColor(J4FColors.darkBlue)
                     .multilineTextAlignment(.center)
@@ -57,6 +56,28 @@ struct WhatYouMissedCell: View {
                     .foregroundColor(J4FColors.darkBlue)
                             
                 }
+                Spacer()
+            }
+            .padding(20)
+        }
+        .frame(width: 150, height: 100)
+    }
+}
+
+
+struct CheckNotificationsCell: View {
+  
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                .fill(J4FColors.paleBlue)
+            VStack(alignment: .center){
+                Spacer()
+                Text("Check your notifications")
+//                    .fixedSize(horizontal: false, vertical: true)
+                    .font(J4FFonts.username)
+                    .foregroundColor(J4FColors.darkBlue)
+                    .multilineTextAlignment(.center)
                 Spacer()
             }
             .padding(20)
