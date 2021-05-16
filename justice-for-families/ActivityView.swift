@@ -8,6 +8,36 @@
 import SwiftUI
 import Combine
 
+
+
+struct ActivityView: View {
+    
+    @ObservedObject var networkManager: ActivityNetworkManager
+    @StateObject var model: AuthenticationData
+    var isTabView : Bool
+    
+    var body: some View {
+                
+        NavigationView {
+            List(networkManager.comments) { c in
+                NavigationLink(destination: PostView(postID: c.postID, model: model)) {
+                    ActivityCell(c)
+                        .background(J4FColors.background)
+                }
+            }
+            .background(J4FColors.background)
+            .navigationBarHidden(!isTabView)
+            .navigationBarTitle("Activity")
+            
+        }
+        .background(J4FColors.background)
+        .navigationBarTitle("Activity")
+        .navigationBarHidden(isTabView)
+
+    }
+}
+
+
 class ActivityNetworkManager: ObservableObject {
     
     var didChange = PassthroughSubject<ActivityNetworkManager, Never>()
@@ -27,29 +57,5 @@ class ActivityNetworkManager: ObservableObject {
         Network.getWhatYouMissed { a in
             self.comments = a.comments
         }
-    }
-}
-
-struct ActivityView: View {
-    
-    @ObservedObject var networkManager: ActivityNetworkManager
-    @StateObject var model: AuthenticationData
-    
-    var body: some View {
-                
-        NavigationView {
-            List(networkManager.comments) { c in
-                NavigationLink(destination: PostView(postID: c.postID, model: model)) {
-                    ActivityCell(c)
-                        .background(J4FColors.background)
-                }
-            }
-            .background(J4FColors.background)
-            .navigationBarTitle("Activity")
-        }
-        .background(J4FColors.background)
-
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
     }
 }

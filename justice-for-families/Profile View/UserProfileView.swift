@@ -100,24 +100,26 @@ struct UserPostsView: View {
 }
 
 struct UIUserProfileView : View{
-    
+
     @State var index = 0
     @StateObject var model: AuthenticationData
     @State private var isShowing = false
     var username: String
     @ObservedObject var networkManager: ProfileNetworkManager
-    
-    init(model: AuthenticationData, username: String){
+    var isTabView : Bool
+
+    init(model: AuthenticationData, username: String, isTabView: Bool){
         self._model = StateObject(wrappedValue: model)
         self.username = username
         self.networkManager = ProfileNetworkManager(username: username)
+        self.isTabView = isTabView
     }
-    
+
     @ViewBuilder
     var body: some View {
-        
+
         VStack {
-            BioView(model: model, networkManager: networkManager, username: username)
+            BioView(model: model, networkManager: networkManager, username: username, isTabView: isTabView)
             PostsAndLikedView(username: username, index: $index)
             TabView(selection: self.$index){
                 VStack{
@@ -146,7 +148,7 @@ struct UIUserProfileView : View{
                             ForEach(networkManager.likedPosts) { p in
                                 FeedCell(post: p, model: model)
                             }
-                            
+
                         }
                         .pullToRefresh(isShowing: $isShowing, onRefresh: {
                             networkManager.getLikedPosts()
@@ -155,9 +157,21 @@ struct UIUserProfileView : View{
                     }
 
                 }
+                .navigationBarTitle(Network.getDisplayUsername(fromUsername: username), displayMode: .inline)
+                .navigationBarItems(trailing:
+
+                        Menu("...") {
+                            Button("Logout", action: {model.logout()
+                        })
+                    })
+                .navigationBarHidden(!isTabView)
+
             }
+
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         }
+
+
         .padding(.top)
     }
 
@@ -165,13 +179,11 @@ struct UIUserProfileView : View{
 
 
 
-
-
-
 struct BioView : View {
     @StateObject var model: AuthenticationData
     @ObservedObject var networkManager: ProfileNetworkManager
     var username: String
+    var isTabView : Bool
 
     var body: some View {
         
@@ -181,7 +193,7 @@ struct BioView : View {
                 Text(Network.getDisplayUsername(fromUsername: username))
                     .font(.custom("Poppins-Medium", size: 19))
                     .foregroundColor(J4FColors.darkBlue)
-                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
+                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username && isTabView{
                     NavigationLink(destination: EditProfileView(model: model)) {
                         Text("Edit Profile")
                             .padding()
@@ -193,9 +205,7 @@ struct BioView : View {
                 }
             }
         }
-
     }
-
 }
 
 
@@ -253,14 +263,13 @@ class ProfileNetworkManager: ObservableObject {
 struct UserProfileView: View {
     @StateObject var model: AuthenticationData
     var username: String
+    var isTabView: Bool
+    
     var body: some View {
-        UIUserProfileView(model: model, username: username)
-            .navigationBarTitle(username, displayMode: .inline)
-            .navigationBarItems(trailing:
-                Menu("...") {
-                    Button("Logout", action: {model.logout()
-                })
-            })
+        NavigationView{
+            UIUserProfileView(model: model, username: username, isTabView: isTabView)
+                
+        }
+        .navigationBarTitle(Network.getDisplayUsername(fromUsername: username), displayMode: .inline)
     }
 }
-

@@ -66,7 +66,6 @@ struct PostView: View {
                         
                     }
                 }.textCase(.none)
-//                .listRowInsets(EdgeInsets())
             }
             .listStyle(GroupedListStyle()) // Important, so that the header scrolls with the list
             
@@ -166,7 +165,7 @@ struct PostHeader: View {
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
                 } else{
-                    NavigationLink(destination: UserProfileView(model: model, username: post.username)) {
+                    NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
                         Image(systemName: "person.crop.circle")
                             .resizable()
                             .frame(width: 41, height: 41, alignment: .leading)
@@ -188,7 +187,7 @@ struct PostHeader: View {
                                 .foregroundColor(J4FColors.darkBlue)
                                 .lineLimit(1)
                         }else{
-                            NavigationLink(destination: UserProfileView(model: model, username: post.username)) {
+                            NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
                                 Text(Network.getDisplayUsername(fromUsername: post.username))
                                     .font(J4FFonts.username)
                                     .foregroundColor(J4FColors.darkBlue)

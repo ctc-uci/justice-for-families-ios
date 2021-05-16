@@ -45,7 +45,7 @@ struct HomeFeed: View {
 
                                 }
                             }
-                            NavigationLink(destination: ActivityView(networkManager: ActivityNetworkManager(), model: model)) {
+                            NavigationLink(destination: ActivityView(networkManager: ActivityNetworkManager(), model: model, isTabView: false)) {
                                 CheckNotificationsCell()
                             }
                             
