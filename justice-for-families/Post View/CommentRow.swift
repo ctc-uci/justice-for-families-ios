@@ -55,9 +55,4 @@ struct CommentRow: View {
     }
 }
 
-struct CommentRow_Previews: PreviewProvider {
-    static var previews: some View {
-        CommentRow()
-    }
-}
 
