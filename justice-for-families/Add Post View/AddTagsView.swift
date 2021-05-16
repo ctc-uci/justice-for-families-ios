@@ -28,40 +28,55 @@ struct AddTagsView: View {
     @Binding var tags: Array<String>
     @State var searchText: String = ""
     
-    @State var selectedTags : Dictionary<String, Bool> =  ["resources" : false,
+    @State var popularTags : Dictionary<String, Bool> =  ["resources" : false,
                                                            "j4f" : false,
                                                            "queens" : false,
                                                            "community" : false,
                                                            "rules" : false,
                                                            "new facilities" : false]
-    
+    @State var selectedTags : Dictionary<String, Bool> =  [:]
     @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                #if DEBUG
+//                #if DEBUG
                 Divider().padding([.leading, .trailing], 24)
-                SearchBar(text: $searchText)
+                SearchBar(text: $searchText, selectedTags: $selectedTags)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 7)
-                #endif
+//                #endif
                 Divider().padding([.leading, .trailing], 24)
                 VStack(alignment: .leading, spacing: 11) {
                     Text("popular")
                         .foregroundColor(Constants.primaryFontColor)
                         .font(.custom("Poppins-Medium", size: 15))
                         .padding(EdgeInsets(top: 11, leading: 24, bottom: 15, trailing: 0))
-                    let tagsList = selectedTags.keys.sorted()
+                    let tagsList = popularTags.keys.sorted()
                     HStack (spacing: 10) {
                         ForEach(tagsList[0...2], id: \.self) { tag in
-                            Toggle("#\(tag.description)", isOn: self.binding(for: tag))
+                            Toggle(tag.description, isOn: self.binding(for: tag))
                                 .toggleStyle(TagToggleStyle())
                         }
                     }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 12))
                     HStack (spacing: 10) {
                         ForEach(tagsList[3...5], id: \.self) { tag in
-                            Toggle("#\(tag.description)", isOn: self.binding(for: tag))
+                            Toggle(tag.description, isOn: self.binding(for: tag))
+                                .toggleStyle(TagToggleStyle())
+                        }
+                    }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 12))
+                    
+                    Divider().padding([.top, .leading, .trailing], 24)
+                    
+                    // MARK: Selected Tags Section
+                    let customTags = selectedTags.keys.sorted()
+                    Text("Selected Tags")
+                        .foregroundColor(Constants.primaryFontColor)
+                        .font(.custom("Poppins-Medium", size: 15))
+                        .padding(EdgeInsets(top: 11, leading: 24, bottom: 15, trailing: 0))
+                    HStack (spacing: 10) {
+                        ForEach(customTags, id: \.self) { tag in
+                            Toggle(tag.description, isOn: self.binding(for: tag))
                                 .toggleStyle(TagToggleStyle())
                         }
                     }.padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 12))
@@ -85,7 +100,13 @@ struct AddTagsView: View {
     private func binding(for key: String) -> Binding<Bool> {
         return .init(
             get: { self.selectedTags[key, default: false] },
-            set: { self.selectedTags[key] = $0 }
+            set: { status in
+                if selectedTags.count < 2 && selectedTags[key] == nil {
+                    selectedTags[key] = true
+                } else if selectedTags[key] != nil {
+                    selectedTags.removeValue(forKey: key)
+                }
+            }
         )
     }
     

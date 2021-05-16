@@ -75,13 +75,12 @@ struct HomeFeed: View {
     var body: some View {
 
         NavigationView {
-            VStack(alignment: .leading){
-                
-                Text("What you missed...")
-                    .font(J4FFonts.postTitle)
-                    .padding(.leading, 15)
+
+//            Text("HI")
+            VStack{
+
                 ScrollView(.horizontal, showsIndicators: false, content: {
-                    
+
                     HStack{
                         Spacer(minLength: 15)
                         ForEach(networkManager.whatYouMissedPosts, id: \.self){ activityComment in
@@ -106,8 +105,7 @@ struct HomeFeed: View {
                     }
                     .listStyle(PlainListStyle())
                 }
-                
-                
+
             }.pullToRefresh(isShowing: $isShowing) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                    networkManager.fetchPosts()

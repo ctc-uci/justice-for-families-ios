@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchBar: View {
     @Binding var text: String
-    
+    @Binding var selectedTags : Dictionary<String, Bool>
     @State private var isEditing = false
     
     var body: some View {
@@ -46,8 +46,16 @@ struct SearchBar: View {
                 self.isEditing = false
                 self.text = ""
             }) {
-                Text("Cancel")
-                    .font(.custom("Poppins-Normal", size: 12))
+                Button(action: {
+                    if selectedTags.count < 2 {
+                        self.selectedTags[text] = true
+//                        addedTags.append(text)
+                        text.removeAll()
+                    }
+                }, label: {
+                    Text("Add Tag")
+                        .font(.custom("Poppins-Normal", size: 12))
+                })
             }
             .padding(.trailing, 10)
             .foregroundColor(Constants.primaryFontColor)
@@ -57,6 +65,6 @@ struct SearchBar: View {
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(text: .constant(""))
+        SearchBar(text: .constant(""), selectedTags: .constant([:]))
     }
 }

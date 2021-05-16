@@ -20,6 +20,7 @@ struct TagCell: View {
             .cornerRadius(40)
             .foregroundColor(J4FColors.darkBlue)
             .font(J4FFonts.postText)
+
         
     }
     
