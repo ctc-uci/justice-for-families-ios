@@ -42,9 +42,9 @@ struct CurrentScreen: View{
             if currentView == .Tab1 {
                 HomeFeed(model: model)
             } else if currentView == .Tab2 {
-                ActivityView(networkManager: ActivityNetworkManager(), model: model)
+                ActivityView(networkManager: ActivityNetworkManager(), model: model, isTabView: true)
             } else {
-                UserProfileView(model: model, username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
+                UserProfileView(model: model, username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", isTabView: true)
             }
         }
     }
