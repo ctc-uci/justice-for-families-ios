@@ -498,7 +498,90 @@ struct Network {
             }
         }
     }
+    
+    static func getS3SignedURL(forContentType contentType: String, onCompletion completion: @escaping(Result<S3UploadResponse, Error>) -> Void) {
+        guard let url = URL(string: "\(self.baseURL)/s3Upload?contentType=\(contentType)") else { return }
+        
+        AF.request(url, method: .get).responseString { (response) in
 
+            switch response.result {
 
+            case .success(_):
+                guard let data = response.data else { return }
+                
+                do {
+                    guard let result = try? JSONDecoder().decode(S3UploadResponse.self, from: data)
+                        else { return }
+                    DispatchQueue.main.async { completion(.success(result)) }
+                } catch DecodingError.keyNotFound(let key, let context) {
+                    Swift.print("🔴 GET S3 URL ERROR: could not find key \(key) in JSON: \(context.debugDescription)\n     for content type: \(contentType)")
+                } catch DecodingError.valueNotFound(let type, let context) {
+                    Swift.print("🔴 GET S3 URL ERROR: could not find type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.typeMismatch(let type, let context) {
+                    Swift.print("🔴 GET S3 URL ERROR: type mismatch for type \(type) in JSON: \(context.debugDescription)")
+                } catch DecodingError.dataCorrupted(let context) {
+                    Swift.print("🔴 GET S3 URL ERROR: data found to be corrupted in JSON: \(context.debugDescription)\n     for content type: \(contentType)")
+                } catch let error as NSError {
+                    NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
+                }
+                break
+                
+            case .failure(let error):
+                print("🔴 Error trying to retrieve S3 URLs for post ID: \(contentType): \(error)")
+                DispatchQueue.main.async { completion(.failure(error)) }
+                break
+            }
+        }
+    }
 
+    static func upload(imageData: Data, toURL url: String,
+                       onCompletion completion: @escaping(Result<Any?, Error>) -> Void) {
+    
+        guard let url = URL(string: url) else { return }
+        
+        
+        AF.upload(imageData,
+                  to: url,
+                  method: .put,
+                  headers: ["Content-Type":"image/jpeg"]
+        ).responseString { (response) in
+            debugPrint(response)
+            switch response.response?.statusCode {
+                case 200:
+                    Swift.print("🟢 Successfully uploaded image to S3")
+                    DispatchQueue.main.async { completion(.success(nil)) }
+
+                default:
+                    print("🔴 Error trying to upload image to S3")
+                    DispatchQueue.main.async { completion(.failure(response.result as! Error)) }
+            }
+        }
+    }
+    
+    static func updateProfilePicture(forUser username: String,
+                                     withImageURL imageURL: String,
+                                     onCompletion completion: @escaping(Result<Int, Error>) -> Void) {
+        guard let url = URL(string: "\(baseURL)/authentication/update/picture") else { return }
+        let parameters: [String: String] = [
+            "email": username,
+            "picture": imageURL,
+        ]
+        
+        AF.request(url,
+                   method: .post,
+                   parameters: parameters,
+                   encoding: JSONEncoding.default)
+            .responseString { (response) in
+            
+            guard let statusCode = response.response?.statusCode else { return }
+            if statusCode == 200 {
+                print("🟡 Successfully updated profile image for \(username) with url: \(imageURL)")
+            } else {
+                print("🔴 Error trying to update profile image for \(username) with url: \(imageURL)")
+                print("🔴 Error \(response.description)")
+            }
+            DispatchQueue.main.async { completion(.success(statusCode)) }
+            
+        }
+    }
 }
