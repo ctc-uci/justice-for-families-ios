@@ -57,3 +57,21 @@ struct ActivityCell: View {
     }
 }
 
+
+struct noActivityMessage: View {
+    
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(Color.white)
+            VStack(alignment: .leading){
+                Text("Up to date")
+                    .font(J4FFonts.postText)
+                    .multilineTextAlignment(.leading)
+                
+            }
+            .padding(20)
+        }
+    }
+}
