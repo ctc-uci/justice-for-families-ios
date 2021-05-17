@@ -142,7 +142,6 @@ struct Network {
             switch response.result {
             case .success(_):
                 guard let data = response.data else { return }
-                print("🟡", response.result)
                 
                 do {
                     
@@ -154,7 +153,6 @@ struct Network {
                         Network.hasLiked(forPostID: p.decodedPost._id, username: username) { (result) in
                             switch result {
                             case .success(let isLiked):
-                                print("🟡 (\(p.decodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                                 p.isLiked = isLiked
                             case .failure(_):
                                 print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
@@ -205,7 +203,6 @@ struct Network {
                         Network.hasLiked(forPostID: p.decodedPost._id, username: username) { (result) in
                             switch result {
                             case .success(let isLiked):
-                                print("🟡 (\(p.decodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                                 p.isLiked = isLiked
                             case .failure(_):
                                 print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
@@ -245,7 +242,6 @@ struct Network {
             switch response.result {
             case .success(_):
                 guard let data = response.data else { return }
-                print("🟡", response.result)
                 
                 do {
                     
@@ -257,7 +253,6 @@ struct Network {
                         Network.hasLiked(forPostID: p.decodedPost._id, username: username) { (result) in
                             switch result {
                             case .success(let isLiked):
-                                print("🟡 (\(p.decodedPost._id)) -- Has liked \(p.title)? - \(isLiked)")
                                 p.isLiked = isLiked
                             case .failure(_):
                                 print("🔴 Error trying to check if logged in user has liked post: \(p.decodedPost._id)")
@@ -411,7 +406,6 @@ struct Network {
             switch response.result {
             
             case .success(_):
-//                print("🟡 WYM SUCCESS:", response.result)
                 guard let data = response.data else { return }
                 do {
                     let activities = try JSONDecoder().decode(Activity.self, from: data)
@@ -461,7 +455,6 @@ struct Network {
                 } catch let error as NSError {
                     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
                 }
-                break
             case .failure(let error):
                 print(error)
                 break
@@ -469,7 +462,42 @@ struct Network {
         }
     }
     
-    
+    static func getProfilePicture(forUserEmail email: String, completion: @escaping(_ image: UIImage) -> Void) {
+        let parameters: [String: Any] = ["email": email]
+        guard let url = URL(string: "\(self.baseURL)/authentication/profilepic/get") else { return }
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString { response in
+            switch response.result {
+            case .success(let result):
+                guard let imageURL = URL(string: result) else { return }
+                AF.request(imageURL, method: .get).response { response in
+                   switch response.result {
+                    case .success(let responseData):
+                        guard let data = responseData else { return }
+                        
+                        let maxSize = 100 * UIScreen.main.scale
+                        
+                        let imageSource = CGImageSourceCreateWithData(data as CFData, nil)!
+                        let options: [NSString:Any] = [kCGImageSourceThumbnailMaxPixelSize: maxSize,
+                                                       kCGImageSourceCreateThumbnailFromImageAlways:true]
+
+                        guard let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary)
+                        else { return }
+                                    
+                        let image = UIImage(cgImage: scaledImage)
+                        
+                        DispatchQueue.main.async { completion(image) }
+                        
+                    case .failure(let error):
+                        print("error--->",error)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                break
+            }
+        }
+    }
 
 
 

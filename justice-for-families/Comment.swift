@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct DecodedComment: Decodable {
     
@@ -23,7 +24,7 @@ struct DecodedComment: Decodable {
     
 }
 
-struct Comment: Identifiable {
+class Comment: Identifiable, ObservableObject {
     
     let id = UUID()
     let text: String
@@ -34,4 +35,17 @@ struct Comment: Identifiable {
     let datePosted: String?
     let createdAt: String?
     let updatedAt: String?
+    
+    @Published var userProfilePicture: UIImage = UIImage(systemName: "person.crop.circle")!
+    
+    init(text: String, username: String, numLikes: Int, postId: String, datePosted: String?, createdAt: String?, updatedAt: String?) {
+        self.text = text
+        self.username = username
+        self.numLikes = numLikes
+        self.postId = postId
+        self.datePosted = datePosted
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
+    
 }

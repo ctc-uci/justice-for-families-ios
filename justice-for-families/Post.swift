@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct HasLikedResponse: Decodable {
     
@@ -54,6 +55,7 @@ class Post: Identifiable, ObservableObject {
     var title: String = ""
     var text: String = ""
     var username: String = ""
+    @Published var userProfilePicture: UIImage = UIImage(systemName: "person.crop.circle")!
     
     init(anonymous: Bool, datePosted: String, createdAt: String, updatedAt: String, numComments: Int, numLikes: Int, tags: [String], title: String, text: String, username: String, DecodedPost: DecodedPost) {
         

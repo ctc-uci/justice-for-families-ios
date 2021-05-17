@@ -10,11 +10,7 @@ import Combine
 import Alamofire
 
 struct SheetPresenter<Main>: View where Main: View {
-    @Binding var isPresentingSheet: Bool {
-        didSet {
-            print("🟡 SET NEW POST PRESENTED AHHHHH ----- \(isPresentingSheet)")
-        }
-    }
+    @Binding var isPresentingSheet: Bool
     var content: Main
     var body: some View {
         Text("")
