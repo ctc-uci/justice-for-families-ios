@@ -125,6 +125,21 @@ class NetworkManager: ObservableObject {
         Network.fetchAllPosts { (posts) in
             self.posts = posts.reversed()
             posts.forEach { (p) in
+                
+                // Get the post's profile picture
+                if let image = ImageCacheHelper.imagecache.object(forKey: p.username as NSString) {
+                    p.userProfilePicture = image.image
+                } else {
+                    Network.getProfilePicture(forUserEmail: p.username) { image in
+                        p.userProfilePicture = image
+                        let imageCache = ImageCache()
+                        imageCache.image = image
+                        ImageCacheHelper.imagecache.setObject(imageCache, forKey: p.username as NSString)
+                        
+                    }
+                }
+                
+                // Check if the post is liked by the logged in user
                 Network.hasLiked(forPostID: p.decodedPost._id, username: self.username) { (result) in
                     switch result {
                     case .success(let isLiked):

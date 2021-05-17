@@ -44,61 +44,6 @@ struct PostsAndLikedView: View {
     }
 }
 
-struct UserLikedPostsView: View {
-    
-    @Binding var isShowing: Bool
-    @ObservedObject var networkManager: ProfileNetworkManager
-    var username: String
-    @StateObject var model: AuthenticationData
-    
-    var body: some View {
-        List {
-            Section() {
-                ForEach(networkManager.likedPosts) { p in
-                    FeedCell(post: p, model: model)
-                        .listRowBackground(J4FColors.background)
-                }
-            }
-        }
-        .listStyle(GroupedListStyle())
-        .pullToRefresh(isShowing: $isShowing, onRefresh: {
-            networkManager.getLikedPosts()
-            self.isShowing = false
-        })
-    }
-}
-
-struct UserPostsView: View {
-    
-    @Binding var isShowing: Bool
-    @ObservedObject var networkManager: ProfileNetworkManager
-    var username: String
-    @StateObject var model: AuthenticationData
-    
-    var body: some View {
-        List {
-            Section() {
-                if UserDefaults.standard.string(forKey: "LoggedInUser")  == username {
-                    ForEach(networkManager.posts) { p in
-                        FeedCell(post: p, model: model)
-                            .listRowBackground(J4FColors.background)
-                    }
-                }else{
-                    ForEach(networkManager.anonPosts) { p in
-                        FeedCell(post: p, model: model)
-                            .listRowBackground(J4FColors.background)
-                    }
-                }
-            }
-        }
-        .listStyle(GroupedListStyle())
-        .pullToRefresh(isShowing: $isShowing, onRefresh: {
-            networkManager.getPosts()
-            self.isShowing = false
-        })
-    }
-}
-
 struct UIUserProfileView : View{
 
     @State var index = 0
@@ -188,7 +133,12 @@ struct BioView : View {
     var body: some View {
         
         HStack {
-            Image(systemName: "person.circle").font(.system(size: 90, weight: .regular))
+            Image(uiImage: (networkManager.profilePicture ?? UIImage(systemName: "person.circle"))!)
+                .resizable()
+                .frame(width: 90, height: 90, alignment: .leading)
+                .cornerRadius(45)
+                .aspectRatio(contentMode: .fit)
+                .clipped()
             VStack(alignment: .leading) {
                 Text(Network.getDisplayUsername(fromUsername: username))
                     .font(.custom("Poppins-Medium", size: 19))
@@ -213,6 +163,8 @@ class ProfileNetworkManager: ObservableObject {
     var didChange = PassthroughSubject<ProfileNetworkManager, Never>()
     var username: String
     
+    @Published var profilePicture = UIImage(systemName: "person.crop.circle")
+    
     @Published var posts = [Post]() {
         didSet {
             didChange.send(self)
@@ -236,12 +188,18 @@ class ProfileNetworkManager: ObservableObject {
         getPosts()
         getLikedPosts()
         getAnonPosts()
-        
+        getProfilePicture()
     }
 
     public func getPosts() {
         Network.getPost(fromUsername: username) {
             (posts) in self.posts = posts.reversed()
+            self.posts.forEach { p in
+                Network.getProfilePicture(forUserEmail: self.username) { image in
+                    p.objectWillChange.send()
+                    p.userProfilePicture = image
+                }
+            }
         }
     }
     
@@ -255,6 +213,20 @@ class ProfileNetworkManager: ObservableObject {
         Network.getAnonPosts(fromUsername: username) {
             (posts) in self.anonPosts = posts.reversed()
         }
+    }
+    
+    public func getProfilePicture() {
+        if let image = ImageCacheHelper.imagecache.object(forKey: username as NSString) {
+            self.profilePicture = image.image
+        } else {
+            Network.getProfilePicture(forUserEmail: username) { image in
+                self.profilePicture = image
+                let imageCache = ImageCache()
+                imageCache.image = image
+                ImageCacheHelper.imagecache.setObject(imageCache, forKey: self.username as NSString)
+            }
+        }
+        
     }
     
 

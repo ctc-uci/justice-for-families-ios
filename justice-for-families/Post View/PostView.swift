@@ -115,13 +115,16 @@ struct PostView: View {
 
 struct CommentCell: View {
     
-    var comment: Comment
+    @StateObject var comment: Comment
     
     var body: some View {
         HStack(alignment: .top) {
-            Image(systemName: "person.crop.circle")
+            Image(uiImage: comment.userProfilePicture)
                 .resizable()
                 .frame(width: 41, height: 41, alignment: .leading)
+                .cornerRadius(41/2)
+                .aspectRatio(contentMode: .fit)
+                .clipped()
             CommentView(comment: comment)
         }
         .frame(height: 120, alignment: .leading)
@@ -154,7 +157,7 @@ struct CommentView: View {
 
 struct PostHeader: View {
     
-    var post: Post
+    @StateObject var post: Post
     @StateObject var model: AuthenticationData
     
     var body: some View {
@@ -169,6 +172,9 @@ struct PostHeader: View {
                         Image(systemName: "person.crop.circle")
                             .resizable()
                             .frame(width: 41, height: 41, alignment: .leading)
+                            .cornerRadius(41/2)
+                            .aspectRatio(contentMode: .fit)
+                            .clipped()
                     }
                     
                 }
@@ -249,14 +255,19 @@ class CommentsNetworkManager: ObservableObject {
     
     init(postID: String = "") {
         self.postID = postID
-//        print("🟡 PostView init with ID: \(postID)")
-//        fetchComments()
     }
     
     
     func fetchComments() {
         Network.getComments(forPostID: self.postID, completionHandler: { (comments) in
             self.comments = comments
+            
+            self.comments.forEach { c in
+                Network.getProfilePicture(forUserEmail: c.username) { image in
+                    c.userProfilePicture = image
+                }
+            }
+            
         })
     }
 }

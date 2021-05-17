@@ -5,11 +5,12 @@
 //  Created by Jules Labador on 3/6/21.
 //
 
+import Foundation
 import SwiftUI
 
 struct FeedCell: View {
     
-    let post: Post
+    @StateObject var post: Post
     @StateObject var model: AuthenticationData
     
     var body: some View {
@@ -18,9 +19,13 @@ struct FeedCell: View {
                 .fill(Color.white)
             VStack(alignment: .leading) {
                 HStack(alignment: .bottom) {
-                    Image(systemName: "person.crop.circle")
+                    let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
+                    Image(uiImage: imageCache?.image ?? post.userProfilePicture)
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
+                        .cornerRadius(41/2)
+                        .aspectRatio(contentMode: .fit)
+                        .clipped()
                     
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
