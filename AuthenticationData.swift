@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 class AuthenticationData: ObservableObject {
+    
     @Published var email = ""
     @Published var password = ""
     @Published var canLogin: Int? = nil
@@ -17,6 +18,12 @@ class AuthenticationData: ObservableObject {
     @Published var email_SignUp = ""
     @Published var password_SignUp = ""
     @Published var reEnterPassword = ""
+    
+    init() {
+        if let username = UserDefaults.standard.object(forKey: "LoggedInUser") as? String {
+            self.email = username
+        }
+    }
     
     func logout() {
         resetQueries()
@@ -33,7 +40,8 @@ class AuthenticationData: ObservableObject {
         reEnterPassword = ""
         UserDefaults.standard.removeObject(forKey: "LoggedInUser")
     }
-    func login() {
+    func login(email: String, pass: String) {
+        print(email, pass)
         //can also use http://localhost:3000/authentication/login
         //this way is good since it tells you specifically what went wrong(e.g. incorrect user/pass, user not yet confirmed, ...)
         //will need to clone j4f backend repo and activate backend using "node server.js" while in j4f backend repo
@@ -42,13 +50,15 @@ class AuthenticationData: ObservableObject {
             return
         }
         
-        AF.request(url, method: .post, parameters: ["email": email, "password": password], encoding: JSONEncoding.default).responseString { (response) in
+        AF.request(url, method: .post, parameters: ["email": email, "password": pass], encoding: JSONEncoding.default).responseString { (response) in
 
             switch response.result {
                 case .success(_):
                     if let httpStatusCode = response.response?.statusCode {
                       switch(httpStatusCode) {
                           case 200:
+                            self.email = email
+                            self.password = pass
                             UserDefaults.standard.set(self.email, forKey: "LoggedInUser")
                             self.canLogin = 1
                             print("Success")

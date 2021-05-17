@@ -14,9 +14,17 @@ import Alamofire
 struct LoginView: View {
     @State private var hiddenPass = true
     
-    @ObservedObject var model = AuthenticationData()
+    @ObservedObject var model: AuthenticationData
     private var fieldWidth: CGFloat? = 350
     private var fieldHeight: CGFloat? = 60
+    
+    @State private var email: String = ""
+    @State private var pass: String = ""
+    
+    public init(model: AuthenticationData) {
+        self._model = ObservedObject(wrappedValue: model)
+    }
+    
     var body: some View {
         NavigationView {
             VStack (alignment: .center, spacing: 20) {
@@ -46,7 +54,7 @@ struct LoginView: View {
                 
                 VStack(alignment: .center){
                     HStack{
-                        TextField("email",text: $model.email)
+                        TextField("email",text: $email)
                             .foregroundColor(Constants.primaryFontColor)
                             .padding()
                             .background(Color.white)
@@ -58,9 +66,9 @@ struct LoginView: View {
                     
                     HStack {
                         if self.hiddenPass {
-                            SecureField("password", text: $model.password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
+                            SecureField("password", text: $pass).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                         } else {
-                            TextField("password", text: $model.password).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
+                            TextField("password", text: $pass).background(Color.white).frame(width:278).foregroundColor(Constants.primaryFontColor).font(.custom("Poppins-Regular", size: 16)).autocapitalization(UITextAutocapitalizationType(rawValue: 0)!)
                         }
                         
                         Button(action: {self.hiddenPass.toggle()}) {
@@ -82,9 +90,9 @@ struct LoginView: View {
                 }
                 .padding(.bottom,30)
                 
-                NavigationLink(destination: MainView(model: model), tag: 1, selection: $model.canLogin){
+//                NavigationLink(destination: MainView(model: model), tag: 1, selection: $model.canLogin){
                     Button(action: {
-                        print(model.login())
+                        print(model.login(email: email, pass: pass))
                     }) {
                         Text("Login")
                             .font(.custom("Poppins-Regular", size: 18))
@@ -95,7 +103,7 @@ struct LoginView: View {
                             .background(Capsule().fill(Constants.primaryFontColor))
                         
                     }.padding([.leading, .trailing],30)
-                }
+//                }
                 
                 HStack(alignment: .center, spacing: 0){
                     Text("I'm a new user. ")
@@ -122,11 +130,11 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            LoginView()
-        }
-    }
-}
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            LoginView(model: <#AuthenticationData#>)
+//        }
+//    }
+//}
 
