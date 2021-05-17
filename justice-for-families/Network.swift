@@ -585,3 +585,8 @@ struct Network {
         }
     }
 }
+
+struct S3UploadResponse: Decodable {
+    let uploadURL: String
+    let path: String
+}
