@@ -27,6 +27,7 @@
 		4A781E94262F920A00ABDEDF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A781E93262F920A00ABDEDF /* Comment.swift */; };
 		4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */; };
 		4AD5DCA0262F8BAD00A614B1 /* J4FColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5DC9A262F8BAD00A614B1 /* J4FColors.swift */; };
+		4AFB7F53265325A60011D342 /* UserProfilePictureImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB7F52265325A60011D342 /* UserProfilePictureImageView.swift */; };
 		5AE31D2B262FE70F00382580 /* AddTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE31D2A262FE70F00382580 /* AddTagsView.swift */; };
 		5B5CB0AE257B094F00357437 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CB0AD257B094F00357437 /* PostView.swift */; };
 		5BA5F07D263A221C00706B25 /* WhatYouMissedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA5F07C263A221C00706B25 /* WhatYouMissedCell.swift */; };
@@ -92,6 +93,7 @@
 		4A781E93262F920A00ABDEDF /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		4AD5DC99262F8BAD00A614B1 /* J4FFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = J4FFonts.swift; sourceTree = "<group>"; };
 		4AD5DC9A262F8BAD00A614B1 /* J4FColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = J4FColors.swift; sourceTree = "<group>"; };
+		4AFB7F52265325A60011D342 /* UserProfilePictureImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePictureImageView.swift; sourceTree = "<group>"; };
 		526367AC012CCDAFA09C8B34 /* Pods_justice_for_familiesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_justice_for_familiesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC2D1E29C2FB70D75D9D685 /* Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; path = "Target Support Files/Pods-justice-for-families-justice-for-familiesUITests/Pods-justice-for-families-justice-for-familiesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5AE31D2A262FE70F00382580 /* AddTagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagsView.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				4A6CF100264C967400F0D9A0 /* ActivityCell.swift */,
 				4A6CF102264C968F00F0D9A0 /* ActivityView.swift */,
 				4A45627D2651E84400D07241 /* ImageCacheHelper.swift */,
+				4AFB7F52265325A60011D342 /* UserProfilePictureImageView.swift */,
 			);
 			path = "justice-for-families";
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				4AD5DC9F262F8BAD00A614B1 /* J4FFonts.swift in Sources */,
 				5BE5421625B3A4EB008DF7A8 /* LoginView.swift in Sources */,
 				4A781E94262F920A00ABDEDF /* Comment.swift in Sources */,
+				4AFB7F53265325A60011D342 /* UserProfilePictureImageView.swift in Sources */,
 				3D5FA31125449D1400888CC8 /* justice_for_familiesApp.swift in Sources */,
 				4A71FDD7263DEF9300866219 /* Activity.swift in Sources */,
 				4A781E8F262F91F900ABDEDF /* Post.swift in Sources */,
