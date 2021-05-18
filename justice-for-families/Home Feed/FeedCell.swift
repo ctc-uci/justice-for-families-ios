@@ -19,13 +19,7 @@ struct FeedCell: View {
                 .fill(Color.white)
             VStack(alignment: .leading) {
                 HStack(alignment: .bottom) {
-                    let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
-                    Image(uiImage: imageCache?.image ?? post.userProfilePicture)
-                        .resizable()
-                        .frame(width: 41, height: 41, alignment: .leading)
-                        .cornerRadius(41/2)
-                        .aspectRatio(contentMode: .fit)
-                        .clipped()
+                    UserProfilePictureImageView(username: post.username, isAnon: post.anonymous)
                     
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {

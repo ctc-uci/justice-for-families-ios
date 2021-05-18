@@ -163,18 +163,16 @@ struct PostHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if post.anonymous{
+                if post.anonymous {
                     Image(systemName: "person.crop.circle")
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
                 } else{
+
                     NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: 41, height: 41, alignment: .leading)
-                            .cornerRadius(41/2)
-                            .aspectRatio(contentMode: .fit)
-                            .clipped()
+                        UserProfilePictureImageView(username: post.username, isAnon: post.anonymous)
+
+                        
                     }
                     
                 }
