@@ -108,9 +108,19 @@ struct PostView: View {
                 }.disabled(commentText=="")
             }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
         }
+        .navigationBarItems(trailing:
+            Menu("...") {
+                Button(action: {
+                    print("flagged post")
+                }, label: {
+                    Text("Flag Post")
+                        .foregroundColor(.red)
+                })
+        })
 
 
     }
+    
 }
 
 struct CommentCell: View {
