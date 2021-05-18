@@ -108,9 +108,19 @@ struct PostView: View {
                 }.disabled(commentText=="")
             }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
         }
+        .navigationBarItems(trailing:
+            Menu("...") {
+                Button(action: {
+                    print("flagged post")
+                }, label: {
+                    Text("Flag Post")
+                        .foregroundColor(.red)
+                })
+        })
 
 
     }
+    
 }
 
 struct CommentCell: View {
@@ -163,18 +173,21 @@ struct PostHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if post.anonymous{
+                if post.anonymous {
                     Image(systemName: "person.crop.circle")
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
                 } else{
+                    let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
+                    
                     NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
-                        Image(systemName: "person.crop.circle")
+                        Image(uiImage: imageCache?.image ?? post.userProfilePicture)
                             .resizable()
                             .frame(width: 41, height: 41, alignment: .leading)
                             .cornerRadius(41/2)
                             .aspectRatio(contentMode: .fit)
                             .clipped()
+
                     }
                     
                 }

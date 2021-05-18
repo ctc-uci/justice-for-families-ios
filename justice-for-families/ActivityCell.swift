@@ -20,9 +20,7 @@ struct ActivityCell: View {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(Color.white)
             HStack {
-                Image(systemName: "person.crop.circle")
-                    .resizable()
-                    .frame(width: 41, height: 41, alignment: .leading)
+                UserProfilePictureImageView(username: comment.commentUsername, isAnon: false)
                 
                 VStack(alignment: .leading){
                     Text("\(Network.getDisplayUsername(fromUsername: comment.commentUsername)) commented on one of your posts")

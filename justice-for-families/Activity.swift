@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Activity: Decodable {
     var comments: [ActivityComment]

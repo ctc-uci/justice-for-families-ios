@@ -220,8 +220,8 @@ class EditProfileNetworkManager: ObservableObject {
     }
 }
 
-struct EditProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileView(model: AuthenticationData())
-    }
-}
+//struct EditProfileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditProfileView(model: AuthenticationData())
+//    }
+//}

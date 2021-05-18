@@ -19,14 +19,22 @@ struct FeedCell: View {
                 .fill(Color.white)
             VStack(alignment: .leading) {
                 HStack(alignment: .bottom) {
-                    let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
-                    Image(uiImage: imageCache?.image ?? post.userProfilePicture)
-                        .resizable()
-                        .frame(width: 41, height: 41, alignment: .leading)
-                        .cornerRadius(41/2)
-                        .aspectRatio(contentMode: .fit)
-                        .clipped()
-                    
+                    if post.anonymous{
+                        Image(systemName: "person.crop.circle")
+                            .resizable()
+                            .frame(width: 41, height: 41, alignment: .leading)
+                    }else{
+                        let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
+                        Image(uiImage: imageCache?.image ?? post.userProfilePicture)
+                            .resizable()
+                            .frame(width: 41, height: 41, alignment: .leading)
+                            .cornerRadius(41/2)
+                            .aspectRatio(contentMode: .fit)
+                            .clipped()
+                        
+                    }
+
+
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             TagCell(tag: post.tags[0])
@@ -121,7 +129,7 @@ struct FeedCellInteractButtons: View {
                     Image(systemName: post.isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
                         .renderingMode(.template)
                         .foregroundColor(J4FColors.orange)
-                    Text("\(post.numLikes) likes")
+                    Text(post.numLikes != 1 ? "\(post.numLikes) likes" : "\(post.numLikes) like")
                         .font(J4FFonts.button)
                         .foregroundColor(J4FColors.darkBlue)
                 }
@@ -132,19 +140,19 @@ struct FeedCellInteractButtons: View {
             
             Spacer()
             
-            Button(action: {
-//                print("Tapped on the comment button!")
-            }) {
-                HStack(alignment: .center) {
-                    Image(systemName: "bubble.left")
-                        .renderingMode(.template)
-                        .foregroundColor(J4FColors.orange)
-                    Text("\(post.numComments) comments")
-                        .font(J4FFonts.button)
-                        .foregroundColor(J4FColors.darkBlue)
-                }
-                
+            HStack(alignment: .center) {
+                Image(systemName: "bubble.left")
+                    .renderingMode(.template)
+                    .foregroundColor(J4FColors.orange)
+                Text(post.numComments != 1 ? "\(post.numComments) comments" : "\(post.numComments) comment")
+                    .font(J4FFonts.button)
+                    .foregroundColor(J4FColors.darkBlue)
             }
+            
+
+                
+                
+            
             // Prevents all three buttons from detecting a tap when the row is tapped on
             .buttonStyle(BorderlessButtonStyle())
             
