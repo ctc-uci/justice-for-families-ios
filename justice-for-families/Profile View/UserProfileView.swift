@@ -106,12 +106,8 @@ struct UIUserProfileView : View{
                 .navigationBarItems(trailing:
                     Menu("...") {
                         Button("Logout", action: {model.logout()})
-                        Button(action: {
-                            print("reported")
-                        }, label: {
-                            Text("Report User")
-                                .foregroundColor(.red)
-                        })
+                        Link("Terms and Conditions", destination: URL(string: "https://docs.google.com/document/d/1yJIP6Q2y6Wnty8I_h_wAdCQY2qQrNEniOiQdXgTBSuw/edit?usp=sharing")!)
+
                 })
 
                 .navigationBarHidden(!isTabView)
@@ -248,6 +244,18 @@ struct UserProfileView: View {
                 
         }
         .navigationBarTitle(Network.getDisplayUsername(fromUsername: username), displayMode: .inline)
+        
+        .navigationBarItems(trailing:
+            Menu("...") {
+                Button(action: {
+                    print("reported")
+                }, label: {
+                    Text("Report User")
+                        .foregroundColor(.red)
+                })
+                
+
+        })
     }
 }
 
