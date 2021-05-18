@@ -10,24 +10,19 @@ import SwiftUI
 @main
 struct justice_for_familiesApp: App {
     @StateObject var model = AuthenticationData()
-    @ObservedObject var loggedInUser = LoggedInUser()
+    
     var body: some Scene {
         WindowGroup {
             
             // Depending on if the 'LoggedInUser' key exists in UserDefaults,
             // present either the 'MainView' or 'LoginView'
-            if (loggedInUser.user != nil) {
+            if (!model.email.isEmpty ) {
                 MainView(model: model)
-//                HomeFeed(networkManager: NetworkManager(), model: model)
             } else {
-                LoginView()
+                LoginView(model: model)
             }
             
             
         }
     }
-}
-
-class LoggedInUser: ObservableObject {
-    @Published var user = UserDefaults.standard.string(forKey: "LoggedInUser")
 }
