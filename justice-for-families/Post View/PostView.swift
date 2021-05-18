@@ -178,11 +178,16 @@ struct PostHeader: View {
                         .resizable()
                         .frame(width: 41, height: 41, alignment: .leading)
                 } else{
-
+                    let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
+                    
                     NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
-                        UserProfilePictureImageView(username: post.username, isAnon: post.anonymous)
+                        Image(uiImage: imageCache?.image ?? post.userProfilePicture)
+                            .resizable()
+                            .frame(width: 41, height: 41, alignment: .leading)
+                            .cornerRadius(41/2)
+                            .aspectRatio(contentMode: .fit)
+                            .clipped()
 
-                        
                     }
                     
                 }
