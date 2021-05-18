@@ -30,8 +30,6 @@ struct EditProfileView: View{
     var body: some View{
         NavigationView {
             VStack{
-                //                ProfileImgView()
-                //                TextFieldView()
                 Button(action: {
                     self.showingImagePicker = true
                 }) {
@@ -57,26 +55,8 @@ struct EditProfileView: View{
                     ImagePicker(image: self.$selectedImage)
                     
                 }
+                Spacer()
                 
-                VStack (alignment: .leading, spacing: 10){
-                    HStack{
-                        Text("Username")
-                        TextField("Username", text: $username)
-                    }
-                    HStack{
-                        Text("Email")
-                        TextField("Email", text: $email)
-                    }
-                    HStack{
-                        Text("Old Password")
-                        TextField("Old Password", text: $password)
-                    }
-                    HStack{
-                        Text("New Password")
-                        TextField("New Password", text: $newPassword)
-                    }
-                    Spacer()
-                }.padding([.leading, .trailing], 24)
             }
         }
         .navigationBarTitle("Edit Profile", displayMode: .inline)
@@ -220,8 +200,3 @@ class EditProfileNetworkManager: ObservableObject {
     }
 }
 
-//struct EditProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditProfileView(model: AuthenticationData())
-//    }
-//}
