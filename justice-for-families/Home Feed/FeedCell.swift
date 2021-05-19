@@ -12,6 +12,7 @@ struct FeedCell: View {
     
     @StateObject var post: Post
     @StateObject var model: AuthenticationData
+    var isTabView : Bool
     
     var body: some View {
         ZStack {
@@ -85,7 +86,7 @@ struct FeedCell: View {
             }
             .padding(20)
             // Removes arrow indicators on the right side of the cell
-            NavigationLink(destination: PostView(post: post, model: model)) { EmptyView() }
+            NavigationLink(destination: PostView(post: post, model: model, isTabView: isTabView)) { EmptyView() }
             .opacity(0.0)
         }
         .listRowBackground(J4FColors.background)
@@ -148,10 +149,6 @@ struct FeedCellInteractButtons: View {
                     .font(J4FFonts.button)
                     .foregroundColor(J4FColors.darkBlue)
             }
-            
-
-                
-                
             
             // Prevents all three buttons from detecting a tap when the row is tapped on
             .buttonStyle(BorderlessButtonStyle())
