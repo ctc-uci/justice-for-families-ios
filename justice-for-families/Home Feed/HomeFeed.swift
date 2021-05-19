@@ -22,6 +22,7 @@ struct HomeFeed: View {
     @State private var isShowing = false
     @ObservedObject var networkManager = NetworkManager()
     @StateObject var model: AuthenticationData
+    var isTabView : Bool
     
     var body: some View {
 
@@ -36,7 +37,7 @@ struct HomeFeed: View {
                         HStack{
                             Spacer(minLength: 15)
                             ForEach(networkManager.whatYouMissedPosts.reversed(), id: \.self){ activityComment in
-                                NavigationLink(destination: PostView(postID: activityComment.postID, model: model)) {
+                                NavigationLink(destination: PostView(postID: activityComment.postID, model: model, isTabView: false)) {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 5, style: .continuous)
                                             .fill(J4FColors.paleBlue).frame(width: 150, height: 100)
@@ -60,8 +61,8 @@ struct HomeFeed: View {
 
                     ForEach(networkManager.posts) { p in
                     
-                        NavigationLink(destination: PostView(post: p, model: model)) {
-                            FeedCell(post: p, model: model)
+                        NavigationLink(destination: PostView(post: p, model: model, isTabView: isTabView)) {
+                            FeedCell(post: p, model: model, isTabView: isTabView)
                         }
                     }
                 }

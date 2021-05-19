@@ -32,6 +32,7 @@ struct AddPostView: View {
     @State var postBody: String = "What's on your mind?"
     @State var isAnon: Bool = false
     @State var tags: Array<String> = []
+    @ObservedObject var networkManager: AddPostNetworkManager = AddPostNetworkManager(username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "")
 
     @Environment(\.presentationMode) private var presentationMode
     
@@ -41,11 +42,13 @@ struct AddPostView: View {
         NavigationView {
             VStack(alignment: .leading) {
                 HStack {
-                    Image("replace this later")
+                    Image(uiImage: (networkManager.profilePicture ?? UIImage(systemName: "person.circle"))!)
+                        .resizable()
                         .frame(width: 47, height: 47)
                         .background(Color.gray)
                         .cornerRadius(30)
                         .padding(EdgeInsets(top: 16, leading: 24, bottom: 0, trailing: 0))
+                        
                     if tags.isEmpty {
                         Button(action: {
                             showingTags.toggle()
@@ -160,10 +163,33 @@ struct AddPostView: View {
     }
 }
 
-struct Post_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            AddPostView()
-        }
+
+class AddPostNetworkManager: ObservableObject {
+    var didChange = PassthroughSubject<AddPostNetworkManager, Never>()
+    var username: String
+    
+    @Published var profilePicture = UIImage(systemName: "person.crop.circle")
+
+    
+    init(username: String) {
+        self.username = username
+        getProfilePicture()
     }
+    
+    public func getProfilePicture() {
+        if let image = ImageCacheHelper.imagecache.object(forKey: username as NSString) {
+            self.profilePicture = image.image
+        } else {
+            Network.getProfilePicture(forUserEmail: username) { image in
+                self.profilePicture = image
+                let imageCache = ImageCache()
+                imageCache.image = image
+                ImageCacheHelper.imagecache.setObject(imageCache, forKey: self.username as NSString)
+            }
+        }
+        
+    }
+    
+
+
 }

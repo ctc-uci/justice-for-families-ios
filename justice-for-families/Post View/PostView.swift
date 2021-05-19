@@ -40,25 +40,25 @@ struct PostView: View {
     @State private var commentText: String = ""
     @State private var placeholderString: String = "hello"
     @StateObject var model: AuthenticationData
-    
+    var isTabView : Bool
     var postModel: PostModel
     
-    init(post: Post?, model: AuthenticationData) {
+    init(post: Post?, model: AuthenticationData, isTabView: Bool) {
         self.postModel = PostModel(post: post)
         self._model = StateObject(wrappedValue: model)
+        self.isTabView = isTabView
     }
     
-    init(postID: String, model: AuthenticationData) {
+    init(postID: String, model: AuthenticationData, isTabView: Bool) {
         self.postModel = PostModel(postID: postID)
         self._model = StateObject(wrappedValue: model)
+        self.isTabView = isTabView
     }
     
-    
-        
     var body: some View {
         VStack {
                 List {
-                    Section(header: PostHeader(post: postModel.post, model: model)) {
+                    Section(header: PostHeader(post: postModel.post, model: model, isTabView: isTabView)) {
                     ForEach(postModel.networkManager.comments) { i in
                         CommentCell(comment: i)
                             .listRowInsets(EdgeInsets())
@@ -107,6 +107,8 @@ struct PostView: View {
                         .accentColor(J4FColors.darkBlue)             
                 }.disabled(commentText=="")
             }.frame(idealHeight: CGFloat(10), maxHeight: CGFloat(50)).padding(.horizontal)
+            .navigationBarTitle("", displayMode: .inline)
+//            .navigationBarHidden(!isTabView)
         }
         .navigationBarItems(trailing:
             Menu("...") {
@@ -169,6 +171,7 @@ struct PostHeader: View {
     
     @StateObject var post: Post
     @StateObject var model: AuthenticationData
+    var isTabView : Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -180,7 +183,7 @@ struct PostHeader: View {
                 } else{
                     let imageCache = ImageCacheHelper.imagecache.object(forKey: post.username as NSString)
                     
-                    NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
+                    NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: isTabView)) {
                         Image(uiImage: imageCache?.image ?? post.userProfilePicture)
                             .resizable()
                             .frame(width: 41, height: 41, alignment: .leading)
@@ -206,7 +209,7 @@ struct PostHeader: View {
                                 .foregroundColor(J4FColors.darkBlue)
                                 .lineLimit(1)
                         }else{
-                            NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: false)) {
+                            NavigationLink(destination: UserProfileView(model: model, username: post.username, isTabView: isTabView)) {
                                 Text(Network.getDisplayUsername(fromUsername: post.username))
                                     .font(J4FFonts.username)
                                     .foregroundColor(J4FColors.darkBlue)

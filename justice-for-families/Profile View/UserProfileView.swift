@@ -62,7 +62,6 @@ struct UIUserProfileView : View{
 
     @ViewBuilder
     var body: some View {
-
         VStack {
             BioView(model: model, networkManager: networkManager, username: username, isTabView: isTabView)
             PostsAndLikedView(username: username, index: $index)
@@ -72,12 +71,13 @@ struct UIUserProfileView : View{
                         List {
                             if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
                                 ForEach(networkManager.posts) { p in
-                                    FeedCell(post: p, model: model)
+                                    FeedCell(post: p, model: model, isTabView: false)
                                         .listRowBackground(J4FColors.background)
                                 }
                             }else{
                                 ForEach(networkManager.anonPosts) { p in
-                                    FeedCell(post: p, model: model)
+                                    FeedCell(post: p, model: model
+                                             , isTabView: false)
                                         .listRowBackground(J4FColors.background)
                                 }
                             }
@@ -91,7 +91,7 @@ struct UIUserProfileView : View{
                     else{
                         List {
                             ForEach(networkManager.likedPosts) { p in
-                                FeedCell(post: p, model: model)
+                                FeedCell(post: p, model: model, isTabView: false)
                             }
 
                         }
@@ -102,16 +102,24 @@ struct UIUserProfileView : View{
                     }
 
                 }
-                .navigationBarTitle(Network.getDisplayUsername(fromUsername: username), displayMode: .inline)
+                
                 .navigationBarItems(trailing:
+                        
                     Menu("...") {
-                        Button("Logout", action: {model.logout()})
-                        Link("End User License Agreement", destination: URL(string: "https://docs.google.com/document/d/1yJIP6Q2y6Wnty8I_h_wAdCQY2qQrNEniOiQdXgTBSuw/edit?usp=sharing")!)
+                        if UserDefaults.standard.string(forKey: "LoggedInUser")  == username{
+                            Link("End User License Agreement", destination: URL(string: "https://docs.google.com/document/d/1yJIP6Q2y6Wnty8I_h_wAdCQY2qQrNEniOiQdXgTBSuw/edit?usp=sharing")!)
+                            Button("Logout", action: {model.logout()})
 
+                        } else {
+                            Button(action: {
+                                print("user blocked")
+                            }, label: {
+                                Text("Block User")
+                                    .foregroundColor(.red)
+                            })
+                        }
                 })
-
-                .navigationBarHidden(!isTabView)
-
+                .navigationBarTitle(Network.getDisplayUsername(fromUsername: username), displayMode: .inline)
             }
 
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -237,23 +245,17 @@ struct UserProfileView: View {
     @StateObject var model: AuthenticationData
     var username: String
     var isTabView: Bool
+
+    
+    init(model: AuthenticationData, username: String, isTabView: Bool){
+        self._model = StateObject(wrappedValue: model)
+        self.username = username
+        self.isTabView = isTabView
+        
+    }
     
     var body: some View {
-        NavigationView{
-            UIUserProfileView(model: model, username: username, isTabView: isTabView)
-                
-        }
-        .navigationBarTitle(Network.getDisplayUsername(fromUsername: username), displayMode: .inline)
-        
-        .navigationBarItems(trailing:
-            Menu("...") {
-                Button(action: {
-                    print("user blocked")
-                }, label: {
-                    Text("Block User")
-                        .foregroundColor(.red)
-                })
-        })
+        UIUserProfileView(model: model, username: username, isTabView: isTabView)
     }
 }
 

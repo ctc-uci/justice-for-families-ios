@@ -15,21 +15,24 @@ enum Tab {
 }
 
 
-
-
-
-
 struct CurrentScreen: View{
     @StateObject var model: AuthenticationData
     @Binding var currentView: Tab
     var body: some View {
         VStack{
             if currentView == .Tab1 {
-                HomeFeed(model: model)
+                HomeFeed(model: model, isTabView: true)
             } else if currentView == .Tab2 {
-                ActivityView(networkManager: ActivityNetworkManager(), model: model, isTabView: true)
+                NavigationView{
+                    ActivityView(networkManager: ActivityNetworkManager(), model: model, isTabView: true)
+
+                }
             } else {
-                UserProfileView(model: model, username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", isTabView: true)
+                NavigationView{
+                    UserProfileView(model: model, username: UserDefaults.standard.string(forKey: "LoggedInUser") ?? "", isTabView: true)
+                        .navigationBarTitle(Network.getDisplayUsername(fromUsername: UserDefaults.standard.string(forKey: "LoggedInUser") ?? ""), displayMode: .inline)
+                }
+                
             }
         }
     }

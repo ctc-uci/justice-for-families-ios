@@ -18,11 +18,10 @@ struct ActivityView: View {
     var isTabView : Bool
     
     var body: some View {
-                
-        NavigationView {
             List{
                 ForEach(networkManager.comments){ c in
-                    NavigationLink(destination: PostView(postID: c.postID, model: model)) {
+                    
+                    NavigationLink(destination: PostView(postID: c.postID, model: model, isTabView: isTabView)) {
                         ActivityCell(c)
                             .background(J4FColors.background)
                     }
@@ -32,19 +31,14 @@ struct ActivityView: View {
 
             }
             .background(J4FColors.background)
-            .navigationBarHidden(!isTabView)
             .navigationBarTitle("Activity")
-                
-        }
-        .background(J4FColors.background)
-        .navigationBarTitle("Activity")
-        .navigationBarHidden(isTabView)
-        .pullToRefresh(isShowing: $isShowing) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-               networkManager.fetchActivity()
-               self.isShowing = true
+            .pullToRefresh(isShowing: $isShowing) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                   networkManager.fetchActivity()
+                   self.isShowing = true
+                }
             }
-        }
+        
     }
 }
 
