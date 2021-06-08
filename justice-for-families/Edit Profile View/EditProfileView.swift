@@ -21,10 +21,14 @@ struct EditProfileView: View {
     @State var password = ""
     @State var newPassword = ""
     
-    @State private var image: Image?
+    @State private var image: Image? = Image(uiImage:
+                                                ImageCacheHelper.imagecache.object(forKey: (UserDefaults.standard.string(forKey: "LoggedInUser") ?? "" as String)
+                                                as NSString)!.image)
     @State private var showingImagePicker = false
     @State private var selectedImage: UIImage?
     @State private var selectedImageType: String = "image/jpeg"
+    
+    @State private var didSaveChanges = true
 
     
     var body: some View{
@@ -34,7 +38,7 @@ struct EditProfileView: View {
                     self.showingImagePicker = true
                 }) {
                     VStack {
-                        if image != nil {
+                        if image != nil  {
                             image?
                                 .resizable()
                                 .frame(width: 120, height: 120)
@@ -63,7 +67,7 @@ struct EditProfileView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
                                 Button(action: {
-                                    if username.count != 0 || email.count != 0 || password.count != 0 || newPassword.count != 0 {
+                                    if !didSaveChanges {
                                         self.showingActionSheet = true
                                     } else {
                                         self.presentationMode.wrappedValue.dismiss()
@@ -74,6 +78,7 @@ struct EditProfileView: View {
                                 },
                             trailing:
                                 Button(action: {
+                                    didSaveChanges = true
                                     didTapSave()
                                 }){
                                     Text("Save")
@@ -93,6 +98,7 @@ struct EditProfileView: View {
     func loadImage() {
         guard let inputImage = selectedImage else { return }
         image = Image(uiImage: inputImage)
+        didSaveChanges = false
     }
     
     private func didTapSave() {
