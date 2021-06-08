@@ -470,31 +470,35 @@ struct Network {
             switch response.result {
             case .success(let result):
                 guard let imageURL = URL(string: result) else { return }
-                AF.request(imageURL, method: .get).response { response in
-                   switch response.result {
-                    case .success(let responseData):
-                        guard let data = responseData else { return }
-                        
-                        let maxSize = 100 * UIScreen.main.scale
-                        
-                        let imageSource = CGImageSourceCreateWithData(data as CFData, nil)!
-                        let options: [NSString:Any] = [kCGImageSourceThumbnailMaxPixelSize: maxSize,
-                                                       kCGImageSourceCreateThumbnailFromImageAlways:true]
-
-                        guard let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary)
-                        else { return }
-                                    
-                        let image = UIImage(cgImage: scaledImage)
-                        
-                        DispatchQueue.main.async { completion(image) }
-                        
-                    case .failure(let error):
-                        print("error--->",error)
-                    }
-                }
+                download(imageFromUrl: imageURL, completion: completion)
             case .failure(let error):
                 print(error)
                 break
+            }
+        }
+    }
+    
+    static func download(imageFromUrl imageURL: URL, completion: @escaping(_ image: UIImage) -> Void) {
+        AF.request(imageURL, method: .get).response { response in
+           switch response.result {
+            case .success(let responseData):
+                guard let data = responseData else { return }
+                
+                let maxSize = 100 * UIScreen.main.scale
+                
+                let imageSource = CGImageSourceCreateWithData(data as CFData, nil)!
+                let options: [NSString:Any] = [kCGImageSourceThumbnailMaxPixelSize: maxSize,
+                                               kCGImageSourceCreateThumbnailFromImageAlways:true]
+
+                guard let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary)
+                else { return }
+                            
+                let image = UIImage(cgImage: scaledImage)
+                
+                DispatchQueue.main.async { completion(image) }
+                
+            case .failure(let error):
+                print("error--->",error)
             }
         }
     }

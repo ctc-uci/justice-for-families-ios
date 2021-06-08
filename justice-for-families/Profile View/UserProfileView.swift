@@ -172,7 +172,11 @@ class ProfileNetworkManager: ObservableObject {
     var didChange = PassthroughSubject<ProfileNetworkManager, Never>()
     var username: String
     
-    @Published var profilePicture = UIImage(systemName: "person.crop.circle")
+    @Published var profilePicture = UIImage(systemName: "person.crop.circle") {
+        didSet {
+            didChange.send(self)
+        }
+    }
     
     @Published var posts = [Post]() {
         didSet {
@@ -204,9 +208,16 @@ class ProfileNetworkManager: ObservableObject {
         Network.getPost(fromUsername: username) {
             (posts) in self.posts = posts.reversed()
             self.posts.forEach { p in
-                Network.getProfilePicture(forUserEmail: self.username) { image in
-                    p.objectWillChange.send()
-                    p.userProfilePicture = image
+                if let image = ImageCacheHelper.imagecache.object(forKey: p.username as NSString) {
+                    p.userProfilePicture = image.image
+                } else {
+                    Network.getProfilePicture(forUserEmail: self.username) { image in
+                        p.objectWillChange.send()
+                        p.userProfilePicture = image
+                        let imageCache = ImageCache()
+                        imageCache.image = image
+                        ImageCacheHelper.imagecache.setObject(imageCache, forKey: self.username as NSString)
+                    }
                 }
             }
         }
@@ -235,7 +246,6 @@ class ProfileNetworkManager: ObservableObject {
                 ImageCacheHelper.imagecache.setObject(imageCache, forKey: self.username as NSString)
             }
         }
-        
     }
     
 

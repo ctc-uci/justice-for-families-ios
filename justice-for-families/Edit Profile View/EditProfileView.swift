@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 import SwiftUIRefresh
 
-struct EditProfileView: View{
+struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var model: AuthenticationData
     @ObservedObject var networkManager: EditProfileNetworkManager = EditProfileNetworkManager()
@@ -104,7 +104,6 @@ struct EditProfileView: View{
 //                    else{
 //                        print("new password invalid")
 //                    }
-        
         if let image = self.selectedImage {
             upload(image)
         }
@@ -148,8 +147,9 @@ struct EditProfileView: View{
     }
     
     private func updateProfile(withURL url: String) {
+        let user = UserDefaults.standard.string(forKey: "LoggedInUser")!
         Network.updateProfilePicture(
-            forUser: UserDefaults.standard.string(forKey: "LoggedInUser")!,
+            forUser: user,
             withImageURL: url
         ) { (result) in
             switch result {
@@ -157,6 +157,12 @@ struct EditProfileView: View{
                     switch statusCode {
                         case 200:
                             print("🟢 Successfully uploaded and updated profile picture")
+                            guard let imageURL = URL(string: url) else { return }
+                            Network.download(imageFromUrl: imageURL) { image in
+                                let imageCache = ImageCache()
+                                imageCache.image = image
+                                ImageCacheHelper.imagecache.setObject(imageCache, forKey: user as NSString)
+                            }
                             self.presentationMode.wrappedValue.dismiss()
                         default:
                             print("🔥 Error saving profile picture")
